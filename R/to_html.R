@@ -271,8 +271,21 @@ to_html.md_span_wikilink = function(md, ...) {
 #############
 
 #' @exportS3Method
+to_html.md_text_br = function(md, ...) {
+  "<br />"
+}
+
+#' @exportS3Method
+to_html.md_text_softbr = function(md, ...) {
+  ""
+}
+
+#' @exportS3Method
 to_html.md_text = function(md, ...) {
   c(md)
 }
+
+# TODO - check breaks'
+# TODO - html escaping?
 
 
