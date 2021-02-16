@@ -45,7 +45,8 @@ to_html.md_block = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_block_doc = function(md, ...) {
-  tag_block("html", md, ...)
+  unlist(lapply(md, to_html, ...))
+  #tag_block("html", md, ...)
 }
 
 
