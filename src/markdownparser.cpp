@@ -8,36 +8,28 @@ using namespace Rcpp;
 struct md_node;
 
 struct md_node {
-  std::vector<std::string> type;
-  std::string text;
-  Rcpp::List attributes;
-
+  Rcpp::List l;
   std::vector<md_node> children;
   md_node* parent;
-
-  md_node(std::vector<std::string> type)
-  : type(type)
-  { };
-
-  md_node(std::vector<std::string> type, Rcpp::List attr)
-    : type(type), attributes(attr)
-  { };
 };
 
 namespace Rcpp {
 // chunk wrappers
 template <> SEXP wrap(md_node const& node) {
 
-  if (node.type[1] == "text") {
-    return Rcpp::CharacterVector(node.text);
-  }
+  //if (node.l.inherits("text")) {
+  //  return Rcpp::CharacterVector(node.l[0]);
+  //}
 
-  Rcpp::List res;
+
+  Rcpp::List res(node.l);
   for(auto const& child : node.children) {
-    res.push_back(wrap(child));
+    res.push_back(Rcpp::wrap(child));
   }
 
-  res.attr("class") = node.type;
+  for(auto name : node.l.attributeNames()) {
+    res.attr(name) = node.l.attr(name);
+  }
 
   return res;
 };
@@ -46,7 +38,7 @@ template <> SEXP wrap(md_node const& node) {
 
 class MarkdownParser {
 public:
-  MarkdownParser(std::string const& doc);
+  MarkdownParser(std::string const& doc, int flag);
   int parse(std::string const& doc);
   md_node get_ast();
 
@@ -65,12 +57,10 @@ private:
   md_node* cur_node;
 };
 
-MarkdownParser::MarkdownParser(std::string const& doc)
-: ast(md_node({"md", "root"}))
-{
+MarkdownParser::MarkdownParser(std::string const& doc, int flag) {
   parser = {
     0, // abi_version
-    unsigned(MD_FLAG_NOHTML | MD_FLAG_STRIKETHROUGH),
+    (unsigned) flag,
     &MarkdownParser::onEnterBlock,
     &MarkdownParser::onLeaveBlock,
     &MarkdownParser::onEnterSpan,
@@ -79,6 +69,11 @@ MarkdownParser::MarkdownParser(std::string const& doc)
     nullptr,
     nullptr
   };
+
+  md_node root;
+  root.l.attr("class") = std::vector<std::string>({"md_node"});
+
+  ast = root;
 
   //stack.push_back(&ast);
   cur_node = &ast;
@@ -120,154 +115,222 @@ void MarkdownParser::end_node() {
 int MarkdownParser::onEnterBlock(MD_BLOCKTYPE type, void* detail, void* userdata) {
   MarkdownParser *parser = static_cast<MarkdownParser *>(userdata);
 
-  Rcpp::Rcout << "Start block " << type << "\n";
-
-  Rcpp::List new_block;
-  std::vector<std::string> block_class = {"md", "block"};
+  md_node node;
+  std::vector<std::string> block_class;
 
   if (type == MD_BLOCK_DOC) {
-    block_class.push_back("doc");
+    block_class.push_back("md_block_doc");
   } else if (type == MD_BLOCK_QUOTE) {
-    block_class.push_back("quote");
+    block_class.push_back("md_block_quote");
   } else if (type == MD_BLOCK_UL) {
-    block_class.push_back("ul");
+    block_class.push_back("md_block_ul");
+
+    MD_BLOCK_UL_DETAIL* d = static_cast<MD_BLOCK_UL_DETAIL *>(detail);
+    node.l.attr("is_tight") = d->is_tight;
+    node.l.attr("mark") = std::string(1, d->mark);
+
   } else if (type == MD_BLOCK_OL) {
-    block_class.push_back("ol");
+    block_class.push_back("md_block_ol");
+
+    MD_BLOCK_OL_DETAIL* d = static_cast<MD_BLOCK_OL_DETAIL *>(detail);
+    node.l.attr("start") = d->start;
+    node.l.attr("is_tight") = d->is_tight;
+    node.l.attr("mark_delimiter") = std::string(1, d->mark_delimiter);
+
   } else if (type == MD_BLOCK_LI) {
-    block_class.push_back("li");
+    block_class.push_back("md_block_li");
+
+    MD_BLOCK_LI_DETAIL* d = static_cast<MD_BLOCK_LI_DETAIL *>(detail);
+    node.l.attr("is_task") = d->is_task;
+    node.l.attr("task_mark") = (d->is_task) ? std::string(1, d->task_mark) : std::string("");
+
   } else if (type == MD_BLOCK_HR) {
-    block_class.push_back("hr");
+    block_class.push_back("md_block_hr");
   } else if (type == MD_BLOCK_H) {
-    block_class.push_back("h");
+    block_class.push_back("md_block_h");
+
+    MD_BLOCK_H_DETAIL* d = static_cast<MD_BLOCK_H_DETAIL *>(detail);
+    node.l.attr("level") = d->level;
+
   } else if (type == MD_BLOCK_CODE) {
-    block_class.push_back("code");
+    block_class.push_back("md_block_code");
+
+    MD_BLOCK_CODE_DETAIL* d = static_cast<MD_BLOCK_CODE_DETAIL *>(detail);
+    node.l.attr("info") = md_attr_str(d->info);
+    node.l.attr("lang") = md_attr_str(d->lang);
+    node.l.attr("fence_char") = std::string(1, d->fence_char);
+
   } else if (type == MD_BLOCK_HTML) {
-    block_class.push_back("html");
+    block_class.push_back("md_block_html");
   } else if (type == MD_BLOCK_P) {
-    block_class.push_back("p");
+    block_class.push_back("md_block_p");
   } else if (type == MD_BLOCK_TABLE) {
-    block_class.push_back("table");
+    block_class.push_back("md_block_table");
+
+    MD_BLOCK_TABLE_DETAIL* d = static_cast<MD_BLOCK_TABLE_DETAIL *>(detail);
+    node.l.attr("col_count") = d->col_count;
+    node.l.attr("head_row_count") = d->head_row_count;
+    node.l.attr("body_row_count") = d->body_row_count;
+
   } else if (type == MD_BLOCK_THEAD) {
-    block_class.push_back("thead");
+    block_class.push_back("md_block_thead");
   } else if (type == MD_BLOCK_TBODY) {
-    block_class.push_back("tbody");
+    block_class.push_back("md_block_tbody");
   } else if (type == MD_BLOCK_TR) {
-    block_class.push_back("tr");
+    block_class.push_back("md_block_tr");
   } else if (type == MD_BLOCK_TH) {
-    block_class.push_back("th");
+    block_class.push_back("md_block_th");
   } else if (type == MD_BLOCK_TD) {
-    block_class.push_back("td");
+    block_class.push_back("md_block_td");
+
+    MD_BLOCK_TD_DETAIL* d = static_cast<MD_BLOCK_TD_DETAIL *>(detail);
+    if      (d->align == MD_ALIGN_DEFAULT) node.l.attr("align") = "default";
+    else if (d->align == MD_ALIGN_LEFT)    node.l.attr("align") = "left";
+    else if (d->align == MD_ALIGN_CENTER)  node.l.attr("align") = "center";
+    else if (d->align == MD_ALIGN_RIGHT)   node.l.attr("align") = "right";
+
   } else {
-    block_class.push_back("other");
+    block_class.push_back("md_block_other");
   }
 
-  md_node new_node(block_class);
-  parser->add_node(new_node);
+  block_class.push_back("md_block");
+  block_class.push_back("md_node");
+
+  node.l.attr("class") = block_class;
+  parser->add_node(node);
 
   return 0;
 }
 
 int MarkdownParser::onLeaveBlock(MD_BLOCKTYPE type, void* detail, void* userdata) {
-  MarkdownParser *parser = static_cast<MarkdownParser *>(userdata);
-
-  Rcpp::Rcout << "End block\n";
-  parser->end_node();
+  static_cast<MarkdownParser *>(userdata)->end_node();
 
   return 0;
 }
 
 int MarkdownParser::onEnterSpan(MD_SPANTYPE type, void* detail, void* userdata) {
   MarkdownParser *parser = static_cast<MarkdownParser *>(userdata);
-  Rcpp::Rcout << "Start span\n";
 
-  Rcpp::List span_attr;
-  std::vector<std::string> span_class = {"md", "span"};
+  md_node node;
+  std::vector<std::string> span_class;
 
   if (type == MD_SPAN_EM) {
-    span_class.push_back("em");
+    span_class.push_back("md_span_em");
   } else if (type == MD_SPAN_STRONG) {
-    span_class.push_back("strong");
+    span_class.push_back("md_span_strong");
   } else if (type == MD_SPAN_A) {
-    span_class.push_back("a");
+    span_class.push_back("md_span_a");
 
-    //Detail: Structure MD_SPAN_A_DETAIL.
     MD_SPAN_A_DETAIL* d = static_cast<MD_SPAN_A_DETAIL *>(detail);
-    span_attr["title"] = md_attr_str(d->title);
-    span_attr["href"] = md_attr_str(d->href);
-  } else if (type == MD_SPAN_IMG) {
-    span_class.push_back("img");
+    node.l.attr("title") = md_attr_str(d->title);
+    node.l.attr("href") = md_attr_str(d->href);
 
-    //Detail: Structure MD_SPAN_IMG_DETAIL.
+  } else if (type == MD_SPAN_IMG) {
+    span_class.push_back("md_span_img");
+
     MD_SPAN_IMG_DETAIL* d = static_cast<MD_SPAN_IMG_DETAIL *>(detail);
-    span_attr["title"] = md_attr_str(d->title);
-    span_attr["src"] = md_attr_str(d->src);
+    node.l.attr("title") = md_attr_str(d->title);
+    node.l.attr("src") = md_attr_str(d->src);
+
   } else if (type == MD_SPAN_CODE) {
-    span_class.push_back("code");
+    span_class.push_back("md_span_code");
   } else if (type == MD_SPAN_DEL) {
-    span_class.push_back("del");
+    span_class.push_back("md_span_del");
   } else if (type == MD_SPAN_LATEXMATH) {
-    span_class.push_back("latexmath");
+    span_class.push_back("md_span_latexmath");
   } else if (type == MD_SPAN_LATEXMATH_DISPLAY) {
-    span_class.push_back("latexmath_display");
+    span_class.push_back("md_span_latexmath_display");
   } else if (type == MD_SPAN_WIKILINK) {
-    span_class.push_back("wikilink");
+    span_class.push_back("md_span_wikilink");
   } else if (type == MD_SPAN_U) {
-    span_class.push_back("u");
+    span_class.push_back("md_span_u");
   }
 
-  md_node new_span(span_class, span_attr);
-  parser->add_node(new_span);
+  span_class.push_back("md_span");
+  span_class.push_back("md_node");
+
+  node.l.attr("class") = span_class;
+  parser->add_node(node);
 
   return 0;
 }
 
 int MarkdownParser::onLeaveSpan(MD_SPANTYPE type, void* detail, void* userdata) {
-  MarkdownParser *parser = static_cast<MarkdownParser *>(userdata);
-  Rcpp::Rcout << "End span\n";
-
+  static_cast<MarkdownParser *>(userdata)->end_node();
   return 0;
 }
 
 int MarkdownParser::onText(MD_TEXTTYPE type, const MD_CHAR* text, MD_SIZE size, void* userdata) {
-  MarkdownParser *parser = static_cast<MarkdownParser *>(userdata);
-
-  Rcpp::Rcout << "Text \n";
-
-  std::vector<std::string> block_class = {"md", "text"};
+  std::vector<std::string> text_class;
   std::string txt;
 
   if (type == MD_TEXT_NULLCHAR) {
-    block_class.push_back("nullchar");
-    txt = "";
+    text_class.push_back("md_text_nullchar");
   } else if (type == MD_TEXT_BR) {
-    block_class.push_back("break");
-    txt = "\n";
+    text_class.push_back("md_text_break");
   } else if (type == MD_TEXT_SOFTBR) {
-    block_class.push_back("softbreak");
-    txt = " ";
+    text_class.push_back("md_text_softbreak");
   } else {
-    block_class.push_back("text");
+    if (type == MD_TEXT_NORMAL) {
+      text_class.push_back("md_text_normal");
+    } else if (type == MD_TEXT_ENTITY) {
+      text_class.push_back("md_text_entity");
+    } else if (type == MD_TEXT_CODE) {
+      text_class.push_back("md_text_code");
+    } else if (type == MD_TEXT_HTML) {
+      text_class.push_back("md_text_html");
+    } else if (type == MD_TEXT_LATEXMATH) {
+      text_class.push_back("md_text_latexmath");
+    } else {
+      Rcpp::stop("Unknown text type");
+    }
+
     txt = std::string(text, size);
   }
+  text_class.push_back("md_text");
+  text_class.push_back("md_node");
 
-  md_node new_text(block_class);
-  new_text.text = txt;
+  md_node node;
+  if (txt.length() != 0)
+    node.l.push_back(txt);
+  node.l.attr("class") = text_class;
 
-  parser->add_node(new_text);
-  parser->end_node();
+  static_cast<MarkdownParser *>(userdata)->add_node(node);
+  static_cast<MarkdownParser *>(userdata)->end_node();
 
   return 0;
 }
 
-
-
-
-
-
-//' @export
 // [[Rcpp::export]]
-Rcpp::List mdparse(std::string x) {
-  MarkdownParser p(x);
+Rcpp::List parse_md_cpp(std::string x, int flag) {
+  MarkdownParser p(x, flag);
   return Rcpp::wrap(p.get_ast());
 }
 
+// [[Rcpp::export]]
+int flag_mask(std::vector<std::string> const& flags) {
+  int flag_val = 0;
+  for(auto const& flag : flags) {
+    if      (flag == "MD_FLAG_COLLAPSEWHITESPACE")       flag_val |= MD_FLAG_COLLAPSEWHITESPACE;
+    else if (flag == "MD_FLAG_PERMISSIVEATXHEADERS")     flag_val |= MD_FLAG_PERMISSIVEATXHEADERS;
+    else if (flag == "MD_FLAG_PERMISSIVEURLAUTOLINKS")   flag_val |= MD_FLAG_PERMISSIVEURLAUTOLINKS;
+    else if (flag == "MD_FLAG_PERMISSIVEEMAILAUTOLINKS") flag_val |= MD_FLAG_PERMISSIVEEMAILAUTOLINKS;
+    else if (flag == "MD_FLAG_NOINDENTEDCODEBLOCKS")     flag_val |= MD_FLAG_NOINDENTEDCODEBLOCKS;
+    else if (flag == "MD_FLAG_NOHTMLBLOCKS")             flag_val |= MD_FLAG_NOHTMLBLOCKS;
+    else if (flag == "MD_FLAG_NOHTMLSPANS")              flag_val |= MD_FLAG_NOHTMLSPANS;
+    else if (flag == "MD_FLAG_TABLES")                   flag_val |= MD_FLAG_TABLES;
+    else if (flag == "MD_FLAG_STRIKETHROUGH")            flag_val |= MD_FLAG_STRIKETHROUGH;
+    else if (flag == "MD_FLAG_PERMISSIVEWWWAUTOLINKS")   flag_val |= MD_FLAG_PERMISSIVEWWWAUTOLINKS;
+    else if (flag == "MD_FLAG_TASKLISTS")                flag_val |= MD_FLAG_TASKLISTS;
+    else if (flag == "MD_FLAG_LATEXMATHSPANS")           flag_val |= MD_FLAG_LATEXMATHSPANS;
+    else if (flag == "MD_FLAG_WIKILINKS")                flag_val |= MD_FLAG_WIKILINKS;
+    else if (flag == "MD_FLAG_UNDERLINE")                flag_val |= MD_FLAG_UNDERLINE;
+    else if (flag == "MD_FLAG_PERMISSIVEAUTOLINKS")      flag_val |= MD_FLAG_PERMISSIVEAUTOLINKS;
+    else if (flag == "MD_FLAG_NOHTML")                   flag_val |= MD_FLAG_NOHTML;
+    else if (flag == "MD_DIALECT_COMMONMARK")            flag_val |= MD_DIALECT_COMMONMARK;
+    else if (flag == "MD_DIALECT_GITHUB")                flag_val |= MD_DIALECT_GITHUB;
+    else                                                 Rcpp::stop("Unknown flag name: %s", flag);
+  }
+
+  return flag_val;
+}
