@@ -126,7 +126,7 @@ int MarkdownParser::onEnterBlock(MD_BLOCKTYPE type, void* detail, void* userdata
     block_class.push_back("md_block_ul");
 
     MD_BLOCK_UL_DETAIL* d = static_cast<MD_BLOCK_UL_DETAIL *>(detail);
-    node.l.attr("is_tight") = d->is_tight;
+    node.l.attr("tight") = d->is_tight;
     node.l.attr("mark") = std::string(1, d->mark);
 
   } else if (type == MD_BLOCK_OL) {
@@ -134,7 +134,7 @@ int MarkdownParser::onEnterBlock(MD_BLOCKTYPE type, void* detail, void* userdata
 
     MD_BLOCK_OL_DETAIL* d = static_cast<MD_BLOCK_OL_DETAIL *>(detail);
     node.l.attr("start") = d->start;
-    node.l.attr("is_tight") = d->is_tight;
+    node.l.attr("tight") = d->is_tight;
     node.l.attr("mark_delimiter") = std::string(1, d->mark_delimiter);
 
   } else if (type == MD_BLOCK_LI) {
