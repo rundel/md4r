@@ -16,5 +16,5 @@ test_that("flags_check", {
   expect_error(flags_check(NA))
 
   expect_null(flags_check("MD_DIALECT_GITHUB"))
-  expect_error(flags_check("MD_DIALECT_GITHUB", NA))
+  expect_error(flags_check(c("MD_DIALECT_GITHUB", NA)))
 })

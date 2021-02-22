@@ -10,7 +10,7 @@ md4c_flags = tibble::tribble(
   "MD_FLAG_TABLES",                   "Enable tables extension.",
   "MD_FLAG_STRIKETHROUGH",            "Enable strikethrough extension.",
   "MD_FLAG_PERMISSIVEWWWAUTOLINKS",   "Enable WWW autolinks (even without any scheme prefix, if they begin with 'www.')",
-  #"MD_FLAG_TASKLISTS",                "Enable task list extension.",
+  "MD_FLAG_TASKLISTS",                "Enable task list extension.",
   "MD_FLAG_LATEXMATHSPANS",           "Enable $ and $$ containing LaTeX equations.",
   "MD_FLAG_WIKILINKS",                "Enable wiki links extensn.",
   "MD_FLAG_UNDERLINE",                "Enable underline extension (and disables '_' for normal emphasis).",
@@ -65,8 +65,7 @@ flags_check = function(flags, match_case = FALSE) {
   missing = f[ !flags %in% md4c_flags[["flag"]] ]
 
   if (length(missing) != 0) {
-    cli::cli_alert_danger("Invalid flag{?s} provided: {.val {missing}}")
-    stop(NULL, call. = FALSE) #FIXME
+    stop(cli_glue("Invalid flag{?s} provided: {.val {missing}}"), call. = FALSE)
   }
 
   invisible()
