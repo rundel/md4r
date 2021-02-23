@@ -1,3 +1,13 @@
+html_escape = function(x) {
+  x = gsub('&', "&amp;", x)
+  x = gsub('<', "&lt;", x)
+  x = gsub('>', "&gt;", x)
+  x = gsub('([^\\])?"', "\\1&quot;", x)
+
+  x
+}
+
+
 #' @title Convert a markdown object to html
 #' @description
 #'
@@ -17,7 +27,7 @@ to_html.default = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_node = function(md, ...) {
-  unlist(lapply(md, to_html, ...))
+  content = unlist(lapply(md, to_html, ...))
 }
 
 
@@ -27,26 +37,34 @@ to_html.md_node = function(md, ...) {
 #
 #############
 
-tag_block = function(tag, md, ...) {
+tag_block = function(tag, md, ..., trim = FALSE, collapse = NULL, escape = FALSE) {
   checkmate::assert_character(tag, len = 1, any.missing = FALSE)
+
+  content = unlist(lapply(md, to_html, ...))
+
+  if (!is.null(collapse))
+    content = paste(content, collapse = collapse)
+
+  if (trim)
+    content = trimws(content)
 
   tag_close = strsplit(tag, " ")[[1]][1]
   c(
     glue::glue("<{tag}>"),
-    unlist(lapply(md, to_html, ...)),
+    content,
     glue::glue("</{tag_close}>")
   )
 }
 
 #' @exportS3Method
-to_html.md_block = function(md, ...) {
-  stop("Unknown block class: ", class(md)[1], call. = FALSE)
-}
-
-#' @exportS3Method
 to_html.md_block_doc = function(md, ...) {
-  unlist(lapply(md, to_html, ...))
-  #tag_block("html", md, ...)
+  content = unlist(lapply(md, to_html, ...))
+
+  if (is.null(content)) {
+    ""
+  } else {
+    content
+  }
 }
 
 
@@ -63,11 +81,12 @@ to_html.md_block_ul = function(md, ...) {
 #' @exportS3Method
 to_html.md_block_ol = function(md, ...) {
   start = attr(md, "start")
-  c(
-    glue::glue("<ol start=\"{start}\">"),
-    unlist(lapply(md, to_html, ...)),
-    glue::glue("</ol>")
-  )
+
+  tag = "ol"
+  if (start != 1) {
+    tag = glue::glue("ol start=\"{start}\"")
+  }
+  tag_block(tag, md, ...)
 }
 
 #' @exportS3Method
@@ -92,12 +111,13 @@ to_html.md_block_li = function(md, ...) {
 #' @exportS3Method
 to_html.md_block_h = function(md, ...) {
   tag = paste0("h", attr(md, "level"))
-  tag_block(tag, md, ...)
+  tag_block(tag, md, ..., trim = TRUE, collapse = "")
 }
 
 #' @exportS3Method
 to_html.md_block_code = function(md, ...) {
-  lang = attr(md, "lang")
+  lang = textutils::HTMLdecode(attr(md, "lang"))
+
   if (lang != "") {
     tag = glue::glue("<pre><code class=\"language-{lang}\">")
   } else {
@@ -113,13 +133,19 @@ to_html.md_block_code = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_block_html = function(md, ...) {
- to_html.md_block(md, ...)
+  unlist(lapply(md, to_html, ...))
 }
 
 #' @exportS3Method
 to_html.md_block_p = function(md, ...) {
   tag_block("p", md, ...)
 }
+
+#' @exportS3Method
+to_html.md_block_hr = function(md, ...) {
+  c("<hr />")
+}
+
 
 #' @exportS3Method
 to_html.md_block_table = function(md, ...) {
@@ -174,7 +200,7 @@ to_html.md_block_td = function(md, ...) {
 
 span_text = function(md, ..., collapse="\n") {
   text = unlist(lapply(md, to_html, ...))
-  paste(text, collapse=collapse)
+  text = paste(text, collapse=collapse)
 }
 
 tag_span = function(tag, md, ..., collapse="\n") {
@@ -225,8 +251,13 @@ to_html.md_span_latexmath_display = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_span_a = function(md, ...) {
-  href = attr(md, "href")
+  href = textutils::HTMLdecode(attr(md, "href"))
+  href = httpuv::decodeURI(href)
+  href = httpuv::encodeURI(href)
+
   title = attr(md, "title")
+  title = textutils::HTMLdecode(title)
+  title = html_escape(title)
 
   tag = glue::glue("a href=\"{href}\"")
   if (title != "")
@@ -237,8 +268,8 @@ to_html.md_span_a = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_span_img = function(md, ...) {
-  src = attr(md, "src")
-  title = attr(md, "title")
+  src = httpuv::encodeURI(attr(md, "src"))
+  title = html_escape(attr(md, "title"))
 
   # Based on md4c-html.c's approach
   # see https://github.com/mity/md4c/blob/269bbdb31be2225562c802690152f0e08af26181/src/md4c-html.c#L439
@@ -246,9 +277,12 @@ to_html.md_span_img = function(md, ...) {
 
   text = paste(unlist(md), collapse="\n")
 
-  glue::glue(
-    "<img src=\"{src}\" alt=\"{text}\" title=\"{title}\" />"
-  )
+  tag = glue::glue('<img src="{src}" alt="{text}"')
+
+  if (title != "")
+    tag = glue::glue('{tag} title="{title}"')
+
+  glue::glue('{tag} />')
 }
 
 #' @exportS3Method
@@ -271,7 +305,7 @@ to_html.md_span_wikilink = function(md, ...) {
 #############
 
 #' @exportS3Method
-to_html.md_text_br = function(md, ...) {
+to_html.md_text_break = function(md, ...) {
   "<br />"
 }
 
@@ -279,6 +313,26 @@ to_html.md_text_br = function(md, ...) {
 to_html.md_text_softbr = function(md, ...) {
   ""
 }
+
+#' @exportS3Method
+to_html.md_text_code = function(md, ...) {
+  html_escape(md)
+}
+
+#' @exportS3Method
+to_html.md_text_entity = function(md, ...) {
+  char = textutils::HTMLdecode(md)
+  if (char == "")
+    char = "�"
+
+  html_escape(char)
+}
+
+#' @exportS3Method
+to_html.md_text_normal = function(md, ...) {
+  html_escape(md)
+}
+
 
 #' @exportS3Method
 to_html.md_text = function(md, ...) {

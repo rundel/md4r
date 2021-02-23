@@ -5,6 +5,50 @@
 
 using namespace Rcpp;
 
+// encodeURI
+Rcpp::CharacterVector encodeURI(Rcpp::CharacterVector value);
+RcppExport SEXP _md4r_encodeURI(SEXP valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type value(valueSEXP);
+    rcpp_result_gen = Rcpp::wrap(encodeURI(value));
+    return rcpp_result_gen;
+END_RCPP
+}
+// encodeURIComponent
+Rcpp::CharacterVector encodeURIComponent(Rcpp::CharacterVector value);
+RcppExport SEXP _md4r_encodeURIComponent(SEXP valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type value(valueSEXP);
+    rcpp_result_gen = Rcpp::wrap(encodeURIComponent(value));
+    return rcpp_result_gen;
+END_RCPP
+}
+// decodeURI
+Rcpp::CharacterVector decodeURI(Rcpp::CharacterVector value);
+RcppExport SEXP _md4r_decodeURI(SEXP valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type value(valueSEXP);
+    rcpp_result_gen = Rcpp::wrap(decodeURI(value));
+    return rcpp_result_gen;
+END_RCPP
+}
+// decodeURIComponent
+Rcpp::CharacterVector decodeURIComponent(Rcpp::CharacterVector value);
+RcppExport SEXP _md4r_decodeURIComponent(SEXP valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type value(valueSEXP);
+    rcpp_result_gen = Rcpp::wrap(decodeURIComponent(value));
+    return rcpp_result_gen;
+END_RCPP
+}
 // parse_md_cpp
 Rcpp::List parse_md_cpp(std::string x, int flag);
 RcppExport SEXP _md4r_parse_md_cpp(SEXP xSEXP, SEXP flagSEXP) {
@@ -30,6 +74,10 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_md4r_encodeURI", (DL_FUNC) &_md4r_encodeURI, 1},
+    {"_md4r_encodeURIComponent", (DL_FUNC) &_md4r_encodeURIComponent, 1},
+    {"_md4r_decodeURI", (DL_FUNC) &_md4r_decodeURI, 1},
+    {"_md4r_decodeURIComponent", (DL_FUNC) &_md4r_decodeURIComponent, 1},
     {"_md4r_parse_md_cpp", (DL_FUNC) &_md4r_parse_md_cpp, 2},
     {"_md4r_flag_mask", (DL_FUNC) &_md4r_flag_mask, 1},
     {NULL, NULL, 0}
