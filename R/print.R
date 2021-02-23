@@ -113,6 +113,8 @@ print_tree = function(x, ...) {
   end_leaf = pc(ch$l, ch$h, ch$h, " ")
 
   print_leaf = function(x, indent) {
+
+
     for(i in seq_along(x)) {
       if (i==length(x)) {
         print_node(x[[i]], indent, end_leaf)
@@ -135,7 +137,9 @@ print_tree = function(x, ...) {
   }
 
   print_node(x, "", "")
-  print_leaf(x, "")
+
+  if (!inherits(x, "md_text"))
+    print_leaf(x, "")
 
   invisible(x)
 }
