@@ -117,21 +117,21 @@ to_md.md_block_table = function(md, ...) {
 #
 #############
 
-span_text = function(md, ..., collapse="\n") {
-  text = unlist(lapply(md, to_md, ...))
-  paste(text, collapse=collapse)
-}
-
-tag_span = function(tag, md, ..., collapse="\n") {
-  checkmate::assert_character(tag, len = 1, any.missing = FALSE)
-
-  tag_close = strsplit(tag, " ")[[1]][1] # strip attributes
-  paste0(
-    glue::glue("<{tag}>"),
-    span_text(md, ..., collapse),
-    glue::glue("</{tag_close}>")
-  )
-}
+#span_text = function(md, ..., collapse="\n") {
+#  text = unlist(lapply(md, to_md, ...))
+#  paste(text, collapse=collapse)
+#}
+#
+#tag_span = function(tag, md, ..., collapse="\n") {
+#  checkmate::assert_character(tag, len = 1, any.missing = FALSE)
+#
+#  tag_close = strsplit(tag, " ")[[1]][1] # strip attributes
+#  paste0(
+#    glue::glue("<{tag}>"),
+#    span_text(md, ..., collapse),
+#    glue::glue("</{tag_close}>")
+#  )
+#}
 
 #' @exportS3Method
 to_md.md_span_em = function(md, ...) {
