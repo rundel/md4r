@@ -24,7 +24,8 @@ Imports:
     cli,
     checkmate,
     glue,
-    purrr
+    purrr,
+    textutils
 Config/testthat/edition: 3
 Suggests: 
     testthat (>= 3.0.0),
