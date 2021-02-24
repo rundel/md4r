@@ -253,8 +253,8 @@ to_html.md_span_latexmath_display = function(md, ...) {
 #' @exportS3Method
 to_html.md_span_a = function(md, ...) {
   href = textutils::HTMLdecode(attr(md, "href"))
-  href = httpuv::decodeURI(href)
-  href = httpuv::encodeURI(href)
+  href = decodeURI(href)
+  href = encodeURI(href)
 
   title = attr(md, "title")
   title = textutils::HTMLdecode(title)
@@ -269,7 +269,7 @@ to_html.md_span_a = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_span_img = function(md, ...) {
-  src = httpuv::encodeURI(attr(md, "src"))
+  src = encodeURI(attr(md, "src"))
   title = html_escape(attr(md, "title"))
 
   # Based on md4c-html.c's approach
@@ -326,7 +326,7 @@ to_html.md_text_code = function(md, ...) {
 to_html.md_text_entity = function(md, ...) {
   char = textutils::HTMLdecode(md)
   if (char == "")
-    char = "�"
+    char = "\uFFFD"
 
   html_escape(char)
 }

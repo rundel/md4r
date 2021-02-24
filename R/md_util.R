@@ -28,7 +28,7 @@ md_text_summary = function(x, max_width = 60, type = "md_text_normal", replace_n
 
 ellipsis_chars = function() {
   if (is_utf8_output()) {
-    "…"
+    "\u2026"
   } else {
     "..."
   }
