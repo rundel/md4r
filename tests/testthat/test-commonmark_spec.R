@@ -17,37 +17,6 @@ clean_html = function(x) {
   x = gsub("\n", "", x)
 }
 
-expect_identical_html = function(object, expected, info = NULL, label = NULL, expected.label = NULL, ...) {
-  md = parse_md(object, flags = "MD_DIALECT_COMMONMARK")
-  md_text = trimws(paste(object, collapse="\n"))
-  md_text = cli_glue("{.val {md_text}}")
-  md_html = to_html(md)
-  md_html = clean_html(md_html)
-
-  spec_html = clean_html(expected)
-
-  # Based on testthat:::expect_waldo_equal
-  comp = testthat:::waldo_compare(md_html, spec_html, ..., x_arg = "actual", y_arg = "expected")
-  comp_txt = paste(comp, collapse = '\n\n', sep = "\n")
-
-  msg = paste(
-    paste0(info, ": generated html does not match expected html."),
-    "",
-    paste0("`markdown`: ", md_text),
-    comp_txt,
-    sep="\n"
-  )
-
-  expect(
-    length(comp) == 0,
-    msg,
-    trace_env = rlang::caller_env()
-  )
-
-  invisible()
-}
-
-
 
 test_that("0.29 Spec - to_html()", {
 
@@ -65,9 +34,9 @@ test_that("0.29 Spec - to_html()", {
         return()
 
       expect_identical_html(
-        test$markdown,
+        test$markdown, "MD_DIALECT_COMMONMARK",
         test$html,
-        info = test$label,
+        info = test$label
       )
     }
   )
