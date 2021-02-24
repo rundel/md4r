@@ -56,7 +56,7 @@ flags_describe = function() {
 #'
 #' @export
 flags_check = function(flags, match_case = FALSE) {
-  checkmate::assert_character(flags, min.len=1, any.missing = FALSE)
+  checkmate::assert_character(flags, min.len=0, any.missing = FALSE)
 
   f = flags
   if (!match_case)

@@ -178,10 +178,12 @@ int MarkdownParser::onEnterBlock(MD_BLOCKTYPE type, void* detail, void* userdata
     block_class.push_back("md_block_tbody");
   } else if (type == MD_BLOCK_TR) {
     block_class.push_back("md_block_tr");
-  } else if (type == MD_BLOCK_TH) {
-    block_class.push_back("md_block_th");
-  } else if (type == MD_BLOCK_TD) {
-    block_class.push_back("md_block_td");
+  } else if (type == MD_BLOCK_TH || type == MD_BLOCK_TD) {
+    if (type == MD_BLOCK_TD) {
+      block_class.push_back("md_block_td");
+    } else if (type == MD_BLOCK_TH) {
+      block_class.push_back("md_block_th");
+    }
 
     MD_BLOCK_TD_DETAIL* d = static_cast<MD_BLOCK_TD_DETAIL *>(detail);
     if      (d->align == MD_ALIGN_DEFAULT) node.l.attr("align") = "default";
@@ -242,6 +244,10 @@ int MarkdownParser::onEnterSpan(MD_SPANTYPE type, void* detail, void* userdata) 
     span_class.push_back("md_span_latexmath_display");
   } else if (type == MD_SPAN_WIKILINK) {
     span_class.push_back("md_span_wikilink");
+
+    MD_SPAN_WIKILINK_DETAIL* d = static_cast<MD_SPAN_WIKILINK_DETAIL *>(detail);
+    node.l.attr("target") = md_attr_str(d->target);
+
   } else if (type == MD_SPAN_U) {
     span_class.push_back("md_span_u");
   }

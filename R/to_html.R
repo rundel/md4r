@@ -117,6 +117,7 @@ to_html.md_block_h = function(md, ...) {
 #' @exportS3Method
 to_html.md_block_code = function(md, ...) {
   lang = textutils::HTMLdecode(attr(md, "lang"))
+  lang = html_escape(lang)
 
   if (lang != "") {
     tag = glue::glue("<pre><code class=\"language-{lang}\">")
@@ -276,6 +277,8 @@ to_html.md_span_img = function(md, ...) {
   # for details.
 
   text = paste(unlist(md), collapse="\n")
+  text = textutils::HTMLdecode(text)
+  text = html_escape(text)
 
   tag = glue::glue('<img src="{src}" alt="{text}"')
 
