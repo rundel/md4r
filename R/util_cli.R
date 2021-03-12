@@ -6,8 +6,7 @@ cli_glue = function(..., .envir = parent.frame()) {
 
   # cli_format_method does wrapping which we dont want at this stage
   # so glue things back together.
-  #paste(txt, collapse = " ")
-  txt
+  paste(txt, collapse = " ")
 }
 
 cli_stop = function(..., .envir = parent.frame()) {
