@@ -4,10 +4,12 @@
 \alias{to_md}
 \title{Convert a markdown object back to markdown text}
 \usage{
-to_md(md, ...)
+to_md(md, flags = flags_used(md), ...)
 }
 \arguments{
 \item{md}{Markdown object}
+
+\item{flags}{Parser flags}
 
 \item{...}{Unused, for extensibility.}
 }
