@@ -71,7 +71,21 @@ flags_check = function(flags, match_case = FALSE) {
   invisible()
 }
 
+#' @rdname flags
+#'
+#' @param md Markdown object
+#'
+#' @export
+flags_used = function(md) {
+  flags = attr(md, "flags")
 
+  if (is.null(flags)) {
+    cli_warn("Unable to determine flags, assuming no flags set (i.e. CommonMark spec).")
+    character()
+  } else {
+    flags
+  }
+}
 
 
 

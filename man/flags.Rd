@@ -5,6 +5,7 @@
 \alias{flags_available}
 \alias{flags_describe}
 \alias{flags_check}
+\alias{flags_used}
 \title{Markdown parser flags}
 \usage{
 flags_available()
@@ -12,11 +13,15 @@ flags_available()
 flags_describe()
 
 flags_check(flags, match_case = FALSE)
+
+flags_used(md)
 }
 \arguments{
 \item{flags}{Character vector of flag names}
 
 \item{match_case}{Require flag names to case match}
+
+\item{md}{Markdown object}
 }
 \description{
 The \href{https://github.com/mity/md4c}{\code{md4c}} library supports a number of markdown
