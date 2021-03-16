@@ -63,7 +63,7 @@ md4c_tests_to_md = function(file, name, flags, examples) {
 
 md4c_tests_to_md = function(file, name, flags, examples) {
 
-  if (name %in% c("tables", "tasklists"))
+  if (name %in% c("tables", "permissive-www-autolinks"))
     return()
 
   skip_tests = list(
@@ -87,10 +87,12 @@ md4c_tests_to_md = function(file, name, flags, examples) {
         if (any(sub))
           testthat::skip( skip_tests[[name]][["msg"]][sub] )
 
-        orig_md = parse_md(test$md, flags)
-        to_md = orig_md %>% to_md() %>% parse_md(flags)
+        orig_md = test$md
+        orig_md_ast = parse_md(orig_md, flags)
+        to_md = to_md(orig_md_ast)
+        to_md_ast = parse_md(to_md, flags)
 
-        expect_identical_md(test$md, to_md, orig_md, flags)
+        expect_identical_md(orig_md, to_md, to_md_ast, orig_md_ast, flags)
 
         #expect_identical(
         #  to_md,

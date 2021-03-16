@@ -64,7 +64,7 @@ expect_identical_html = function(md, flags, expected, info = NULL, ...) {
 
 
 
-expect_identical_md = function(md, md_ast, exp_ast, flags, info = NULL, ...) {
+expect_identical_md = function(md, to_md, md_ast, exp_ast, flags, info = NULL, ...) {
   # Based on testthat:::expect_waldo_equal
   comp = testthat:::waldo_compare(md_ast, exp_ast, ..., x_arg = "actual", y_arg = "expected")
 
@@ -85,11 +85,21 @@ expect_identical_md = function(md, md_ast, exp_ast, flags, info = NULL, ...) {
       collapse="\n"
     ),
     "",
+    cli::style_bold("to_md() markdown:"),
+    cli::col_grey( paste(
+      to_md, collapse="\n"
+    ) ),
+    "",
     cli::style_bold("observed ast:"),
     paste(
       capture.output(print(md_ast)),
       collapse="\n"
     ),
+    #"",
+    #paste(
+    #  capture.output(print(comp)),
+    #  collapse = "\n"
+    #),
     sep="\n"
   )
 
