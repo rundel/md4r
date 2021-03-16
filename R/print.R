@@ -127,10 +127,10 @@ print_tree = function(x, ...) {
       if (inherits(x[[i]], "md_text"))
         next
 
-      if (inherits(x[[i]], "md_block_code")) {
-        code_format(x[[i]], child_indent, end_leaf)
-        next
-      }
+      #if (inherits(x[[i]], "md_block_code")) {
+      #  code_format(x[[i]], child_indent, end_leaf)
+      #  next
+      #}
 
       print_leaf(x[[i]], child_indent)
     }
