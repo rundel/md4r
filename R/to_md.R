@@ -42,9 +42,7 @@ to_md.md_block = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_block_doc = function(md, ...) {
-  trimws(
-    process_child_nodes(md, ..., collapse="")
-  )
+  process_child_nodes(md, ..., collapse="")
 }
 
 
@@ -59,11 +57,14 @@ to_md.md_block_ul = function(md, ...) {
   mark = attr(md, "mark")
   tight = attr(md, "tight")
 
-  children = process_child_nodes(md, ...)
+  indent = list(...)$indent %||% " "
+  new_indent = "  " # mark is always 1 char long
+
+  children = process_child_nodes(md, indent = paste0(indent, new_indent), ...)
   if (!tight)
     children = paste0(children, "\n")
 
-  paste(mark, children, collapse="\n")
+  paste(indent, mark, " ", children, sep="", collapse="\n")
 }
 
 #' @exportS3Method
@@ -72,13 +73,17 @@ to_md.md_block_ol = function(md, ...) {
   delim = attr(md, "mark_delimiter")
   tight = attr(md, "tight")
 
+  # Assumes all children are <li>
   n = start+length(md)-1
 
-  children = process_child_nodes(md, ...)
+  indent = list(...)$indent %||% " "
+  new_indent = paste(rep(" ", nchar(n) + nchar(delim) + 1), collapse="")
+
+  children = process_child_nodes(md, indent = paste0(indent, new_indent), ...)
   if (!tight)
     children = paste0(children, "\n")
 
-  paste(start:n, delim, " ", children, sep="", collapse="\n")
+  paste(indent, start:n, delim, " ", children, sep="", collapse="\n")
 }
 
 #' @exportS3Method
@@ -86,12 +91,12 @@ to_md.md_block_li = function(md, ...) {
   is_task   = attr(md, "is_task")
   task_mark = attr(md, "task_mark")
 
-  content = process_child_nodes(md, ..., collapse="")
+  content = process_child_nodes(md, ..., collapse="\n")
 
   if (is_task) {
     glue::glue("[{task_mark}] {content}")
   } else {
-    content
+    glue::glue("{content}")
   }
 }
 
@@ -104,16 +109,23 @@ to_md.md_block_h = function(md, ...) {
 #' @exportS3Method
 to_md.md_block_code = function(md, ...) {
   lang   = attr(md, "lang")
-  paste( c(
-    paste0("```", lang),
-    process_child_nodes(md, ...),
-    "```"
-  ), collapse="\n")
+  fence_char = attr(md, "fence_char")
+
+  content = process_child_nodes(md, ..., collapse = "")
+
+  if (fence_char == "") { # Indented code blocks
+    # md_text_code is wonky, this seems easiest
+    content = paste("    ", strsplit(content,"\n")[[1]], sep="", collapse="\n")
+    glue::glue("{content}\n", .trim = FALSE)
+  } else { # Fenced code block
+    fence = paste(rep(fence_char, 3), collapse="")
+    glue::glue("{fence}{lang}\n{content}{fence}\n", .trim = FALSE)
+  }
 }
 
 #' @exportS3Method
 to_md.md_block_html = function(md, ...) {
-  process_child_nodes(md, ...)
+  process_child_nodes(md, ..., collapse="")
 }
 
 #' @exportS3Method
@@ -209,8 +221,10 @@ to_md.md_span_a = function(md, ...) {
 
   content = process_child_nodes(md, ..., collapse = "")
 
-
-  glue::glue("[{content}]({href}{title})")
+  if (content == href || sub("^mailto:|^http[s]?://","", href) == content)
+    glue::glue("<{content}>")
+  else
+    glue::glue("[{content}]({href}{title})")
 }
 
 #' @exportS3Method
