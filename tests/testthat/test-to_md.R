@@ -63,12 +63,14 @@ md4c_tests_to_md = function(file, name, flags, examples) {
 
 md4c_tests_to_md = function(file, name, flags, examples) {
 
-  if (name %in% c("tables", "permissive-www-autolinks"))
+  if (name %in% c("permissive-www-autolinks"))
     return()
 
   skip_tests = list(
     "coverage" = tibble::tribble(
       ~ex, ~msg,
+      #  6, "No idea, needs further exploration",
+       29, "Current bug with md4c"
     ),
     "wiki-links" = tibble::tribble(
       ~ex, ~msg,
