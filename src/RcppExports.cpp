@@ -72,6 +72,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// table_entry_escape
+std::string table_entry_escape(std::string const& x);
+RcppExport SEXP _md4r_table_entry_escape(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string const& >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(table_entry_escape(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_md4r_encodeURI", (DL_FUNC) &_md4r_encodeURI, 1},
@@ -80,6 +91,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_md4r_decodeURIComponent", (DL_FUNC) &_md4r_decodeURIComponent, 1},
     {"_md4r_parse_md_cpp", (DL_FUNC) &_md4r_parse_md_cpp, 2},
     {"_md4r_flag_mask", (DL_FUNC) &_md4r_flag_mask, 1},
+    {"_md4r_table_entry_escape", (DL_FUNC) &_md4r_table_entry_escape, 1},
     {NULL, NULL, 0}
 };
 
