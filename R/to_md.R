@@ -1,11 +1,61 @@
 process_child_nodes = function(md, ..., collapse = NULL) {
-  content = unlist(lapply(md, to_md, ...))
+  if (is.null(collapse))
+    return( unlist(lapply(md, to_md, ...)) )
 
-  if (!is.null(collapse))
-    content = paste(content, collapse = collapse)
+  mergeable_text = c("md_text_normal", "md_text_html", "md_text_entity", "md_span")
+
+  if (length(md) == 0)
+    return(character())
+
+  content = to_md(md[[1]], ...)
+
+  for(i in seq_along(md)[-1]) {
+    new_content = to_md(md[[i]], ...)
+
+    if (
+         inherits(md[[i]],   c("md_text_code", "md_text_html"))
+      && inherits(md[[i-1]], c("md_text_code", "md_text_html"))
+      && inherits(md, c("md_block_code", "md_block_html"))
+    ) {
+      # These occur in their respective block types
+      # and contain explicit \n and we need to split on these
+      prev_content = to_md(md[[i-1]], ...)
+      if (new_content == "\n" && prev_content == "\n") {
+        content = c(content, "")
+      } else if (new_content == "\n") {
+        # Do nothing
+      } else if (prev_content == "\n") {
+        content = c(content, new_content)
+      } else {
+        end = length(content)
+        content[end] = paste0(content[end], new_content)
+      }
+    } else if (   inherits(md[[i]], mergeable_text)
+        && inherits(md[[i-1]], mergeable_text)
+        && length(new_content) == 1
+    ) {
+      end = length(content)
+      content[end] = paste0(content[end], new_content)
+    } else {
+      if (   inherits(md[[i-1]], c("md_block_p", "md_block_table", "md_block_ul", "md_block_ol"))
+          && inherits(md[[i]],   c("md_block")) ) {
+        # Separate p blocks with an empty line (not always needed but necessary in some cases)
+        content = c(content, "", new_content)
+      } else {
+        content = c(content, new_content)
+      }
+    }
+  }
+
 
   content
 }
+
+
+rep_char = function(c, n) {
+  paste(rep(c, n), collapse="")
+}
+
 
 #' @title Convert a markdown object back to markdown text
 #' @description
@@ -20,7 +70,7 @@ to_md = function(md, ...) {
 
 #' @exportS3Method
 to_md.default = function(md, ...) {
-  stop("Unsupported S3 class", call. = FALSE)
+  cli_stop("Unsupported S3 class: {.val {class(md)}}.")
 }
 
 
@@ -37,35 +87,78 @@ to_md.md_node = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_block = function(md, ...) {
-  stop("Unknown block class: ", class(md)[1], call. = FALSE)
+  cli_stop("Unknown md block class: {.val {class(md)}}.")
 }
 
 #' @exportS3Method
 to_md.md_block_doc = function(md, ...) {
-  process_child_nodes(md, ..., collapse="")
+  paste(process_child_nodes(md, ..., collapse=""), collapse="\n")
 }
 
 
 #' @exportS3Method
 to_md.md_block_quote = function(md, ...) {
   children = process_child_nodes(md, ...)
-  paste(">", children)
+  paste0("> ", children)
 }
+
+#' @exportS3Method
+to_md.md_block_h = function(md, ...) {
+  level = attr(md, "level")
+
+  content = process_child_nodes(md, ..., collapse = "")
+
+  paste0(rep_char("#", level), " ", content)
+}
+
+#' @exportS3Method
+to_md.md_block_code = function(md, ...) {
+  lang   = attr(md, "lang")
+  fence_char = attr(md, "fence_char")
+
+  content = process_child_nodes(md, ..., collapse = TRUE)
+
+
+  if (fence_char == "") { # Indented code blocks
+    paste0("    ", content)
+  } else { # Fenced code block
+    fence = rep_char(fence_char, 3)
+    c(
+      paste0(fence, lang),
+      content,
+      fence
+    )
+  }
+}
+
+#' @exportS3Method
+to_md.md_block_html = function(md, ...) {
+  process_child_nodes(md, ..., collapse = TRUE)
+}
+
+#' @exportS3Method
+to_md.md_block_p = function(md, ...) {
+  stopifnot(length(md) != 0)
+  process_child_nodes(md, ..., collapse = TRUE)
+}
+
+
+#############
+#
+# md list stuff
+#
+#############
 
 #' @exportS3Method
 to_md.md_block_ul = function(md, ...) {
   mark = attr(md, "mark")
   tight = attr(md, "tight")
 
-  indent = list(...)$indent %||% " "
-  new_indent = "  " # mark is always 1 char long
+  prefix = paste0(" ", mark, " ")
 
-  children = process_child_nodes(md, indent = paste0(indent, new_indent), ...)
-  if (!tight)
-    children = paste0(children, "\n")
-
-  paste(indent, mark, " ", children, sep="", collapse="\n")
+  process_child_nodes(md, prefix = prefix, tight = tight, ...)
 }
+
 
 #' @exportS3Method
 to_md.md_block_ol = function(md, ...) {
@@ -76,14 +169,13 @@ to_md.md_block_ol = function(md, ...) {
   # Assumes all children are <li>
   n = start+length(md)-1
 
-  indent = list(...)$indent %||% " "
-  new_indent = paste(rep(" ", nchar(n) + nchar(delim) + 1), collapse="")
+  mark_vals = start:n
+  marks = paste0(" ", mark_vals, delim, " ")
 
-  children = process_child_nodes(md, indent = paste0(indent, new_indent), ...)
-  if (!tight)
-    children = paste0(children, "\n")
-
-  paste(indent, start:n, delim, " ", children, sep="", collapse="\n")
+  unlist( purrr::map2(
+    md, marks,
+    ~ to_md(.x, prefix = .y, tight = tight, ...)
+  ) )
 }
 
 #' @exportS3Method
@@ -91,53 +183,189 @@ to_md.md_block_li = function(md, ...) {
   is_task   = attr(md, "is_task")
   task_mark = attr(md, "task_mark")
 
-  content = process_child_nodes(md, ..., collapse="\n")
+  args = list(...)
+  prefix = args$prefix %||% cli_stop("Required arg {.arg prefix} not provided.")
+  tight  = args$tight  %||% cli_stop("Required arg {.arg tight} not provided.")
 
-  if (is_task) {
-    glue::glue("[{task_mark}] {content}")
-  } else {
-    glue::glue("{content}")
-  }
+  indent = rep_char(" ", nchar(prefix))
+
+  if (is_task)
+    prefix = glue::glue("{prefix}[{task_mark}] ")
+
+  if (length(md) == 0)
+    return(prefix)
+
+  # TODO - bring this inline with th process_child_nodes w/ merging text etc
+
+  content = purrr::imap(
+    md,
+    function(child, i, ...) {
+      if (inherits(child, "md_text_softbreak"))
+        return(character())
+
+      content = to_md(child, ...)
+
+      content = if (i == 1) {
+        if (inherits(child, c("md_block_ul", "md_block_ol"))) {
+          c(prefix, content)
+        } else if (length(content) == 1) {
+          paste0(prefix, content)
+        } else {
+          c(
+            paste0(prefix, content[1]),
+            paste0(indent, content[-1])
+          )
+        }
+      } else {
+        if (inherits(child, "md_block")) {
+          paste0(indent, content)
+        } else {
+          content
+        }
+      }
+
+      if (!tight)
+        c(content, "")
+      else
+        content
+    },
+    ...
+  )
+
+
+  unlist(content)
 }
 
-#' @exportS3Method
-to_md.md_block_h = function(md, ...) {
-  tag = paste0("h", attr(md, "level"))
-  tag_block(tag, md, ...)
-}
 
-#' @exportS3Method
-to_md.md_block_code = function(md, ...) {
-  lang   = attr(md, "lang")
-  fence_char = attr(md, "fence_char")
+#############
+#
+# md table stuff
+#
+#############
 
-  content = process_child_nodes(md, ..., collapse = "")
-
-  if (fence_char == "") { # Indented code blocks
-    # md_text_code is wonky, this seems easiest
-    content = paste("    ", strsplit(content,"\n")[[1]], sep="", collapse="\n")
-    glue::glue("{content}\n", .trim = FALSE)
-  } else { # Fenced code block
-    fence = paste(rep(fence_char, 3), collapse="")
-    glue::glue("{fence}{lang}\n{content}{fence}\n", .trim = FALSE)
-  }
-}
-
-#' @exportS3Method
-to_md.md_block_html = function(md, ...) {
-  process_child_nodes(md, ..., collapse="")
-}
-
-#' @exportS3Method
-to_md.md_block_p = function(md, ...) {
-  content = process_child_nodes(md, ..., collapse = "")
-  paste0(content, "\n\n" )
-}
 
 #' @exportS3Method
 to_md.md_block_table = function(md, ...) {
-  # TODO - Fix me
+  checkmate::assert_class(md[[1]], "md_block_thead")
+  head = to_md(md[[1]], ...)
+
+
+  if (length(md) == 1) {
+    body = rep(list(character()), length(head))
+    body = do.call(data.frame, body)
+  } else if (length(md) == 2) {
+    checkmate::assert_class(md[[2]], "md_block_tbody")
+    body = to_md(md[[2]], ...)
+
+    body = do.call(rbind, body)
+    body = as.data.frame(body)
+  } else {
+    cli_stop("Unexpected number of children nodes ({length(md)}) for a `md_block_table`.")
+  }
+
+  names(body) = head
+  attr(body, "align") = attr(head, "align")
+
+  df_md_table(body)
 }
+
+#' @exportS3Method
+to_md.md_block_thead = function(md, ...) {
+  checkmate::assert_list(md, len = 1)
+  checkmate::assert_class(md[[1]], "md_block_tr")
+
+  to_md(md[[1]], ...)
+}
+
+#' @exportS3Method
+to_md.md_block_tbody = function(md, ...) {
+  lapply(md, to_md, ...)
+}
+
+#' @exportS3Method
+to_md.md_block_tr = function(md, ...) {
+  content = lapply(md, to_md, ...)
+  align = lapply(content, attr, which="align")
+  align = unlist(align)
+
+  content = unlist(content)
+  attr(content, "align") = align
+
+  content
+}
+
+#' @exportS3Method
+to_md.md_block_th = function(md, ...) {
+  content = process_child_nodes(md, ..., collapse="")
+  if (length(content) == 0)
+    content = ""
+
+  content = table_entry_escape(content) # escape | chars
+  attr(content, "align") = attr(md, "align")
+
+  content
+}
+
+#' @exportS3Method
+to_md.md_block_td = function(md, ...) {
+  content = process_child_nodes(md, ..., collapse="")
+  if (length(content) == 0)
+    content = ""
+
+  table_entry_escape(content) # escape | chars
+}
+
+
+
+df_md_table = function(df) {
+
+  align = attr(df, "align")
+  if (is.null(align))
+    align = rep("default", ncol(df))
+
+  checkmate::assert_character(
+    align, len = ncol(df), any.missing = FALSE,
+    pattern = "default|center|left|right"
+  )
+
+  col_widths = purrr::map2_int(
+    df, names(df), ~ max(nchar(.x)+2L, nchar(.y)+2L, 3L)
+  )
+
+  divider = purrr::map2_chr(
+    align, col_widths,
+    function(align, width) {
+      if (align == "center")     paste(c(":", rep("-", width-2), ":"), collapse="")
+      else if (align == "left")  paste(c(":", rep("-", width-1)), collapse="")
+      else if (align == "right") paste(c(rep("-", width-1), ":"), collapse="")
+      else                       paste(rep("-", width), collapse="")
+    }
+  )
+
+  pad_cells = function(x, width, side = "right", pad = " ") {
+    stringr::str_pad(
+      paste0(" ", trimws(x)),
+      width,
+      side = side,
+      pad = pad
+    )
+  }
+
+  build_line = function(x) {
+    paste0("|", paste(x, collapse = "|"), "|")
+  }
+
+  c(
+    build_line( pad_cells(names(df), col_widths) ),
+    build_line( divider ),
+    purrr::map_chr(
+      seq_len(nrow(df)),
+      ~ build_line( pad_cells(unlist(df[.x,]), col_widths) )
+    )
+  )
+}
+
+
 
 
 #############
@@ -146,56 +374,51 @@ to_md.md_block_table = function(md, ...) {
 #
 #############
 
-#span_text = function(md, ..., collapse="\n") {
-#  text = unlist(lapply(md, to_md, ...))
-#  paste(text, collapse=collapse)
-#}
-#
-#tag_span = function(tag, md, ..., collapse="\n") {
-#  checkmate::assert_character(tag, len = 1, any.missing = FALSE)
-#
-#  tag_close = strsplit(tag, " ")[[1]][1] # strip attributes
-#  paste0(
-#    glue::glue("<{tag}>"),
-#    span_text(md, ..., collapse),
-#    glue::glue("</{tag_close}>")
-#  )
-#}
+wrap_content = function(content, begin, end = begin) {
+  n = length(content)
+  stopifnot(n!=0)
+
+  content[1] = paste0(begin, content[1])
+  content[n] = paste0(content[n], end)
+
+  content
+}
+
 
 #' @exportS3Method
 to_md.md_span_em = function(md, ...) {
-  content = process_child_nodes(md, ..., collapse="")
-  paste0("*", content, "*")
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "*")
 }
 
 #' @exportS3Method
 to_md.md_span_strong = function(md, ...) {
-  content = process_child_nodes(md, ..., collapse="")
-  paste0("**", content, "**")
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "**")
 }
 
 #' @exportS3Method
 to_md.md_span_u = function(md, ...) {
-  content = process_child_nodes(md, ..., collapse="")
-  paste0("_", content, "_")
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "_")
 }
 
 #' @exportS3Method
 to_md.md_span_code = function(md, ...) {
-  content = process_child_nodes(md, ..., collapse="")
-  paste0("`", content, "`")
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "`")
 }
 
 #' @exportS3Method
 to_md.md_span_del = function(md, ...) {
-  content = process_child_nodes(md, ..., collapse="")
-  paste0("~", content, "~")
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "~")
 }
 
 #' @exportS3Method
 to_md.md_span_latexmath = function(md, ...) {
-  content = process_child_nodes(md, ...)
-  paste0("$", content, "$")
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "$")
 }
 
 #' @exportS3Method
@@ -203,12 +426,11 @@ to_md.md_span_latexmath_display = function(md, ...) {
   content = process_child_nodes(md, ...)
 
   sep = ""
-  if (length(content) > 1) {
-    content = paste(content, collapse = "")
-    sep = "\n"
+  if (length(content) == 1) {
+    wrap_content(content, "$$")
+  } else {
+    c("$$", content, "$$")
   }
-
-  paste("$$", trimws(content), "$$", sep = sep)
 }
 
 #' @exportS3Method
@@ -249,13 +471,11 @@ to_md.md_span_wikilink = function(md, ...) {
 
   target = gsub("\\|", "\\\\|", target)
 
-  if (target == content) {
-    link = target
-  } else {
-    link = paste0(target, "|", content)
+  if (target != paste(content, collapse="")) {
+    content[1] = paste0(target, "|", content[1])
   }
 
-  paste0("[[", link, "]]")
+  wrap_content(content, "[[", "]]")
 }
 
 
@@ -271,30 +491,25 @@ to_md.md_span_wikilink = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_text_break = function(md, ...) {
-  "\n\n"
+  ""
 }
 
 #' @exportS3Method
 to_md.md_text_softbreak = function(md, ...) {
-  "\n"
+  character()
 }
 
 #' @exportS3Method
 to_md.md_text_latexmath = function(md, ...) {
   if (md == " ")
-    "\n"
+    character()
   else
     md
 }
 
 #' @exportS3Method
 to_md.md_text = function(md, ...) {
-  c(md)
+  unlist(md)
 }
-
-
-
-# TODO - check breaks'
-# TODO - html escaping?
 
 
