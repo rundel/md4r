@@ -2,12 +2,16 @@ process_child_nodes = function(md, ..., collapse = NULL) {
   if (is.null(collapse))
     return( unlist(lapply(md, to_md, ...)) )
 
-  mergeable_text = c("md_text_normal", "md_text_html", "md_text_entity", "md_span")
+  mergeable_text = c("md_text_normal", "md_text_html",
+                     "md_text_entity", "md_span")
 
   if (length(md) == 0)
     return(character())
 
   content = to_md(md[[1]], ...)
+  if (length(content) == 1 && content == "\n")
+    content = ""
+
 
   for(i in seq_along(md)[-1]) {
     new_content = to_md(md[[i]], ...)
@@ -30,23 +34,45 @@ process_child_nodes = function(md, ..., collapse = NULL) {
         end = length(content)
         content[end] = paste0(content[end], new_content)
       }
-    } else if (   inherits(md[[i]], mergeable_text)
-        && inherits(md[[i-1]], mergeable_text)
-        && length(new_content) == 1
+    } else if (
+        inherits(md[[i]], mergeable_text) &&
+        inherits(md[[i-1]], mergeable_text)
     ) {
       end = length(content)
-      content[end] = paste0(content[end], new_content)
-    } else {
-      if (   inherits(md[[i-1]], c("md_block_p", "md_block_table", "md_block_ul", "md_block_ol"))
-          && inherits(md[[i]],   c("md_block")) ) {
+      content = c(
+        content[-end],
+        paste0(content[end], new_content[1]),
+        new_content[-1]
+      )
+    } else if ( # Handles case with a md_text_break by adding trailing ws
+        inherits(md[[i]], "md_text_break") &&
+        inherits(md[[i-1]], mergeable_text)
+    ) {
+      end = length(content)
+      content = c(
+        content[-end],
+        paste0(content[end], "    ")
+      )
+    } else if (
+         inherits(md[[i-1]], c("md_block_p", "md_block_table", "md_block_ul", "md_block_ol",
+                               "md_block_quote", "md_block_html"))
+      && inherits(md[[i]],   c("md_block")) )
+    {
         # Separate p blocks with an empty line (not always needed but necessary in some cases)
         content = c(content, "", new_content)
-      } else {
+    } else {
+
+        if (
+            inherits(md[[i-1]], "md_text_softbreak")
+         && (new_content %in% c("***", "---", "___")   # Needed for CommonMark Ex #19
+             || grepl("^[#]", new_content) )           # Needed for CommonMark Ex #40
+        ) {
+          new_content = paste0("    ", new_content)
+        }
+
         content = c(content, new_content)
-      }
     }
   }
-
 
   content
 }
@@ -92,28 +118,57 @@ to_md.md_block = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_block_doc = function(md, ...) {
-  paste(process_child_nodes(md, ..., collapse=""), collapse="\n")
+  paste(
+    process_child_nodes(md, ..., collapse=""),
+    collapse="\n"
+  )
 }
 
 
 #' @exportS3Method
 to_md.md_block_quote = function(md, ...) {
-  children = process_child_nodes(md, ...)
-  paste0("> ", children)
+  content = process_child_nodes(md, ..., collapse=TRUE)
+  c(
+    paste0("> ", content)
+  )
 }
 
 #' @exportS3Method
 to_md.md_block_h = function(md, ...) {
   level = attr(md, "level")
 
-  content = process_child_nodes(md, ..., collapse = "")
+  content = process_child_nodes(md, ..., collapse = TRUE)
 
-  paste0(rep_char("#", level), " ", content)
+  if (length(content) > 1) { # Setext heading
+    if (level == 1) {
+      content = c(content, "===")
+    } else if (level == 2) {
+      content = c(content, "---")
+    } else {
+      cli_stop("Multiline headings not supported with level > 2.")
+    }
+  } else { # ATX heading
+    paste0(rep_char("#", level), " ", content)
+  }
 }
+
+calc_fence_len = function(content, fence_char, min_len = 3) {
+  # If the fence char occurs, our fence needs to be longer
+  len = purrr::map(
+    gregexpr(paste0(fence_char, "+"), content),
+    ~ attr(.x, "match.length")
+  )
+
+  max(min_len, unlist(len)+1)
+}
+
+
+
 
 #' @exportS3Method
 to_md.md_block_code = function(md, ...) {
-  lang   = attr(md, "lang")
+  info = attr(md, "info")
+  lang = attr(md, "lang")
   fence_char = attr(md, "fence_char")
 
   content = process_child_nodes(md, ..., collapse = TRUE)
@@ -122,9 +177,11 @@ to_md.md_block_code = function(md, ...) {
   if (fence_char == "") { # Indented code blocks
     paste0("    ", content)
   } else { # Fenced code block
-    fence = rep_char(fence_char, 3)
+    len = calc_fence_len(content, fence_char, min_len = 3)
+
+    fence = rep_char(fence_char, len)
     c(
-      paste0(fence, lang),
+      paste0(fence, info),
       content,
       fence
     )
@@ -142,6 +199,10 @@ to_md.md_block_p = function(md, ...) {
   process_child_nodes(md, ..., collapse = TRUE)
 }
 
+#' @exportS3Method
+to_md.md_block_hr = function(md, ...) {
+  "***"
+}
 
 #############
 #
@@ -154,6 +215,11 @@ to_md.md_block_ul = function(md, ...) {
   mark = attr(md, "mark")
   tight = attr(md, "tight")
 
+  if (!mark %in% c("-","+","*")) {
+    cli_warn("Unexpected mark value {.val {mark}} replacing with {.val '-'}.")
+    mark = "-"
+  }
+
   prefix = paste0(" ", mark, " ")
 
   process_child_nodes(md, prefix = prefix, tight = tight, ...)
@@ -165,6 +231,11 @@ to_md.md_block_ol = function(md, ...) {
   start = attr(md, "start")
   delim = attr(md, "mark_delimiter")
   tight = attr(md, "tight")
+
+  if (!delim %in% c(".",")")) {
+    cli_warn("Unexpected mark delimeter value {.val {delim}} replacing with {.val '.'}.")
+    delim = "."
+  }
 
   # Assumes all children are <li>
   n = start+length(md)-1
@@ -207,7 +278,10 @@ to_md.md_block_li = function(md, ...) {
 
       content = if (i == 1) {
         if (inherits(child, c("md_block_ul", "md_block_ol"))) {
-          c(prefix, content)
+          c(
+            prefix,
+            paste0(indent, content)
+          )
         } else if (length(content) == 1) {
           paste0(prefix, content)
         } else {
@@ -217,7 +291,7 @@ to_md.md_block_li = function(md, ...) {
           )
         }
       } else {
-        if (inherits(child, "md_block")) {
+        if (inherits(child, "md_block") || inherits(md[[i-1]], "md_block")) {
           paste0(indent, content)
         } else {
           content
@@ -388,7 +462,14 @@ wrap_content = function(content, begin, end = begin) {
 #' @exportS3Method
 to_md.md_span_em = function(md, ...) {
   content = process_child_nodes(md, ..., collapse = TRUE)
-  wrap_content(content, "*")
+
+  fence_char = "*"
+
+  end = length(content)
+  if (grepl("^\\*[^*]", content[1]) &&  grepl("[^*]\\*$", content[end]))
+    fence_char = "_"
+
+  wrap_content(content, fence_char)
 }
 
 #' @exportS3Method
@@ -405,8 +486,40 @@ to_md.md_span_u = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_span_code = function(md, ...) {
-  content = process_child_nodes(md, ..., collapse = TRUE)
-  wrap_content(content, "`")
+  #content = process_child_nodes(md, ..., collapse = TRUE)
+
+  content = to_md(md[[1]], ...)
+  prev_content = content
+
+  if (length(md) != 1) {
+    for(i in seq_along(md)[-1]) {
+      new_content = to_md(md[[i]], ...)
+      stopifnot(length(new_content) == 1)
+
+      if (   (prev_content != " " && new_content != " ")
+          || (prev_content == " " && new_content == " ") # Back to back => trailing ws
+      ) {
+        end = length(content)
+        content = c(
+          content[-end],
+          paste0(content[end], new_content)
+        )
+      } else if (new_content != " " || i == length(md) )  {# Trailing ws should be added
+        content = c(content, new_content)
+      }
+
+      prev_content = new_content
+    }
+  }
+
+
+  len = calc_fence_len(content, "`", min_len = 1)
+  fence = paste(rep("`", len), collapse="")
+
+  if (len != 1)
+    content = wrap_content(content, " ")
+
+  wrap_content(content, fence)
 }
 
 #' @exportS3Method
@@ -438,15 +551,17 @@ to_md.md_span_a = function(md, ...) {
   href = attr(md, "href")
   title = attr(md, "title")
 
-  if (title != "" & !is.null(title))
+  if (title != "" & !is.null(title)) {
+    title = gsub('"', '\\\\"', title)
     title = glue::glue(" \"{title}\"")
+  }
 
   content = process_child_nodes(md, ..., collapse = "")
 
   if (content == href || sub("^mailto:|^http[s]?://","", href) == content)
     glue::glue("<{content}>")
   else
-    glue::glue("[{content}]({href}{title})")
+    glue::glue("[{content}](<{href}>{title})")
 }
 
 #' @exportS3Method
@@ -506,6 +621,18 @@ to_md.md_text_latexmath = function(md, ...) {
   else
     md
 }
+
+#' @exportS3Method
+to_md.md_text_normal = function(md, ...) {
+  content = unlist(md)
+
+  # Punctuation chars need to be escaped
+  if (grepl("^[[:punct:]]$", content))
+    paste0("\\", content)
+  else
+    content
+}
+
 
 #' @exportS3Method
 to_md.md_text = function(md, ...) {
