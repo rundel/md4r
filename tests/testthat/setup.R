@@ -117,11 +117,11 @@ expect_identical_md = function(md, to_md, md_ast, exp_ast, flags, info = NULL, .
 
 
 
-#######################
-###                 ###
-### md4c test tools ###
-###                 ###
-#######################
+##################
+###            ###
+### md4c tests ###
+###            ###
+##################
 
 read_md4c_tests = function(file) {
   section = character()
@@ -188,5 +188,26 @@ read_md4c_tests = function(file) {
     name = gsub("^.*/|\\.txt$","", file),
     flags = flags,
     examples = examples
+  )
+}
+
+
+########################
+###                  ###
+### CommonMark Tests ###
+###                  ###
+########################
+
+read_commonmark_spec = function(dir = "commonmark", version = "0.29") {
+  tests = jsonlite::read_json(
+    glue::glue("{dir}/spec_{version}.json")
+  )
+
+  purrr::map(
+    tests,
+    function(test) {
+      test$label = glue::glue_data("Ex {example} - {section} (L{start_line}-{end_line})", .x = test)
+      test[c("label", "markdown", "html", "example")]
+    }
   )
 }

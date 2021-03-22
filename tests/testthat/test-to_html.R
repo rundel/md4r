@@ -43,8 +43,46 @@ md4c_tests_to_html = function(file, name, flags, examples) {
   )
 }
 
-list.files("md4c/", ".txt", full.names = TRUE) %>%
-  purrr::map(read_md4c_tests) %>%
-  purrr::walk(
-    do.call, what = md4c_tests_to_html
-  )
+m4dc_tests = purrr::map(
+  list.files("md4c/", ".txt", full.names = TRUE),
+  read_md4c_tests
+)
+
+purrr::walk(
+  m4dc_tests,
+  do.call, what = md4c_tests_to_html
+)
+
+
+
+########################
+###                  ###
+### CommonMark tests ###
+###                  ###
+########################
+
+skip_tests = tibble::tribble(
+  ~ex, ~msg,
+  497, "Minor disagreement about encoding # within href",
+  591, "Minor disagreement about encoding & between params in url"
+)
+
+purrr::walk(
+  read_commonmark_spec(version="0.29"),
+  function(test) {
+    label = test$label
+    ex = test$example
+
+    test_that(label, {
+      sub = (ex == skip_tests[["ex"]])
+      if (any(sub))
+        testthat::skip( skip_tests[["msg"]][sub] )
+
+      expect_identical_html(
+        test$markdown, "MD_DIALECT_COMMONMARK",
+        test$html,
+        info = label
+      )
+    })
+  }
+)

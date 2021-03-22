@@ -1,65 +1,8 @@
-
-
-md4c_tests_to_md = function(file, name, flags, examples) {
-
-  if (name %in% c("tables", "tasklists"))
-    return()
-
-  skip_tests = list(
-    "coverage" = tibble::tribble(
-      ~ex, ~msg,
-       11, "Example is missing closing ``` for some reason",
-       12, "Without MD_FLAG_UNDERLINE results are identical",
-       14, "Equivalent up to newline between link & title",
-    ),
-    "wiki-links" = tibble::tribble(
-      ~ex, ~msg,
-       12, "Empty explicit is just converted to implicit",
-       23, "Collapsing the multiline url seems ok here"
-    )
-  )
-
-  use_commonmark_flag = list(
-    `permissive-email-autolinks` = c(1L),
-    `permissive-url-autolinks` = c(1L)
-  )
-
-  purrr::iwalk(
-    examples,
-    function(test, i) {
-      label = glue::glue("{name} - Ex {i} (L{test$line_start}-{test$line_end}) - {test$sec}")
-
-      test_that(label, {
-
-        # Check for link references, if present skip
-        if (any(grepl("\\[.*?\\]:", paste(test$md, collapse="\n"))))
-          testthat::skip( "Link references do not return original md" )
-
-        # Check skips
-        sub = (i == skip_tests[[name]][["ex"]])
-        if (any(sub))
-          testthat::skip( skip_tests[[name]][["msg"]][sub] )
-
-        # Check for commonmark flag
-        if (i %in% use_commonmark_flag[[name]])
-          flags = "MD_DIALECT_COMMONMARK"
-
-        if (length(test$md) == 1)
-          test$md = paste0(test$md, "\n")
-
-        to_md = to_md( parse_md(test$md, flags) )
-        orig_md = trimws( paste(test$md, collapse="\n") )
-
-        expect_identical(
-          to_md,
-          orig_md,
-          info = label
-        )
-      })
-    }
-  )
-}
-
+##################
+###            ###
+### md4c tests ###
+###            ###
+##################
 
 md4c_tests_to_md = function(file, name, flags, examples) {
 
@@ -69,18 +12,14 @@ md4c_tests_to_md = function(file, name, flags, examples) {
   skip_tests = list(
     "coverage" = tibble::tribble(
       ~ex, ~msg,
-      #  6, "No idea, needs further exploration",
        29, "Current bug with md4c"
-    ),
-    "wiki-links" = tibble::tribble(
-      ~ex, ~msg,
     )
   )
 
   purrr::iwalk(
     examples,
     function(test, i) {
-      label = glue::glue("{name} - Ex {i} (L{test$line_start}-{test$line_end}) - {test$sec}")
+      label = glue::glue("md4c tests - {name} - Ex {i} (L{test$line_start}-{test$line_end}) - {test$sec}")
 
       test_that(label, {
 
@@ -94,23 +33,76 @@ md4c_tests_to_md = function(file, name, flags, examples) {
         to_md = to_md(orig_md_ast)
         to_md_ast = parse_md(to_md, flags)
 
-        expect_identical_md(orig_md, to_md, to_md_ast, orig_md_ast, flags)
-
-        #expect_identical(
-        #  to_md,
-        #  orig_md,
-        #  info = label
-        #)
+        expect_identical_md(
+          orig_md, to_md,
+          to_md_ast, orig_md_ast,
+          flags
+        )
       })
     }
   )
 }
 
 
+m4dc_tests = purrr::map(
+  list.files("md4c/", ".txt", full.names = TRUE),
+  read_md4c_tests
+)
+
+purrr::walk(
+  m4dc_tests,
+  do.call, what = md4c_tests_to_md
+)
 
 
-list.files("md4c/", ".txt", full.names = TRUE) %>%
-  purrr::map(read_md4c_tests) %>%
-  purrr::walk(
-    do.call, what = md4c_tests_to_md
-  )
+########################
+###                  ###
+### CommonMark tests ###
+###                  ###
+########################
+
+skip_tests = tibble::tribble(
+  ~ex, ~msg,
+   63, "Not sure how to handle currently",
+  208, "Related to 63",
+  227, "Indenting madness",
+  262, "More block quote wrapping fun",
+  263, "More block quote wrapping fun",
+  269, "Bug with md4c - See #153",
+  282, "Subtle list indenting handling",
+  283, "Subtle list indenting handling",
+  285, "missing block p in lists",
+  289, "missing block p in lists",
+  349, "code span needs additional context awareness",
+  469, "emph / strong nesting rule weirdness",
+  516, "escaping edge case"
+)
+
+
+version = "0.29"
+purrr::walk(
+  read_commonmark_spec(version=version),
+  function(test) {
+    label = paste0("CommonMark Spec (", version, ") - ", test$label)
+    ex = test$example
+
+    test_that(label, {
+      sub = (ex == skip_tests[["ex"]])
+      if (any(sub))
+        testthat::skip( skip_tests[["msg"]][sub] )
+
+      flags = "MD_DIALECT_COMMONMARK"
+
+      orig_md = test$markdown
+      orig_md_ast = parse_md(orig_md, flags)
+      to_md = to_md(orig_md_ast)
+      to_md_ast = parse_md(to_md, flags)
+
+      expect_identical_md(
+        orig_md, to_md,
+        to_md_ast, orig_md_ast,
+        flags
+      )
+    })
+  }
+)
