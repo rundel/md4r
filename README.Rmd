@@ -1,0 +1,63 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+
+library(md4r)
+library(magrittr)
+```
+
+# md4r
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+<!-- badges: end -->
+
+md4r is a wrapper around the [md4c](https://github.com/mity/md4c) markdown parsing library. The goal is to provide a low level tool for reading markdown documents into 
+
+## Installation
+
+Currently this library is only available from [GitHub](https://github.com/) with, and can be installed using `devtools` with:
+
+```r
+# install.packages("devtools")
+devtools::install_github("rundel/md4r")
+```
+## Example
+
+We will start with a simple example of parsing a markdown file using the basic CommonMark dialect.
+
+```{r example}
+md_file = system.file("examples/commonmark.md", package = "md4r")
+readLines(md_file) %>% cat(sep='\n')
+```
+
+this file (or markdown text) can be processed using the `parse_md` function which creates an abstract syntax tree representation of the document (as a list of lists of lists ... with custom S3 classes)
+
+```{r}
+library(md4r)
+(md = parse_md(md_file))
+```
+
+The resulting AST can then be manipulated and transformed into HTML
+
+```{r}
+to_html(md) %>% cat(sep='\n')
+```
+
+or back into markdown
+
+```{r}
+to_md(md) %>% cat(sep='\n')
+```
+
+
