@@ -7,6 +7,15 @@ html_escape = function(x) {
   x
 }
 
+tag_filter = function(x) {
+  gsub(
+    "<(title>|textarea>|style>|xmp>|iframe>|noembed>|noframes>|script>|plaintext>)",
+    "&lt;\\1",
+    x,
+    ignore.case = TRUE
+  )
+}
+
 
 #' @title Convert a markdown object to html
 #' @description
@@ -62,6 +71,8 @@ to_html.md_block_doc = function(md, ...) {
 
   if (is.null(content)) {
     ""
+  } else if ("MD_DIALECT_GITHUB" %in% attr(md, "flags")) {
+    content = tag_filter(content)
   } else {
     content
   }
@@ -319,7 +330,8 @@ to_html.md_text_softbr = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_text_code = function(md, ...) {
-  html_escape(md)
+  text = html_escape(md)
+  gsub("\\\\\\|", "|", text) # escaped | don't need to be escaped in a code chunk.
 }
 
 #' @exportS3Method
