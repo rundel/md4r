@@ -30,7 +30,9 @@ clean_html = function(x) {
   x = gsub(" />", ">", x) # Some img and a tags differ with usage of this across test cases
 }
 
-expect_identical_html = function(md, flags, expected, info = NULL, ...) {
+expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, ...) {
+  local_cli_config(unicode = TRUE, num_colors = 256)
+
   ast = parse_md(md, flags = flags)
   md_text = trimws(paste(md, collapse="\n"))
   md_text = cli_glue("{.val {md_text}}")
@@ -43,11 +45,24 @@ expect_identical_html = function(md, flags, expected, info = NULL, ...) {
   comp = testthat:::waldo_compare(md_html, ex_html, ..., x_arg = "actual", y_arg = "expected")
   comp_txt = paste(comp, collapse = '\n\n', sep = "\n")
 
+  diff = diffmatchpatch::diff_make(
+    paste(ex_html, collapse="\n"),
+    paste(md_html, collapse="\n")
+  )
+
+  error = paste0(info, ": generated html does not match expected html.")
+  if (!is.null(url))
+    error = paste(error, url, sep="\n")
+
   msg = paste(
-    paste0(info, ": generated html does not match expected html."),
+    error,
     "",
-    paste0("`markdown`: ", md_text),
-    comp_txt,
+    paste0("markdown : ", md_text),
+    paste0("expected : ", ex_html),
+    paste0("generated: ", md_html),
+    #comp_txt,
+    #"",
+    paste0("diff     : ", as.character(diff)),
     sep="\n"
   )
 
@@ -208,6 +223,77 @@ read_commonmark_spec = function(dir = "commonmark", version = "0.29") {
     function(test) {
       test$label = glue::glue_data("Ex {example} - {section} (L{start_line}-{end_line})", .x = test)
       test[c("label", "markdown", "html", "example")]
+    }
+  )
+}
+
+#################
+###           ###
+### gfm Tests ###
+###           ###
+#################
+
+read_gfm_tests = function(file) {
+  section = c("", "")
+  examples = list()
+
+  line_start = NA
+  in_example = FALSE
+  end_md = FALSE
+  md = character()
+  html = character()
+
+  chunk_start_pat = "^```````````````````````````````` example"
+  chunk_end_pat   = "^````````````````````````````````$"
+
+  l = readLines(file)
+  for(i in seq_along(l)) {
+    line = l[i]
+
+    if (!in_example & grepl("^#\\s+", line)) {
+      section[1] = sub("^#\\s+","", line)
+    }
+    else if (!in_example & grepl("^##\\s+", line)) {
+      section[2] = sub("^##\\s+","", line)
+    }
+    else if (grepl(chunk_start_pat, line)) {
+      in_example = TRUE
+      line_start = i+1
+    }
+    else if (grepl(chunk_end_pat, line)) {
+      examples[[length(examples)+1]] = list(
+        md = md,
+        html = html,
+        sec = section,
+        line_start = line_start,
+        line_end = i-1
+      )
+
+      in_example = FALSE
+      end_md = FALSE
+      line_start = NA
+
+      md = character()
+      html = character()
+    }
+    else if (in_example & grepl("^\\.$", line)) {
+      end_md = TRUE
+    }
+    else if (in_example) {
+      if (!end_md)
+        md = c(md, line)
+      else if (end_md)
+        html = c(html, line)
+    }
+  }
+
+  # Replace → with \t for inputs and outputs
+  lapply(
+    examples,
+    function(x) {
+      x$md = gsub("→", "\t", x$md)
+      x$html = gsub("→", "\t", x$html)
+      x
     }
   )
 }
