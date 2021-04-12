@@ -6,7 +6,10 @@
 //
 //
 
-static std::string allowed = ";,/?:@&=+$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.!~*'()";
+//static std::string allowed = ";,/?:@&=+$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.!~*'()";
+
+// Allow a # in the uri - used to prefix the fragment
+static std::string allowed = "#;,/?:@&=+$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.!~*'()";
 
 bool isReservedUrlChar(char c) {
   switch (c) {
@@ -20,6 +23,7 @@ bool isReservedUrlChar(char c) {
     case '=':
     case '+':
     case '$':
+    case '#':
       return true;
     default:
       return false;
