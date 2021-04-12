@@ -213,10 +213,8 @@ read_md4c_tests = function(file) {
 ###                  ###
 ########################
 
-read_commonmark_spec = function(dir = "commonmark", version = "0.29") {
-  tests = jsonlite::read_json(
-    glue::glue("{dir}/spec_{version}.json")
-  )
+read_commonmark_spec = function(file) {
+  tests = jsonlite::read_json(file)
 
   purrr::map(
     tests,
