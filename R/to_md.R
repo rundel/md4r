@@ -118,8 +118,10 @@ to_md.md_block = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_block_doc = function(md, ...) {
+  flags = attr(md, "flags")
+
   paste(
-    process_child_nodes(md, ..., collapse=""),
+    process_child_nodes(md, flags = flags, ..., collapse=""),
     collapse="\n"
   )
 }
@@ -551,6 +553,8 @@ to_md.md_span_a = function(md, ...) {
   href = attr(md, "href")
   title = attr(md, "title")
 
+  flags = list(...)[["flags"]] %||% character()
+
   if (title != "" & !is.null(title)) {
     title = gsub('"', '\\\\"', title)
     title = glue::glue(" \"{title}\"")
@@ -558,10 +562,19 @@ to_md.md_span_a = function(md, ...) {
 
   content = process_child_nodes(md, ..., collapse = "")
 
-  if (content == href || sub("^mailto:|^http[s]?://","", href) == content)
-    glue::glue("<{content}>")
-  else
+  if (content == href) {
+    glue::glue("<{href}>")
+  } else if (sub("^mailto:|^http[s]?://","", href) == content) {
+    if (flag_is_set(flags, "MD_FLAG_PERMISSIVEWWWAUTOLINKS") & grepl("^www\\.", content)) {
+      content
+    } else if (flag_is_set(flags, "MD_FLAG_PERMISSIVEEMAILAUTOLINKS") & grepl("^mailto:", href)) {
+      content
+    } else {
+      glue::glue("<{href}>")
+    }
+  } else {
     glue::glue("[{content}](<{href}>{title})")
+  }
 }
 
 #' @exportS3Method
