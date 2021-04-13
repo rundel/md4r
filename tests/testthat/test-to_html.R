@@ -4,7 +4,15 @@
 ###            ###
 ##################
 
-md4c_tests_to_html = function(file, name, flags, examples) {
+md4c_tests_to_html = function() {
+
+  tests = purrr::map(
+    list.files(
+      system.file("specs/md4c/", package="md4r"),
+      ".txt", full.names = TRUE
+    ),
+    read_md4c_tests
+  )
 
   skip_tests = list(
     "coverage" = tibble::tribble(
@@ -18,43 +26,41 @@ md4c_tests_to_html = function(file, name, flags, examples) {
     )
   )
 
-  purrr::iwalk(
-    examples,
-    function(test, i) {
-      label = glue::glue("{name} - Ex {i} (L{test$line_start}-{test$line_end}) - {test$sec}")
+  run_tests = function(file, name, flags, examples) {
+    purrr::iwalk(
+      examples,
+      function(test, i) {
+        label = glue::glue("{name} - Ex {i} (L{test$line_start}-{test$line_end}) - {test$sec}")
 
-      test_that(label, {
+        test_that(label, {
 
-        sub = (i == skip_tests[[name]][["ex"]])
-        if (any(sub))
-          testthat::skip( skip_tests[[name]][["msg"]][sub] )
+          sub = (i == skip_tests[[name]][["ex"]])
+          if (any(sub))
+            testthat::skip( skip_tests[[name]][["msg"]][sub] )
 
 
-        if (length(test$md) == 1)
-          test$md = paste0(test$md, "\n")
+          if (length(test$md) == 1)
+            test$md = paste0(test$md, "\n")
 
-        expect_identical_html(
-          test$md, flags,
-          test$html,
-          info = label
-        )
-      })
-    }
+          expect_identical_html(
+            test$md, flags,
+            test$html,
+            info = label
+          )
+        })
+      }
+    )
+  }
+
+  purrr::walk(
+    tests,
+    do.call, what = run_tests
   )
 }
 
-m4dc_tests = purrr::map(
-  list.files(
-    system.file("specs/md4c/", package="md4r"),
-    ".txt", full.names = TRUE
-  ),
-  read_md4c_tests
-)
+md4c_tests_to_html()
 
-purrr::walk(
-  m4dc_tests,
-  do.call, what = md4c_tests_to_html
-)
+
 
 
 
@@ -64,34 +70,41 @@ purrr::walk(
 ###                  ###
 ########################
 
-skip_tests = tibble::tribble(
-  ~ex, ~msg,
-  591, "Minor disagreement about encoding & between params in url"
-)
-version = "0.29"
-file = paste0("specs/commonmark/spec_", version, ".json")
+commonmark_tests_to_html = function(version = "0.29") {
+  file = paste0("specs/commonmark/spec_", version, ".json")
+  tests = read_commonmark_spec(file = system.file(file, package="md4r"))
 
-purrr::walk(
-  read_commonmark_spec(file = system.file("specs/commonmark/spec_0.29.json", package="md4r")),
-  function(test) {
-    label = test$label
-    ex = test$example
-    url = paste0("https://spec.commonmark.org/", version, "/#example-", ex)
+  skip_tests = tibble::tribble(
+    ~ex, ~msg,
+    591, "Minor disagreement about encoding & between params in url"
+  )
 
-    test_that(label, {
-      sub = (ex == skip_tests[["ex"]])
-      if (any(sub))
-        testthat::skip( skip_tests[["msg"]][sub] )
+  purrr::walk(
+    tests,
+    function(test) {
+      label = test$label
+      ex = test$example
+      url = paste0("https://spec.commonmark.org/", version, "/#example-", ex)
 
-      expect_identical_html(
-        test$markdown, "MD_DIALECT_COMMONMARK",
-        test$html,
-        info = label,
-        url = url
-      )
-    })
-  }
-)
+      test_that(label, {
+        sub = (ex == skip_tests[["ex"]])
+        if (any(sub))
+          testthat::skip( skip_tests[["msg"]][sub] )
+
+        expect_identical_html(
+          test$markdown, "MD_DIALECT_COMMONMARK",
+          test$html,
+          info = label,
+          url = url
+        )
+      })
+    }
+  )
+}
+
+commonmark_tests_to_html("0.29")
+
+
 
 
 #################
@@ -100,7 +113,9 @@ purrr::walk(
 ###           ###
 #################
 
-gfm_tests_to_html = function(examples) {
+gfm_tests_to_html = function() {
+  file = system.file("specs/gfm/spec.txt", package="md4r")
+  tests = read_gfm_tests(file)
 
   skip_tests = tibble::tribble(
     ~ex, ~msg,
@@ -117,7 +132,7 @@ gfm_tests_to_html = function(examples) {
   )
 
   purrr::iwalk(
-    examples,
+    tests,
     function(test, i) {
       section = paste(test$sec, collapse = " > ")
       label = glue::glue("gfm - Ex {i} (L{test$line_start}-{test$line_end}) - {section}")
@@ -141,6 +156,4 @@ gfm_tests_to_html = function(examples) {
   )
 }
 
-tests = read_gfm_tests(system.file("specs/gfm/spec.txt", package="md4r"))
-
-gfm_tests_to_html(tests)
+gfm_tests_to_html()
