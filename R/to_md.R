@@ -570,7 +570,7 @@ to_md.md_span_a = function(md, ...) {
     } else if (flag_is_set(flags, "MD_FLAG_PERMISSIVEEMAILAUTOLINKS") & grepl("^mailto:", href)) {
       content
     } else {
-      glue::glue("<{href}>")
+      glue::glue("<{content}>")
     }
   } else {
     glue::glue("[{content}](<{href}>{title})")
