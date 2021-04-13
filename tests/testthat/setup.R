@@ -79,47 +79,58 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
 
 
 
-expect_identical_md = function(md, to_md, md_ast, exp_ast, flags, info = NULL, ...) {
-  # Based on testthat:::expect_waldo_equal
-  comp = testthat:::waldo_compare(md_ast, exp_ast, ..., x_arg = "actual", y_arg = "expected")
+expect_identical_md = function(md, flags, info = NULL, ...) {
+
+  orig_md = md
+  orig_md_ast = parse_md(orig_md, flags)
+
+  to_md = to_md(orig_md_ast)
+  to_md_ast = parse_md(to_md, flags)
+
+  comp = identical(orig_md_ast, to_md_ast)
 
   local_cli_config(unicode = TRUE, num_colors = 256)
 
-  msg = paste(
-    "",
-    "Generated markdown ast does not match expected ast.",
-    "",
-    cli::style_bold("markdown:"),
-    cli::col_grey( paste(
-      md, collapse="\n"
-    ) ),
-    "",
-    cli::style_bold("expected ast:"),
-    paste(
-      capture.output(print(exp_ast)),
-      collapse="\n"
-    ),
-    "",
-    cli::style_bold("to_md() markdown:"),
-    cli::col_grey( paste(
-      to_md, collapse="\n"
-    ) ),
-    "",
-    cli::style_bold("observed ast:"),
-    paste(
-      capture.output(print(md_ast)),
-      collapse="\n"
-    ),
-    #"",
-    #paste(
-    #  capture.output(print(comp)),
-    #  collapse = "\n"
-    #),
-    sep="\n"
-  )
+  if (comp) {
+    type = "success"
+    msg = ""
+  } else {
+    type = "failure"
 
-  type = if (length(comp) == 0) "success"
-  else "failure"
+    msg = paste(
+      info,
+      "",
+      "Generated markdown ast does not match expected ast.",
+      "",
+      cli::style_bold("markdown:"),
+      cli::col_grey( paste(
+        md, collapse="\n"
+      ) ),
+      "",
+      cli::style_bold("expected ast:"),
+      paste(
+        capture.output(print(orig_md_ast)),
+        collapse="\n"
+      ),
+      "",
+      cli::style_bold("to_md() markdown:"),
+      cli::col_grey( paste(
+        to_md, collapse="\n"
+      ) ),
+      "",
+      cli::style_bold("observed ast:"),
+      paste(
+        capture.output(print(to_md_ast)),
+        collapse="\n"
+      ),
+      #"",
+      #paste(
+      #  capture.output(print(comp)),
+      #  collapse = "\n"
+      #),
+      sep="\n"
+    )
+  }
 
   exp_signal(
     expectation(type, msg, srcref = NULL, trace = NULL)
