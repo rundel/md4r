@@ -34,40 +34,43 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
   local_cli_config(unicode = TRUE, num_colors = 256)
 
   ast = parse_md(md, flags = flags)
-  md_text = trimws(paste(md, collapse="\n"))
-  md_text = cli_glue("{.val {md_text}}")
-  md_text = paste(md_text, collapse=" ")
 
   md_html = clean_html( to_html(ast) )
   ex_html = clean_html( expected )
 
   # Based on testthat:::expect_waldo_equal
-  comp = testthat:::waldo_compare(md_html, ex_html, ..., x_arg = "actual", y_arg = "expected")
-  comp_txt = paste(comp, collapse = '\n\n', sep = "\n")
 
-  diff = diffmatchpatch::diff_make(
-    paste(ex_html, collapse="\n"),
-    paste(md_html, collapse="\n")
-  )
+  if (identical(md_html, ex_html)) {
+    type = "success"
+    msg = ""
+  } else {
+    type = "failure"
 
-  error = paste0(info, ": generated html does not match expected html.")
-  if (!is.null(url))
-    error = paste(error, url, sep="\n")
+    md_text = trimws(paste(md, collapse="\n"))
+    md_text = cli_glue("{.val {md_text}}")
+    md_text = paste(md_text, collapse=" ")
 
-  msg = paste(
-    error,
-    "",
-    paste0("markdown : ", md_text),
-    paste0("expected : ", ex_html),
-    paste0("generated: ", md_html),
-    #comp_txt,
-    #"",
-    paste0("diff     : ", as.character(diff)),
-    sep="\n"
-  )
+    diff = diffmatchpatch::diff_make(
+      paste(ex_html, collapse="\n"),
+      paste(md_html, collapse="\n")
+    )
 
-  type = if (length(comp) == 0) "success"
-  else "failure"
+    error = paste0(info, ": generated html does not match expected html.")
+    if (!is.null(url))
+      error = paste(error, url, sep="\n")
+
+    msg = paste(
+      error,
+      "",
+      paste0("markdown : ", md_text),
+      paste0("expected : ", ex_html),
+      paste0("generated: ", md_html),
+      #comp_txt,
+      #"",
+      paste0("diff     : ", as.character(diff)),
+      sep="\n"
+    )
+  }
 
   exp_signal(
     expectation(type, msg, srcref = NULL, trace = NULL)

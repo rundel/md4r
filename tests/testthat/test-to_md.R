@@ -59,7 +59,7 @@ md4c_tests_to_md = function() {
   )
 }
 
-#md4c_tests_to_md()
+md4c_tests_to_md()
 
 
 ########################
@@ -113,7 +113,7 @@ commonmark_tests_to_md = function(version = "0.29") {
   )
 }
 
-#commonmark_tests_to_md("0.29")
+commonmark_tests_to_md("0.29")
 
 
 
