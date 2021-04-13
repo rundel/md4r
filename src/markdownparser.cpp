@@ -340,3 +340,8 @@ int flag_mask(std::vector<std::string> const& flags) {
 
   return flag_val;
 }
+
+// [[Rcpp::export]]
+bool flag_is_set(std::vector<std::string> const& flags, std::vector<std::string> const& check) {
+    return static_cast<bool>(flag_mask(flags) & flag_mask(check));
+}

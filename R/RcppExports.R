@@ -25,6 +25,10 @@ flag_mask <- function(flags) {
     .Call(`_md4r_flag_mask`, flags)
 }
 
+flag_is_set <- function(flags, check) {
+    .Call(`_md4r_flag_is_set`, flags, check)
+}
+
 table_entry_escape <- function(x) {
     .Call(`_md4r_table_entry_escape`, x)
 }

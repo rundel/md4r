@@ -72,6 +72,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// flag_is_set
+bool flag_is_set(std::vector<std::string> const& flags, std::vector<std::string> const& check);
+RcppExport SEXP _md4r_flag_is_set(SEXP flagsSEXP, SEXP checkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::string> const& >::type flags(flagsSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> const& >::type check(checkSEXP);
+    rcpp_result_gen = Rcpp::wrap(flag_is_set(flags, check));
+    return rcpp_result_gen;
+END_RCPP
+}
 // table_entry_escape
 std::string table_entry_escape(std::string const& x);
 RcppExport SEXP _md4r_table_entry_escape(SEXP xSEXP) {
@@ -91,6 +103,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_md4r_decodeURIComponent", (DL_FUNC) &_md4r_decodeURIComponent, 1},
     {"_md4r_parse_md_cpp", (DL_FUNC) &_md4r_parse_md_cpp, 2},
     {"_md4r_flag_mask", (DL_FUNC) &_md4r_flag_mask, 1},
+    {"_md4r_flag_is_set", (DL_FUNC) &_md4r_flag_is_set, 2},
     {"_md4r_table_entry_escape", (DL_FUNC) &_md4r_table_entry_escape, 1},
     {NULL, NULL, 0}
 };
