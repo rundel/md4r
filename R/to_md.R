@@ -16,6 +16,13 @@ process_child_nodes = function(md, ..., collapse = NULL) {
   for(i in seq_along(md)[-1]) {
     new_content = to_md(md[[i]], ...)
 
+    if (inherits(md[[i]], "md_span_code") & n_match(content, "`") %% 2 == 1) {
+      # Handle CommonMark Ex 349 edge case - if there is an unmatched ` in preceding
+      # content then we need to double backquote the code span
+      new_content = paste0("`", new_content, "`")
+    }
+
+
     if (
          inherits(md[[i]],   c("md_text_code", "md_text_html"))
       && inherits(md[[i-1]], c("md_text_code", "md_text_html"))
@@ -130,9 +137,12 @@ to_md.md_block_doc = function(md, ...) {
 #' @exportS3Method
 to_md.md_block_quote = function(md, ...) {
   content = process_child_nodes(md, ..., collapse=TRUE)
-  c(
-    paste0("> ", content)
-  )
+
+  # If it might look like a list or setext heading underline
+  # we need to indent 4-spaces so it stays as text
+  content = sub("^([*-]+ |===+|---+)", "    \\1", content)
+
+  paste0("> ", content)
 }
 
 #' @exportS3Method
@@ -224,7 +234,11 @@ to_md.md_block_ul = function(md, ...) {
 
   prefix = paste0(" ", mark, " ")
 
-  process_child_nodes(md, prefix = prefix, tight = tight, ...)
+  res = process_child_nodes(md, prefix = prefix, tight = tight, ...)
+  if (res[length(res)] == "")
+    res[-length(res)]
+  else
+    res
 }
 
 
@@ -265,8 +279,12 @@ to_md.md_block_li = function(md, ...) {
   if (is_task)
     prefix = glue::glue("{prefix}[{task_mark}] ")
 
-  if (length(md) == 0)
-    return(prefix)
+  if (length(md) == 0) {
+    if (!tight)
+      return(c(prefix, ""))
+    else
+      return(prefix)
+  }
 
   # TODO - bring this inline with th process_child_nodes w/ merging text etc
 
@@ -293,23 +311,30 @@ to_md.md_block_li = function(md, ...) {
           )
         }
       } else {
-        if (inherits(child, "md_block") || inherits(md[[i-1]], "md_block")) {
+        if (inherits(child, "md_block_p") | inherits(md[[i-1]], "md_block_p")) {
+          # If either block_p add a spacing line
+          c("", paste0(indent, content))
+        } else if (inherits(child, "md_block") || inherits(md[[i-1]], "md_block")) {
           paste0(indent, content)
+        } else if (grepl("^[-*] ", content)) {
+          # Looks like a list but isnt, use indents to keep as text
+          paste0(indent, "    ", content)
         } else {
           content
         }
       }
 
-      if (!tight)
-        c(content, "")
-      else
-        content
+      content
     },
     ...
   )
 
+  res = unlist(content)
 
-  unlist(content)
+  if (!tight)
+    c(res, "")
+  else
+    res
 }
 
 
@@ -460,6 +485,16 @@ wrap_content = function(content, begin, end = begin) {
   content
 }
 
+# Find the number of occurances of pattern within text
+n_match = function(text, pattern, ..., collapse="\n") {
+  text = paste(text, collapse=collapse)
+
+  m = gregexpr(pattern, text, ...)[[1]]
+  m = m[m != -1]
+
+  length(m)
+}
+
 
 #' @exportS3Method
 to_md.md_span_em = function(md, ...) {
@@ -468,7 +503,7 @@ to_md.md_span_em = function(md, ...) {
   fence_char = "*"
 
   end = length(content)
-  if (grepl("^\\*[^*]", content[1]) &&  grepl("[^*]\\*$", content[end]))
+  if (grepl("^\\*[^*]", content[1]) && grepl("[^*]\\*$", content[end]))
     fence_char = "_"
 
   wrap_content(content, fence_char)
@@ -477,7 +512,13 @@ to_md.md_span_em = function(md, ...) {
 #' @exportS3Method
 to_md.md_span_strong = function(md, ...) {
   content = process_child_nodes(md, ..., collapse = TRUE)
-  wrap_content(content, "**")
+
+  if (n_match(content, "\\*") %% 2 == 1) # Unbalanced *s so use __ instead
+    fence_char = "__"
+  else
+    fence_char = "**"
+
+  wrap_content(content, fence_char)
 }
 
 #' @exportS3Method

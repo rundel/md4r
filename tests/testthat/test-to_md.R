@@ -75,28 +75,18 @@ commonmark_tests_to_md = function(version = "0.29") {
 
   skip_tests = tibble::tribble(
     ~ex, ~msg,
-    63, "Not sure how to handle currently",
-    208, "Related to 63",
-    227, "Indenting madness",
-    262, "More block quote wrapping fun",
-    263, "More block quote wrapping fun",
+    227, "TODO - not sure how to keep code block and list separate",
     269, "Bug with md4c - See #153",
-    282, "Subtle list indenting handling",
-    283, "Subtle list indenting handling",
-    285, "missing block p in lists",
-    289, "missing block p in lists",
-    349, "code span needs additional context awareness",
-    469, "emph / strong nesting rule weirdness",
-    516, "escaping edge case"
+    283, "Related to 227",
+    516, "TODO - Seems like an md4c bug - follow up"
   )
-
-
 
   purrr::walk(
     tests,
     function(test) {
       label = paste0("CommonMark Spec (", version, ") - ", test$label)
       ex = test$example
+      url = paste0("https://spec.commonmark.org/", version, "/#example-", ex)
 
       test_that(label, {
         sub = (ex == skip_tests[["ex"]])
@@ -127,18 +117,12 @@ gfm_tests_to_html = function() {
   file = system.file("specs/gfm/spec.txt", package="md4r")
   tests = read_gfm_tests(file)
 
+  # Seem to be essentially the same issues as for CommonMark
   skip_tests = tibble::tribble(
     ~ex, ~msg,
-     63, "TODO - block quote edge case",
-    216, "TODO - list nesting edge case",
-    235, "TODO - list nesting edge case",
-    277, "TODO - list nesting edge case",
-    292, "TODO - list nesting edge case",
-    293, "TODO - list nesting edge case",
-    295, "TODO - list nesting edge case",
-    299, "TODO - list nesting edge case",
-    359, "TODO - expand `s if ` present for inline code chunks",
-    479, "TODO - em and strong nesting",
+    235, "list vs code issue, see above",
+    277, "Bug with md4c",
+    293, "list vs code issue, see above",
     528, "TODO - incorrect escape in link"
   )
 
