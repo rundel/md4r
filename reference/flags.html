@@ -155,28 +155,28 @@ parser. The following functions provide commonly used utilities for these flags.
 #&gt; [15] "MD_FLAG_PERMISSIVEAUTOLINKS"      "MD_FLAG_NOHTML"                  
 #&gt; [17] "MD_DIALECT_COMMONMARK"            "MD_DIALECT_GITHUB"               </div><div class='input'>
 <span class='fu'>flags_describe</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 18 x 2</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 18 x 2</span>
 #&gt;    flag                    description                                          
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                                
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> MD_FLAG_COLLAPSEWHITES… In MD_TEXT_NORMAL, collapse non-trivial whitespace i…
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> MD_FLAG_PERMISSIVEATXH… Do not require space in ATX headers ( ###header )    
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> MD_FLAG_PERMISSIVEURLA… Recognize URLs as autolinks even without '&lt;', '&gt;'    
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> MD_FLAG_PERMISSIVEEMAI… Recognize e-mails as autolinks even without '&lt;', '&gt;'…
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> MD_FLAG_NOINDENTEDCODE… Disable indented code blocks. (Only fenced code work…
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> MD_FLAG_NOHTMLBLOCKS    Disable raw HTML blocks.                             
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> MD_FLAG_NOHTMLSPANS     Disable raw HTML (inline).                           
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> MD_FLAG_TABLES          Enable tables extension.                             
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> MD_FLAG_STRIKETHROUGH   Enable strikethrough extension.                      
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> MD_FLAG_PERMISSIVEWWWA… Enable WWW autolinks (even without any scheme prefix…
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> MD_FLAG_TASKLISTS       Enable task list extension.                          
-#&gt; </span><span style='color: #BCBCBC;'>12</span><span> MD_FLAG_LATEXMATHSPANS  Enable $ and $$ containing LaTeX equations.          
-#&gt; </span><span style='color: #BCBCBC;'>13</span><span> MD_FLAG_WIKILINKS       Enable wiki links extensn.                           
-#&gt; </span><span style='color: #BCBCBC;'>14</span><span> MD_FLAG_UNDERLINE       Enable underline extension (and disables '_' for nor…
-#&gt; </span><span style='color: #BCBCBC;'>15</span><span> MD_FLAG_PERMISSIVEAUTO… Combines flags (MD_FLAG_PERMISSIVEEMAILAUTOLINKS | M…
-#&gt; </span><span style='color: #BCBCBC;'>16</span><span> MD_FLAG_NOHTML          Combines flags (MD_FLAG_NOHTMLBLOCKS | MD_FLAG_NOHTM…
-#&gt; </span><span style='color: #BCBCBC;'>17</span><span> MD_DIALECT_COMMONMARK   All flags off                                        
-#&gt; </span><span style='color: #BCBCBC;'>18</span><span> MD_DIALECT_GITHUB       Combines flags (MD_FLAG_PERMISSIVEAUTOLINKS | MD_FLA…</div><div class='input'>
-</div></span></pre>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                                
+#&gt; <span style='color: #BCBCBC;'> 1</span> MD_FLAG_COLLAPSEWHITES… In MD_TEXT_NORMAL, collapse non-trivial whitespace i…
+#&gt; <span style='color: #BCBCBC;'> 2</span> MD_FLAG_PERMISSIVEATXH… Do not require space in ATX headers ( ###header )    
+#&gt; <span style='color: #BCBCBC;'> 3</span> MD_FLAG_PERMISSIVEURLA… Recognize URLs as autolinks even without '&lt;', '&gt;'    
+#&gt; <span style='color: #BCBCBC;'> 4</span> MD_FLAG_PERMISSIVEEMAI… Recognize e-mails as autolinks even without '&lt;', '&gt;'…
+#&gt; <span style='color: #BCBCBC;'> 5</span> MD_FLAG_NOINDENTEDCODE… Disable indented code blocks. (Only fenced code work…
+#&gt; <span style='color: #BCBCBC;'> 6</span> MD_FLAG_NOHTMLBLOCKS    Disable raw HTML blocks.                             
+#&gt; <span style='color: #BCBCBC;'> 7</span> MD_FLAG_NOHTMLSPANS     Disable raw HTML (inline).                           
+#&gt; <span style='color: #BCBCBC;'> 8</span> MD_FLAG_TABLES          Enable tables extension.                             
+#&gt; <span style='color: #BCBCBC;'> 9</span> MD_FLAG_STRIKETHROUGH   Enable strikethrough extension.                      
+#&gt; <span style='color: #BCBCBC;'>10</span> MD_FLAG_PERMISSIVEWWWA… Enable WWW autolinks (even without any scheme prefix…
+#&gt; <span style='color: #BCBCBC;'>11</span> MD_FLAG_TASKLISTS       Enable task list extension.                          
+#&gt; <span style='color: #BCBCBC;'>12</span> MD_FLAG_LATEXMATHSPANS  Enable $ and $$ containing LaTeX equations.          
+#&gt; <span style='color: #BCBCBC;'>13</span> MD_FLAG_WIKILINKS       Enable wiki links extensn.                           
+#&gt; <span style='color: #BCBCBC;'>14</span> MD_FLAG_UNDERLINE       Enable underline extension (and disables '_' for nor…
+#&gt; <span style='color: #BCBCBC;'>15</span> MD_FLAG_PERMISSIVEAUTO… Combines flags (MD_FLAG_PERMISSIVEEMAILAUTOLINKS | M…
+#&gt; <span style='color: #BCBCBC;'>16</span> MD_FLAG_NOHTML          Combines flags (MD_FLAG_NOHTMLBLOCKS | MD_FLAG_NOHTM…
+#&gt; <span style='color: #BCBCBC;'>17</span> MD_DIALECT_COMMONMARK   All flags off                                        
+#&gt; <span style='color: #BCBCBC;'>18</span> MD_DIALECT_GITHUB       Combines flags (MD_FLAG_PERMISSIVEAUTOLINKS | MD_FLA…</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
