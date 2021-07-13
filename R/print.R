@@ -20,7 +20,7 @@ attr_text = function(attr) {
 
   txt = purrr::map2_chr(
     names(attr), attr,
-    ~cli_glue("{.field {.x}}: {.val {.y}}")
+    ~cli::format_inline("{.field {.x}}: {.val {.y}}")
   )
 
   paste0(" [", paste(txt, collapse = ", "), "]")

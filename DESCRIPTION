@@ -1,5 +1,5 @@
 Package: md4r
-Title: Markdown parser implemented using the MD4c library
+Title: Markdown parser implemented using the MD4C library
 Version: 0.4.7.0
 Authors@R: 
     person(given = "Colin",
@@ -21,7 +21,7 @@ LinkingTo:
 Imports: 
     Rcpp,
     tibble,
-    cli,
+    cli (>= 3.0.0),
     checkmate,
     glue,
     purrr,

@@ -65,7 +65,7 @@ flags_check = function(flags, match_case = FALSE) {
   missing = f[ !flags %in% md4c_flags[["flag"]] ]
 
   if (length(missing) != 0) {
-    stop(cli_glue("Invalid flag{?s} provided: {.val {missing}}"), call. = FALSE)
+    cli::cli_abort("Invalid flag{?s} provided: {.val {missing}}")
   }
 
   invisible()
@@ -80,7 +80,7 @@ flags_used = function(md) {
   flags = attr(md, "flags")
 
   if (is.null(flags)) {
-    cli_warn("Unable to determine flags, assuming no flags set (i.e. CommonMark spec).")
+    cli::cli_warn("Unable to determine flags, assuming no flags set (i.e. CommonMark spec).")
     character()
   } else {
     flags

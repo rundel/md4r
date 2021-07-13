@@ -103,7 +103,7 @@ to_md = function(md, ...) {
 
 #' @exportS3Method
 to_md.default = function(md, ...) {
-  cli_stop("Unsupported S3 class: {.val {class(md)}}.")
+  cli::cli_abort("Unsupported S3 class: {.val {class(md)}}.")
 }
 
 
@@ -120,7 +120,7 @@ to_md.md_node = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_block = function(md, ...) {
-  cli_stop("Unknown md block class: {.val {class(md)}}.")
+  cli::cli_abort("Unknown md block class: {.val {class(md)}}.")
 }
 
 #' @exportS3Method
@@ -157,7 +157,7 @@ to_md.md_block_h = function(md, ...) {
     } else if (level == 2) {
       content = c(content, "---")
     } else {
-      cli_stop("Multiline headings not supported with level > 2.")
+      cli::cli_abort("Multiline headings not supported with level > 2.")
     }
   } else { # ATX heading
     paste0(rep_char("#", level), " ", content)
@@ -228,7 +228,7 @@ to_md.md_block_ul = function(md, ...) {
   tight = attr(md, "tight")
 
   if (!mark %in% c("-","+","*")) {
-    cli_warn("Unexpected mark value {.val {mark}} replacing with {.val '-'}.")
+    cli::cli_warn("Unexpected mark value {.val {mark}} replacing with {.val '-'}.")
     mark = "-"
   }
 
@@ -249,7 +249,7 @@ to_md.md_block_ol = function(md, ...) {
   tight = attr(md, "tight")
 
   if (!delim %in% c(".",")")) {
-    cli_warn("Unexpected mark delimeter value {.val {delim}} replacing with {.val '.'}.")
+    cli::cli_warn("Unexpected mark delimeter value {.val {delim}} replacing with {.val '.'}.")
     delim = "."
   }
 
@@ -271,8 +271,8 @@ to_md.md_block_li = function(md, ...) {
   task_mark = attr(md, "task_mark")
 
   args = list(...)
-  prefix = args$prefix %||% cli_stop("Required arg {.arg prefix} not provided.")
-  tight  = args$tight  %||% cli_stop("Required arg {.arg tight} not provided.")
+  prefix = args$prefix %||% cli::cli_abort("Required arg {.arg prefix} not provided.")
+  tight  = args$tight  %||% cli::cli_abort("Required arg {.arg tight} not provided.")
 
   indent = rep_char(" ", nchar(prefix))
 
@@ -361,7 +361,7 @@ to_md.md_block_table = function(md, ...) {
     body = do.call(rbind, body)
     body = as.data.frame(body)
   } else {
-    cli_stop("Unexpected number of children nodes ({length(md)}) for a `md_block_table`.")
+    cli::cli_abort("Unexpected number of children nodes ({length(md)}) for a `md_block_table`.")
   }
 
   names(body) = head

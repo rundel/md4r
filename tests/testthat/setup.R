@@ -47,7 +47,7 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
     type = "failure"
 
     md_text = trimws(paste(md, collapse="\n"))
-    md_text = cli_glue("{.val {md_text}}")
+    md_text = cli::format_inline("{.val {md_text}}")
     md_text = paste(md_text, collapse=" ")
 
     diff = diffmatchpatch::diff_make(
