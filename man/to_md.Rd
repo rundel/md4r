@@ -2,7 +2,7 @@
 % Please edit documentation in R/to_md.R
 \name{to_md}
 \alias{to_md}
-\title{Convert a markdown object back to markdown text}
+\title{Convert to markdown}
 \usage{
 to_md(md, ...)
 }
@@ -12,5 +12,11 @@ to_md(md, ...)
 \item{...}{Unused, for extensibility.}
 }
 \description{
+Coverts a markdown object (full ast or node) to markdown text.
+}
+\examples{
+md_file = system.file("examples/commonmark.md", package = "md4r")
+md = parse_md(md_file)
+cat(to_md(md), sep="\n")
 
 }

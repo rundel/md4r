@@ -17,13 +17,20 @@ tag_filter = function(x) {
 }
 
 
-#' @title Convert a markdown object to html
-#' @description
+#' @title Convert to html
+#'
+#' @description Coverts a markdown object (full ast or node) to HTML.
 #'
 #' @param md Markdown object
 #' @param ... Unused, for extensibility.
 #'
+#' @examples
+#' md_file = system.file("examples/commonmark.md", package = "md4r")
+#' md = parse_md(md_file)
+#' cat(to_html(md), sep="\n")
+#'
 #' @export
+#'
 to_html = function(md, ...) {
  UseMethod("to_html")
 }

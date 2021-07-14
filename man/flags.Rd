@@ -4,7 +4,6 @@
 \alias{flags}
 \alias{flags_available}
 \alias{flags_describe}
-\alias{flags_check}
 \alias{flags_used}
 \title{Markdown parser flags}
 \usage{
@@ -12,16 +11,10 @@ flags_available()
 
 flags_describe()
 
-flags_check(flags, match_case = FALSE)
-
 flags_used(md)
 }
 \arguments{
-\item{flags}{Character vector of flag names}
-
-\item{match_case}{Require flag names to case match}
-
-\item{md}{Markdown object}
+\item{md}{Markdown ast object}
 }
 \description{
 The \href{https://github.com/mity/md4c}{\code{md4c}} library supports a number of markdown
@@ -33,5 +26,9 @@ parser. The following functions provide commonly used utilities for these flags.
 flags_available()
 
 flags_describe()
+
+md_file = system.file("examples/commonmark.md", package = "md4r")
+md = parse_md(md_file)
+flags_used(md)
 
 }

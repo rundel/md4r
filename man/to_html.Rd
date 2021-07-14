@@ -2,7 +2,7 @@
 % Please edit documentation in R/to_html.R
 \name{to_html}
 \alias{to_html}
-\title{Convert a markdown object to html}
+\title{Convert to html}
 \usage{
 to_html(md, ...)
 }
@@ -12,5 +12,11 @@ to_html(md, ...)
 \item{...}{Unused, for extensibility.}
 }
 \description{
+Coverts a markdown object (full ast or node) to HTML.
+}
+\examples{
+md_file = system.file("examples/commonmark.md", package = "md4r")
+md = parse_md(md_file)
+cat(to_html(md), sep="\n")
 
 }

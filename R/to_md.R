@@ -90,13 +90,20 @@ rep_char = function(c, n) {
 }
 
 
-#' @title Convert a markdown object back to markdown text
-#' @description
+#' @title Convert to markdown
+#'
+#' @description Coverts a markdown object (full ast or node) to markdown text.
 #'
 #' @param md Markdown object
 #' @param ... Unused, for extensibility.
 #'
+#' @examples
+#' md_file = system.file("examples/commonmark.md", package = "md4r")
+#' md = parse_md(md_file)
+#' cat(to_md(md), sep="\n")
+#'
 #' @export
+#'
 to_md = function(md, ...) {
  UseMethod("to_md")
 }

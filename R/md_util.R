@@ -1,11 +1,9 @@
-#' @export
 md_n_nodes = function(x) {
   checkmate::assert_class(x, "md_node")
 
   length(unlist(x))
 }
 
-#' @export
 md_text = function(x, type = "md_text") {
   checkmate::assert_class(x, "md_node")
 
@@ -13,7 +11,6 @@ md_text = function(x, type = "md_text") {
   map_ast(x, classes = type)
 }
 
-#' @export
 md_text_summary = function(x, max_width = 60, type = "md_text_normal", replace_newline = "\\\\n") {
   txt = md_text(x, type)
   txt = paste(txt, collapse="\n")

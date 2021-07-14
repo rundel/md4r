@@ -1,4 +1,21 @@
+#' Parse markdown
+#'
+#' @description Parse either a literal markdown string or a markdown file
+#' given a path. Different dialects and features are supported via the `flags`
+#' argument. See [flags_describe()] for possible flags and their usage, by default
+#' this function uses GitHub Flavored Markdown.
+#'
+#' @param md Character. Either literal string of markdown or a path to a markdown file.
+#' @param flags Character vector. Dialect flags used by the parser.
+#'
+#' @return Returns a markdown ast (`md_block_doc` class) object.
+#'
+#' @examples
+#' md_file = system.file("examples/commonmark.md", package = "md4r")
+#' parse_md(md_file)
+#'
 #' @export
+#'
 parse_md = function(md, flags = "MD_DIALECT_GITHUB") {
   checkmate::assert_character(md, min.len = 1, any.missing = FALSE)
   flags_check(flags)

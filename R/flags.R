@@ -35,6 +35,10 @@ md4c_flags = tibble::tribble(
 #'
 #' flags_describe()
 #'
+#' md_file = system.file("examples/commonmark.md", package = "md4r")
+#' md = parse_md(md_file)
+#' flags_used(md)
+#'
 NULL
 
 #' @rdname flags
@@ -51,10 +55,23 @@ flags_describe = function() {
 
 #' @rdname flags
 #'
-#' @param flags Character vector of flag names
-#' @param match_case Require flag names to case match
+#' @param md Markdown ast object
 #'
 #' @export
+flags_used = function(md) {
+  checkmate::assert_class(md, classes = "md_block_doc")
+  flags = attr(md, "flags")
+
+  if (is.null(flags)) {
+    cli::cli_warn("Unable to determine flags, assuming no flags set (i.e. CommonMark spec).")
+    character()
+  } else {
+    flags
+  }
+}
+
+
+
 flags_check = function(flags, match_case = FALSE) {
   checkmate::assert_character(flags, min.len=0, any.missing = FALSE)
 
@@ -70,25 +87,6 @@ flags_check = function(flags, match_case = FALSE) {
 
   invisible()
 }
-
-#' @rdname flags
-#'
-#' @param md Markdown object
-#'
-#' @export
-flags_used = function(md) {
-  flags = attr(md, "flags")
-
-  if (is.null(flags)) {
-    cli::cli_warn("Unable to determine flags, assuming no flags set (i.e. CommonMark spec).")
-    character()
-  } else {
-    flags
-  }
-}
-
-
-
 
 
 
