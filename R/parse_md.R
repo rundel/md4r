@@ -5,9 +5,9 @@ parse_md = function(md, flags = "MD_DIALECT_GITHUB") {
 
   if (length(md) > 1) {              # If multiple lines in a char vec assume
     md = paste(md, collapse = "\n")  # it has been read in already
-  } else if (!grepl("\n", md)) {     # If no newlines then assume it is a path or url
+    } else if (!grepl("\n", md)) {     # If no newlines check if it is a path or url
     if (file.exists(md))
-      md = readr::read_file(md)
+      md = read_file(md)
   }
 
   # Make sure file ends with trailing newline
@@ -18,4 +18,10 @@ parse_md = function(md, flags = "MD_DIALECT_GITHUB") {
   attr(md_block_doc, "flags") = flags
 
   md_block_doc
+}
+
+read_file = function(file) {
+  txt = readLines(file)
+  txt = paste(txt, collapse = "\n")
+  paste0(txt, "\n")
 }
