@@ -30,7 +30,7 @@ to_html = function(md, ...) {
 
 #' @exportS3Method
 to_html.default = function(md, ...) {
-  stop("Unsupported S3 class", call. = FALSE)
+  cli::cli_abort("Unsupported S3 class: {class(md)}")
 }
 
 

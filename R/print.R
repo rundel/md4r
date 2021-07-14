@@ -9,7 +9,7 @@ print_node = function(x, ...) {
 }
 
 print_node.default = function(x, indent = "", prefix = "") {
-  stop("Unsupported class:", paste(class(x), collapse=", "))
+  cli::cli_abort("Unsupported class: {class(x)}")
 }
 
 attr_text = function(attr) {
@@ -20,7 +20,9 @@ attr_text = function(attr) {
 
   txt = purrr::map2_chr(
     names(attr), attr,
-    ~cli::format_inline("{.field {.x}}: {.val {.y}}")
+    function(name, val) {
+      cli::format_inline("{.field {name}}: {.val {val}}")
+    }
   )
 
   paste0(" [", paste(txt, collapse = ", "), "]")

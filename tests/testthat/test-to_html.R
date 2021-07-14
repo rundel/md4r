@@ -17,7 +17,7 @@ md4c_tests_to_html = function() {
   skip_tests = list(
     "coverage" = tibble::tribble(
       ~ex, ~msg,
-      29, "Known bug, will be fixed in the next version of md4c",
+      #29, "Known bug, will be fixed in the next version of md4c",
       33, "Weird utf-8 issue with En Quad U+2000 spaces"
     ),
     "permissive-www-autolinks" = tibble::tribble(
@@ -87,9 +87,12 @@ commonmark_tests_to_html = function(version = "0.29") {
       url = paste0("https://spec.commonmark.org/", version, "/#example-", ex)
 
       test_that(label, {
-        sub = (ex == skip_tests[["ex"]])
-        if (any(sub))
-          testthat::skip( skip_tests[["msg"]][sub] )
+
+        if (nrow(skip_tests) != 0) {
+          sub = (ex == skip_tests[["ex"]])
+          if (any(sub))
+            testthat::skip( skip_tests[["msg"]][sub] )
+        }
 
         expect_identical_html(
           test$markdown, "MD_DIALECT_COMMONMARK",
