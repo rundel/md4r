@@ -3,7 +3,7 @@
 // All of the following code comes from the httpuv package (master branch as of 2021/02/23)
 // https://github.com/rstudio/httpuv/blob/5bb43428816d175cf66d906599c7569519c67b27/src/httpuv.cpp#L451-L658
 //
-//
+// All of the following code is GPL (>=2) and copyright RStudio, pbc.
 //
 
 //static std::string allowed = ";,/?:@&=+$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.!~*'()";

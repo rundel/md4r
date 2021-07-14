@@ -2,16 +2,31 @@ Package: md4r
 Title: Markdown parser implemented using the MD4C library
 Version: 0.4.8.0
 Authors@R: 
-    person(given = "Colin",
-           family = "Rundel",
-           role = c("aut", "cre"),
-           email = "rundel@gmail.com")
+    c(person(
+        given = "Colin",
+        family = "Rundel",
+        role = c("aut", "cre"),
+        email = "rundel@gmail.com"
+      ),
+      person(
+        given = "Martin",
+        family = "Mitáš",
+        role = c("cph"),
+        comment = "md4c author: md4c.c, md4c.h"
+      ),
+      person(
+        family = "RStudio, PBC",
+        role = c("cph"),
+        comment = "httpuv_url_tools.cpp"
+      )
+    )
 Description: This package provides an R wrapper for the MD4C (Markdown for C) library. 
     It provides basic markdown parsing (CommonMark compliant) along with support for other common
     markdown extentsions (e.g. GitHub flavored markdown, LaTeX equation support, etc.). The 
     package also provides a number of high level functions for exploring and manipulating markdowd
     as well as translating and displaying documents.
-License: GPL (>= 3)
+License: MIT + file LICENSE
+Copyright: RStudio, PBC; Martin Mitáš, Colin Rundel
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -21,11 +36,13 @@ LinkingTo:
 Imports: 
     Rcpp,
     tibble,
-    cli (>= 3.0.0),
+    cli (> 3.0.0),
     checkmate,
     glue,
     purrr,
-    textutils
+    textutils,
+    stringr,
+    withr
 Config/testthat/edition: 3
 Suggests: 
     testthat (>= 3.0.0),
