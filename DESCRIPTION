@@ -48,3 +48,5 @@ Suggests:
     testthat (>= 3.0.0),
     jsonlite,
     diffmatchpatch
+Remotes:
+  r-lib/cli
