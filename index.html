@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">md4r</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.0</span>
       </span>
     </div>
 
@@ -97,24 +97,24 @@
 <p>this file (or markdown text) can be processed using the <code>parse_md</code> function which creates an abstract syntax tree representation of the document (as a list of lists of lists … with custom S3 classes)</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">md4r</span><span class="op">)</span>
-<span class="op">(</span><span class="va">md</span> <span class="op">=</span> <span class="fu">parse_md</span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; md_block_doc [flags: 'MD_DIALECT_GITHUB']</span>
+<span class="op">(</span><span class="va">md</span> <span class="op">=</span> <span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; md_block_doc [flags: "MD_DIALECT_GITHUB"]</span>
 <span class="co">#&gt; ├── md_block_h [level: 2]</span>
 <span class="co">#&gt; │   └── md_text_normal - "Try CommonMark"</span>
 <span class="co">#&gt; ├── md_block_p</span>
 <span class="co">#&gt; │   ├── md_text_normal - "You can try CommonMark here.  This dingus is powered by"</span>
 <span class="co">#&gt; │   ├── md_text_softbreak</span>
-<span class="co">#&gt; │   ├── md_span_a [title: '', href: 'https://github.com/jgm/commonmark.js']</span>
+<span class="co">#&gt; │   ├── md_span_a [title: "", href: "https://github.com/jgm/commonmark.js"]</span>
 <span class="co">#&gt; │   │   └── md_text_normal - "commonmark.js"</span>
 <span class="co">#&gt; │   ├── md_text_normal - ", the"</span>
 <span class="co">#&gt; │   ├── md_text_softbreak</span>
 <span class="co">#&gt; │   └── md_text_normal - "JavaScript reference implementation."</span>
-<span class="co">#&gt; └── md_block_ol [start: 1, tight: 1, mark_delimiter: '.']</span>
+<span class="co">#&gt; └── md_block_ol [start: 1, tight: 1, mark_delimiter: "."]</span>
 <span class="co">#&gt;     ├── md_block_li</span>
 <span class="co">#&gt;     │   └── md_text_normal - "item one"</span>
 <span class="co">#&gt;     └── md_block_li</span>
 <span class="co">#&gt;         ├── md_text_normal - "item two"</span>
-<span class="co">#&gt;         └── md_block_ul [tight: 1, mark: '-']</span>
+<span class="co">#&gt;         └── md_block_ul [tight: 1, mark: "-"]</span>
 <span class="co">#&gt;             ├── md_block_li</span>
 <span class="co">#&gt;             │   └── md_text_normal - "sublist"</span>
 <span class="co">#&gt;             └── md_block_li</span>
@@ -168,13 +168,14 @@
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small>GPL (&gt;= 3)</small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Colin Rundel <br><small class="roles"> Author, maintainer </small>  </li>
+<li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 

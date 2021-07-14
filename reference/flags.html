@@ -74,7 +74,7 @@ parser. The following functions provide commonly used utilities for these flags.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">md4r</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8.0</span>
       </span>
     </div>
 
@@ -120,24 +120,14 @@ parser. The following functions provide commonly used utilities for these flags.
 
 <span class='fu'>flags_describe</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>flags_check</span><span class='op'>(</span><span class='va'>flags</span>, match_case <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
 <span class='fu'>flags_used</span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>flags</th>
-      <td><p>Character vector of flag names</p></td>
-    </tr>
-    <tr>
-      <th>match_case</th>
-      <td><p>Require flag names to case match</p></td>
-    </tr>
-    <tr>
       <th>md</th>
-      <td><p>Markdown object</p></td>
+      <td><p>Markdown ast object</p></td>
     </tr>
     </table>
 
@@ -176,6 +166,10 @@ parser. The following functions provide commonly used utilities for these flags.
 #&gt; <span style='color: #BCBCBC;'>16</span> MD_FLAG_NOHTML          Combines flags (MD_FLAG_NOHTMLBLOCKS | MD_FLAG_NOHTM…
 #&gt; <span style='color: #BCBCBC;'>17</span> MD_DIALECT_COMMONMARK   All flags off                                        
 #&gt; <span style='color: #BCBCBC;'>18</span> MD_DIALECT_GITHUB       Combines flags (MD_FLAG_PERMISSIVEAUTOLINKS | MD_FLA…</div><div class='input'>
+<span class='va'>md_file</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"examples/commonmark.md"</span>, package <span class='op'>=</span> <span class='st'>"md4r"</span><span class='op'>)</span>
+<span class='va'>md</span> <span class='op'>=</span> <span class='fu'><a href='parse_md.html'>parse_md</a></span><span class='op'>(</span><span class='va'>md_file</span><span class='op'>)</span>
+<span class='fu'>flags_used</span><span class='op'>(</span><span class='va'>md</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "MD_DIALECT_GITHUB"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
