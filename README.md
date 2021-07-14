@@ -51,23 +51,23 @@ document (as a list of lists of lists … with custom S3 classes)
 ``` r
 library(md4r)
 (md = parse_md(md_file))
-#> md_block_doc [flags: 'MD_DIALECT_GITHUB']
+#> md_block_doc [flags: "MD_DIALECT_GITHUB"]
 #> ├── md_block_h [level: 2]
 #> │   └── md_text_normal - "Try CommonMark"
 #> ├── md_block_p
 #> │   ├── md_text_normal - "You can try CommonMark here.  This dingus is powered by"
 #> │   ├── md_text_softbreak
-#> │   ├── md_span_a [title: '', href: 'https://github.com/jgm/commonmark.js']
+#> │   ├── md_span_a [title: "", href: "https://github.com/jgm/commonmark.js"]
 #> │   │   └── md_text_normal - "commonmark.js"
 #> │   ├── md_text_normal - ", the"
 #> │   ├── md_text_softbreak
 #> │   └── md_text_normal - "JavaScript reference implementation."
-#> └── md_block_ol [start: 1, tight: 1, mark_delimiter: '.']
+#> └── md_block_ol [start: 1, tight: 1, mark_delimiter: "."]
 #>     ├── md_block_li
 #>     │   └── md_text_normal - "item one"
 #>     └── md_block_li
 #>         ├── md_text_normal - "item two"
-#>         └── md_block_ul [tight: 1, mark: '-']
+#>         └── md_block_ul [tight: 1, mark: "-"]
 #>             ├── md_block_li
 #>             │   └── md_text_normal - "sublist"
 #>             └── md_block_li
