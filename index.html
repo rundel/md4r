@@ -63,6 +63,7 @@
 <div class="page-header"><h1 id="md4r">md4r<a class="anchor" aria-label="anchor" href="#md4r"></a>
 </h1></div>
 <!-- badges: start -->
+
 <p>md4r is a wrapper around the <a href="https://github.com/mity/md4c" class="external-link">md4c</a> markdown parsing library. The goal is to provide a low level tool for reading markdown documents into</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -114,23 +115,58 @@
 <span><span class="co">#&gt;             │   └── md_text_normal - "sublist"</span></span>
 <span><span class="co">#&gt;             └── md_block_li</span></span>
 <span><span class="co">#&gt;                 └── md_text_normal - "sublist"</span></span></code></pre></div>
-<p>The resulting AST can then be manipulated and transformed into HTML</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 3</span></span>
+<span><span class="co">#&gt;  $ :List of 1</span></span>
+<span><span class="co">#&gt;   ..$ :List of 1</span></span>
+<span><span class="co">#&gt;   .. ..$ : chr "Try CommonMark"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "md_text_normal" "md_text" "md_node"</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "level")= num 2</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "class")= chr [1:3] "md_block_h" "md_block" "md_node"</span></span>
+<span><span class="co">#&gt;  $ :List of 6</span></span>
+<span><span class="co">#&gt;   ..$ :List of 1</span></span>
+<span><span class="co">#&gt;   .. ..$ : chr "You can try CommonMark here.  This dingus is powered by"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "md_text_normal" "md_text" "md_node"</span></span>
+<span><span class="co">#&gt;   ..$ : list()</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "md_text_softbreak" "md_text" "md_node"</span></span>
+<span><span class="co">#&gt;   ..$ :List of 1</span></span>
+<span><span class="co">#&gt;   .. ..$ :List of 1</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr "commonmark.js"</span></span>
+<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr [1:3] "md_text_normal" "md_text" "md_node"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "title")= chr ""</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "href")= chr "https://github.com/jgm/commonmark.js"</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "md_span_a" "md_span" "md_node"</span></span>
+<span><span class="va">...</span></span></code></pre></div>
+<p>The resulting AST can then be manipulated and transformed into HTML</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/to_html.html">to_html</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span>sep<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span></span></code></pre></div>
-<h2 id="example-1">Try CommonMark<a class="anchor" aria-label="anchor" href="#example-1"></a>
+<h2 id="example-1">
+Try CommonMark
+<a class="anchor" aria-label="anchor" href="#example-1"></a>
 </h2>
-<p>You can try CommonMark here. This dingus is powered by <a href="https://github.com/jgm/commonmark.js" class="external-link">commonmark.js</a> , the JavaScript reference implementation.</p>
+<p>
+You can try CommonMark here. This dingus is powered by <a href="https://github.com/jgm/commonmark.js" class="external-link">commonmark.js</a> , the JavaScript reference implementation.
+</p>
 <ol>
-<li>item one</li>
-<li>item two<ul>
-<li>sublist</li>
-<li>sublist</li>
+<li>
+item one
+</li>
+<li>
+item two
+<ul>
+<li>
+sublist
+</li>
+<li>
+sublist
+</li>
 </ul>
 </li>
 </ol>
 <p><br></p>
 <p>or back into markdown</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/to_md.html">to_md</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span>sep<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ## Try CommonMark</span></span>
 <span><span class="co">#&gt; You can try CommonMark here.  This dingus is powered by</span></span>
