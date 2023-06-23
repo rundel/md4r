@@ -1,5 +1,5 @@
 ---
-output: github_document
+format: gfm
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
 )
 
 library(md4r)
-library(magrittr)
 ```
 
 # md4r
@@ -39,7 +38,7 @@ We will start with a simple example of parsing a markdown file using the basic C
 
 ```{r example}
 md_file = system.file("examples/commonmark.md", package = "md4r")
-readLines(md_file) %>% cat(sep='\n')
+readLines(md_file) |> cat(sep='\n')
 ```
 
 this file (or markdown text) can be processed using the `parse_md` function which creates an abstract syntax tree representation of the document (as a list of lists of lists ... with custom S3 classes)
@@ -52,13 +51,16 @@ library(md4r)
 The resulting AST can then be manipulated and transformed into HTML
 
 ```{r}
-to_html(md) %>% cat(sep='\n')
+#| results: asis
+to_html(md) |> cat(sep='\n')
 ```
+
+<br/>
 
 or back into markdown
 
 ```{r}
-to_md(md) %>% cat(sep='\n')
+to_md(md) |> cat(sep='\n')
 ```
 
 

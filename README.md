@@ -32,7 +32,7 @@ basic CommonMark dialect.
 
 ``` r
 md_file = system.file("examples/commonmark.md", package = "md4r")
-readLines(md_file) %>% cat(sep='\n')
+readLines(md_file) |> cat(sep='\n')
 #> ## Try CommonMark
 #> 
 #> You can try CommonMark here.  This dingus is powered by
@@ -78,38 +78,40 @@ library(md4r)
 The resulting AST can then be manipulated and transformed into HTML
 
 ``` r
-to_html(md) %>% cat(sep='\n')
-#> <h2>
-#> Try CommonMark
-#> </h2>
-#> <p>
-#> You can try CommonMark here.  This dingus is powered by
-#> <a href="https://github.com/jgm/commonmark.js">commonmark.js</a>
-#> , the
-#> JavaScript reference implementation.
-#> </p>
-#> <ol>
-#> <li>
-#> item one
-#> </li>
-#> <li>
-#> item two
-#> <ul>
-#> <li>
-#> sublist
-#> </li>
-#> <li>
-#> sublist
-#> </li>
-#> </ul>
-#> </li>
-#> </ol>
+to_html(md) |> cat(sep='\n')
 ```
+
+<h2>
+Try CommonMark
+</h2>
+<p>
+You can try CommonMark here. This dingus is powered by
+<a href="https://github.com/jgm/commonmark.js">commonmark.js</a> , the
+JavaScript reference implementation.
+</p>
+<ol>
+<li>
+item one
+</li>
+<li>
+item two
+<ul>
+<li>
+sublist
+</li>
+<li>
+sublist
+</li>
+</ul>
+</li>
+</ol>
+
+<br/>
 
 or back into markdown
 
 ``` r
-to_md(md) %>% cat(sep='\n')
+to_md(md) |> cat(sep='\n')
 #> ## Try CommonMark
 #> You can try CommonMark here.  This dingus is powered by
 #> [commonmark.js](<https://github.com/jgm/commonmark.js>), the
