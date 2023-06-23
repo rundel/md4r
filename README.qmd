@@ -2,9 +2,29 @@
 format: gfm
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+```{r setup, include = FALSE}
+library(knitr)
+hook_output <- knit_hooks$get("output")
+knit_hooks$set(output = function(x, options) {
+  lines <- options$output.lines
+  if (is.null(lines)) {
+    return(hook_output(x, options))  # pass to default hook
+  }
+  x <- unlist(strsplit(x, "\n"))
+  more <- "..."
+  if (length(lines)==1) {        # first n lines
+    if (length(x) > lines) {
+      # truncate the output, but add ....
+      x <- c(head(x, lines), more)
+    }
+  } else {
+    x <- c(more, x[lines], more)
+  }
+  # paste these lines together
+  x <- paste(c(x, ""), collapse = "\n")
+  hook_output(x, options)
+})
 
-```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -46,6 +66,10 @@ this file (or markdown text) can be processed using the `parse_md` function whic
 ```{r}
 library(md4r)
 (md = parse_md(md_file))
+```
+
+```{r output.lines=20}
+str(md)
 ```
 
 The resulting AST can then be manipulated and transformed into HTML

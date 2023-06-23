@@ -1,6 +1,4 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # md4r
 
 <!-- badges: start -->
@@ -73,6 +71,31 @@ library(md4r)
 #>             │   └── md_text_normal - "sublist"
 #>             └── md_block_li
 #>                 └── md_text_normal - "sublist"
+```
+
+``` r
+str(md)
+#> List of 3
+#>  $ :List of 1
+#>   ..$ :List of 1
+#>   .. ..$ : chr "Try CommonMark"
+#>   .. ..- attr(*, "class")= chr [1:3] "md_text_normal" "md_text" "md_node"
+#>   ..- attr(*, "level")= num 2
+#>   ..- attr(*, "class")= chr [1:3] "md_block_h" "md_block" "md_node"
+#>  $ :List of 6
+#>   ..$ :List of 1
+#>   .. ..$ : chr "You can try CommonMark here.  This dingus is powered by"
+#>   .. ..- attr(*, "class")= chr [1:3] "md_text_normal" "md_text" "md_node"
+#>   ..$ : list()
+#>   .. ..- attr(*, "class")= chr [1:3] "md_text_softbreak" "md_text" "md_node"
+#>   ..$ :List of 1
+#>   .. ..$ :List of 1
+#>   .. .. ..$ : chr "commonmark.js"
+#>   .. .. ..- attr(*, "class")= chr [1:3] "md_text_normal" "md_text" "md_node"
+#>   .. ..- attr(*, "title")= chr ""
+#>   .. ..- attr(*, "href")= chr "https://github.com/jgm/commonmark.js"
+#>   .. ..- attr(*, "class")= chr [1:3] "md_span_a" "md_span" "md_node"
+...
 ```
 
 The resulting AST can then be manipulated and transformed into HTML
