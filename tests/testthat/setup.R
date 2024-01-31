@@ -47,7 +47,7 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
     type = "failure"
 
     md_text = trimws(paste(md, collapse="\n"))
-    md_text = cli::format_inline("{.val {md_text}}")
+    #md_text = cli::format_inline("{.val {md_text}}")
     md_text = paste(md_text, collapse=" ")
 
     diff = diffmatchpatch::diff_make(
@@ -62,7 +62,7 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
     msg = paste(
       error,
       "",
-      paste0("markdown : ", md_text),
+      paste0("markdown : \"", gsub("\n", "\\\\n", md_text ), "\""),
       paste0("expected : ", ex_html),
       paste0("generated: ", md_html),
       #comp_txt,
@@ -158,19 +158,21 @@ read_md4c_tests = function(file) {
   examples = list()
 
   in_example = FALSE
-  end_md = FALSE
+  ex_sec = 0
+
   md = character()
   html = character()
+  other = character()
 
-  flag_pat = "(MD_FLAG_|MD_DIALECT_)[A-Z]+"
-  chunk_start_pat = "^```````````````````````````````` example$"
+  flag_pat = "(MD_FLAG_|MD_DIALECT_)[A-Z_]+"
+  chunk_start_pat = "^```````````````````````````````` example"
   chunk_end_pat   = "^````````````````````````````````$"
 
   l = readLines(file)
   for(i in seq_along(l)) {
     line = l[i]
 
-    if (grepl("^#{1,6}", line)) {
+    if (!in_example && grepl("^#{1,6}", line)) {
       section = sub("^#{1,6}\\s+","", line)
     }
     else if (grepl(flag_pat, line)) {
@@ -183,11 +185,12 @@ read_md4c_tests = function(file) {
     }
     else if (grepl(chunk_end_pat, line)) {
       in_example = FALSE
-      end_md = FALSE
+      ex_sec = 0
 
       examples[[length(examples)+1]] = list(
         md = md,
         html = html,
+        other = other,
         sec = section,
         line_start = line_start,
         line_end = i-1
@@ -195,14 +198,18 @@ read_md4c_tests = function(file) {
 
       md = character()
       html = character()
+      other = character()
     }
     else if (grepl("^\\.$", line)) {
-      end_md = TRUE
+      ex_sec = ex_sec + 1
     } else {
-      if (in_example & !end_md)
+      if (in_example & ex_sec == 0) {
         md = c(md, line)
-      if (in_example & end_md)
+      } else if (in_example & ex_sec == 1) {
         html = c(html, line)
+      } else if (in_example & ex_sec == 2) {
+        other = c(other, line)
+      }
     }
   }
 
