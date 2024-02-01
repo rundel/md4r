@@ -228,7 +228,7 @@ tag_span = function(tag, md, ..., collapse="\n") {
   tag_close = strsplit(tag, " ")[[1]][1] # strip attributes
   paste0(
     glue::glue("<{tag}>"),
-    span_text(md, ..., collapse),
+    span_text(md, ..., collapse=collapse),
     glue::glue("</{tag_close}>")
   )
 }
@@ -250,7 +250,7 @@ to_html.md_span_u = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_span_code = function(md, ...) {
-  tag_span("code", md, ...)
+  tag_span("code", md, ..., collapse="") # Fix CM Ex #335
 }
 
 #' @exportS3Method
@@ -273,6 +273,7 @@ to_html.md_span_a = function(md, ...) {
   href = textutils::HTMLdecode(attr(md, "href"))
   href = decodeURI(href)
   href = encodeURI(href)
+  href = html_escape(href)
 
   title = attr(md, "title")
   title = textutils::HTMLdecode(title)
@@ -354,7 +355,6 @@ to_html.md_text_entity = function(md, ...) {
 to_html.md_text_normal = function(md, ...) {
   html_escape(md)
 }
-
 
 #' @exportS3Method
 to_html.md_text = function(md, ...) {

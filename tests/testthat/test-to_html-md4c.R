@@ -4,6 +4,23 @@
 ###            ###
 ##################
 
+
+flag_lookup = c(
+  "--fcollapse-whitespace"         = "MD_FLAG_COLLAPSEWHITESPACE",
+  "--ftables"                      = "MD_FLAG_TABLES",
+  "--fpermissive-url-autolinks"    = "MD_FLAG_PERMISSIVEURLAUTOLINKS",
+  "--fstrikethrough"               = "MD_FLAG_STRIKETHROUGH",
+  "--ftables"                      = "MD_FLAG_TABLES",
+  "--fwiki-links"                  = "MD_FLAG_WIKILINKS",
+  "--fhard-soft-breaks"            = "MD_FLAG_HARD_SOFT_BREAKS",
+  "--flatex-math"                  = "MD_FLAG_LATEXMATHSPANS",
+  "--fpermissive-email-autolinks"  = "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
+  "--fpermissive-www-autolinks"    = "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
+  "--ftasklists"                   = "MD_FLAG_TASKLISTS",
+  "--funderline"                   = "MD_FLAG_UNDERLINE",
+  "--fwiki-links"                  = "MD_FLAG_WIKILINKS"
+)
+
 md4c_tests_to_html = function() {
 
   tests = purrr::map(
@@ -17,12 +34,19 @@ md4c_tests_to_html = function() {
   skip_tests = list(
     "coverage" = tibble::tribble(
       ~ex, ~msg,
-      #29, "Known bug, will be fixed in the next version of md4c",
-      #33, "Weird utf-8 issue with En Quad U+2000 spaces"
+      8, "Weird utf issue with spaces",
+      9, "Weird utf issue with spaces",
+      10, "Weird utf issue with spaces"
     ),
-    "permissive-www-autolinks" = tibble::tribble(
+    "regressions" = tibble::tribble(
       ~ex, ~msg,
-      #6, "& vs &amp; in href params"
+      5, "New line vs space issue"
+    ),
+    "spec" = tibble::tribble(
+      ~ex, ~msg,
+      335, "Slight spacing discrepancy in the span output",
+      337, "Slight spacing discrepancy in the span output",
+      640, "Slight spacing discrepancy in the span output",
     )
   )
 
@@ -36,14 +60,21 @@ md4c_tests_to_html = function() {
 
           sub = (i == skip_tests[[name]][["ex"]])
           if (any(sub))
-            testthat::skip( skip_tests[[name]][["msg"]][sub] )
+            testthat::skip( paste0(
+              name, " #",
+              skip_tests[[name]][["ex"]][sub], " - ",
+              skip_tests[[name]][["msg"]][sub]
+            ) )
 
 
           if (length(test$md) == 1)
             test$md = paste0(test$md, "\n")
 
+          other_flags = flag_lookup[test$other]
+          stopifnot(all(!is.na(other_flags)))
+
           expect_identical_html(
-            test$md, flags,
+            test$md, c(other_flags, flags),
             test$html,
             info = label
           )

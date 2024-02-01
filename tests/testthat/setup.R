@@ -46,9 +46,9 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
   } else {
     type = "failure"
 
-    md_text = trimws(paste(md, collapse="\n"))
+    md_text = paste(md, collapse="\n")
     #md_text = cli::format_inline("{.val {md_text}}")
-    md_text = paste(md_text, collapse=" ")
+    #md_text = paste(md_text, collapse=" ")
 
     diff = diffmatchpatch::diff_make(
       paste(ex_html, collapse="\n"),
@@ -59,10 +59,15 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
     if (!is.null(url))
       error = paste(error, url, sep="\n")
 
+    fix_esc_chars = function(x) {
+      x = gsub("\n", "\\\\n", x)
+      x = gsub("\t", "\\\\t", x)
+    }
+
     msg = paste(
       error,
       "",
-      paste0("markdown : \"", gsub("\n", "\\\\n", md_text ), "\""),
+      paste0("markdown : \"", fix_esc_chars(md_text), "\""),
       paste0("expected : ", ex_html),
       paste0("generated: ", md_html),
       #comp_txt,
@@ -154,7 +159,7 @@ expect_identical_md = function(md, flags, info = NULL, ...) {
 
 read_md4c_tests = function(file) {
   section = character()
-  flags = character()
+  flags = "MD_DIALECT_COMMONMARK"
   examples = list()
 
   in_example = FALSE
@@ -190,7 +195,7 @@ read_md4c_tests = function(file) {
       examples[[length(examples)+1]] = list(
         md = md,
         html = html,
-        other = other,
+        other = unique(unlist(strsplit(other, " "))),
         sec = section,
         line_start = line_start,
         line_end = i-1
@@ -218,6 +223,15 @@ read_md4c_tests = function(file) {
     flags = c(flags, "MD_FLAG_TABLES")
   }
 
+  # Replace → with \t for inputs and outputs
+  examples = lapply(
+    examples,
+    function(x) {
+      x$md = gsub("→", "\t", x$md)
+      x$html = gsub("→", "\t", x$html)
+      x
+    }
+  )
 
   list(
     file = file,
