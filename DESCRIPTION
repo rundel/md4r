@@ -1,5 +1,5 @@
 Package: md4r
-Title: Markdown parser implemented using the MD4C library
+Title: Markdown Parser Implemented using the MD4C Library
 Version: 0.5.1.0
 Authors@R: 
     c(person(
@@ -34,6 +34,7 @@ RoxygenNote: 7.3.1
 LinkingTo: 
     Rcpp
 Imports:
+    tibble,
     Rcpp,
     cli,
     checkmate,
@@ -43,7 +44,6 @@ Imports:
     stringr
 Config/testthat/edition: 3
 Suggests:
-    tibble,
     withr,
     testthat (>= 3.0.0),
     diffmatchpatch
