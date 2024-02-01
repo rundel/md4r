@@ -19,12 +19,15 @@
 #' @export
 #'
 parse_md = function(md, flags = "MD_DIALECT_COMMONMARK") {
-  checkmate::assert_character(md, min.len = 1, any.missing = FALSE)
+  checkmate::assert_character(md, any.missing = FALSE)
+  if (length(md) == 0)
+    md = ""
+
   flags_check(flags)
 
   if (length(md) > 1) {              # If multiple lines in a char vec assume
     md = paste(md, collapse = "\n")  # it has been read in already
-    } else if (!grepl("\n", md)) {     # If no newlines check if it is a path or url
+  } else if (!grepl("\n", md)) {     # If no newlines check if it is a path or url
     if (file.exists(md))
       md = read_file(md)
   }
