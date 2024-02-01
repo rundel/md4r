@@ -12,16 +12,14 @@ process_child_nodes = function(md, ..., collapse = NULL) {
   if (length(content) == 1 && content == "\n")
     content = ""
 
-
   for(i in seq_along(md)[-1]) {
     new_content = to_md(md[[i]], ...)
 
     if (inherits(md[[i]], "md_span_code") & n_match(content, "`") %% 2 == 1) {
-      # Handle CommonMark Ex 349 edge case - if there is an unmatched ` in preceding
+      # Handle CommonMark Spec 0.29 - Ex 349 edge case - if there is an unmatched ` in preceding
       # content then we need to double backquote the code span
       new_content = paste0("`", new_content, "`")
     }
-
 
     if (
          inherits(md[[i]],   c("md_text_code", "md_text_html"))
@@ -546,7 +544,7 @@ to_md.md_span_code = function(md, ...) {
       new_content = to_md(md[[i]], ...)
       stopifnot(length(new_content) == 1)
 
-      if (   (prev_content != " " && new_content != " ")
+      if (   ( !grepl("( )+", prev_content) && new_content != " ")
           || (prev_content == " " && new_content == " ") # Back to back => trailing ws
       ) {
         end = length(content)
@@ -556,6 +554,8 @@ to_md.md_span_code = function(md, ...) {
         )
       } else if (new_content != " " || i == length(md) )  {# Trailing ws should be added
         content = c(content, new_content)
+      } else{
+        #stop("Should not happen!")
       }
 
       prev_content = new_content
@@ -608,11 +608,14 @@ to_md.md_span_a = function(md, ...) {
     title = glue::glue(" \"{title}\"")
   }
 
-  content = process_child_nodes(md, ..., collapse = "")
+  if (length(md) != 0)
+    content = process_child_nodes(md, ..., collapse = "")
+  else
+    content = ""
 
-  if (content == href) {
+  if (content == href & href != "") {
     glue::glue("<{href}>")
-  } else if (sub("^mailto:|^http[s]?://","", href) == content) {
+  } else if (sub("^mailto:|^http[s]?://","", href) == content & href != "") {
     if (flag_is_set(flags, "MD_FLAG_PERMISSIVEWWWAUTOLINKS") & grepl("^www\\.", content)) {
       content
     } else if (flag_is_set(flags, "MD_FLAG_PERMISSIVEEMAILAUTOLINKS") & grepl("^mailto:", href)) {
@@ -688,7 +691,7 @@ to_md.md_text_normal = function(md, ...) {
   content = unlist(md)
 
   # Punctuation chars need to be escaped
-  if (grepl("^[[:punct:]]$", content))
+  if (grepl("^([\\`*$%_{}<>()#+.!\"\'&/:;<>=?@^~|-]|\\[|\\])$", content))
     paste0("\\", content)
   else
     content

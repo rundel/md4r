@@ -331,6 +331,7 @@ int flag_mask(std::vector<std::string> const& flags) {
     else if (flag == "MD_FLAG_LATEXMATHSPANS")           flag_val |= MD_FLAG_LATEXMATHSPANS;
     else if (flag == "MD_FLAG_WIKILINKS")                flag_val |= MD_FLAG_WIKILINKS;
     else if (flag == "MD_FLAG_UNDERLINE")                flag_val |= MD_FLAG_UNDERLINE;
+    else if (flag == "MD_FLAG_HARD_SOFT_BREAKS")         flag_val |= MD_FLAG_HARD_SOFT_BREAKS;
     else if (flag == "MD_FLAG_PERMISSIVEAUTOLINKS")      flag_val |= MD_FLAG_PERMISSIVEAUTOLINKS;
     else if (flag == "MD_FLAG_NOHTML")                   flag_val |= MD_FLAG_NOHTML;
     else if (flag == "MD_DIALECT_COMMONMARK")            flag_val |= MD_DIALECT_COMMONMARK;

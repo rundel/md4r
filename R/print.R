@@ -4,10 +4,11 @@ pc = function(...) {
   paste(..., collapse="", sep="")
 }
 
-print_node = function(x, ...) {
+print_node = function(x, indent = "", prefix = "") {
   UseMethod("print_node")
 }
 
+#' @exportS3Method
 print_node.default = function(x, indent = "", prefix = "") {
   cli::cli_abort("Unsupported class: {class(x)}")
 }
@@ -28,6 +29,7 @@ attr_text = function(attr) {
   paste0(" [", paste(txt, collapse = ", "), "]")
 }
 
+#' @exportS3Method
 print_node.md_block_li = function(x, indent = "", prefix = "") {
   if (attr(x, "is_task") == 0) {
     attr(x, "is_task") = NULL
@@ -36,6 +38,7 @@ print_node.md_block_li = function(x, indent = "", prefix = "") {
   print_node.md_node(x, indent, prefix)
 }
 
+#' @exportS3Method
 print_node.md_node = function(x, indent = "", prefix = "") {
   a = attributes(x)
   attr = ""
@@ -50,10 +53,12 @@ print_node.md_node = function(x, indent = "", prefix = "") {
   )
 }
 
+#' @exportS3Method
 print_node.md_text_softbreak = function(x, indent = "", prefix = "") {
   print_node.md_node(x, indent, prefix)
 }
 
+#' @exportS3Method
 print_node.md_text = function(x, indent = "", prefix = "") {
   type = class(x)[1]
   x = sub("\n$", "\\\\n", x) # escape trailing newlines

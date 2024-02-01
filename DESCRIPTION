@@ -1,6 +1,6 @@
 Package: md4r
 Title: Markdown parser implemented using the MD4C library
-Version: 0.4.8.0
+Version: 0.5.1.0
 Authors@R: 
     c(person(
         given = "Colin",
@@ -30,11 +30,10 @@ Copyright: RStudio, PBC; Martin Mitáš, Colin Rundel
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 LinkingTo: 
     Rcpp
 Imports:
-    tibble,
     Rcpp,
     cli,
     checkmate,
@@ -44,7 +43,7 @@ Imports:
     stringr
 Config/testthat/edition: 3
 Suggests:
+    tibble,
     withr,
     testthat (>= 3.0.0),
-    jsonlite,
     diffmatchpatch
