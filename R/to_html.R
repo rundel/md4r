@@ -78,11 +78,14 @@ to_html.md_block_doc = function(md, ...) {
 
   if (is.null(content)) {
     ""
-  } else if ("MD_DIALECT_GITHUB" %in% attr(md, "flags")) {
-    content = tag_filter(content)
   } else {
     content
   }
+
+  # Doesnt seem to be needed any more
+  #else if ("MD_DIALECT_GITHUB" %in% attr(md, "flags")) {
+  #  content = tag_filter(content)
+  #}
 }
 
 
