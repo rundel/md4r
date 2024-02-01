@@ -2,9 +2,12 @@
 % Please edit documentation in R/parse_md.R
 \name{parse_md}
 \alias{parse_md}
+\alias{parse_gfm}
 \title{Parse markdown}
 \usage{
-parse_md(md, flags = "MD_DIALECT_GITHUB")
+parse_md(md, flags = "MD_DIALECT_COMMONMARK")
+
+parse_gfm(md, flags = "MD_DIALECT_GITHUB")
 }
 \arguments{
 \item{md}{Character. Either literal string of markdown or a path to a markdown file.}
@@ -17,11 +20,13 @@ Returns a markdown ast (\code{md_block_doc} class) object.
 \description{
 Parse either a literal markdown string or a markdown file
 given a path. Different dialects and features are supported via the \code{flags}
-argument. See \code{\link[=flags_describe]{flags_describe()}} for possible flags and their usage, by default
-this function uses GitHub Flavored Markdown.
+argument. See \code{\link[=flags_describe]{flags_describe()}} for possible flags and their usage. \code{parse_md()}
+defaults parsing using the commonmark spec while \code{parse_gfm()} uses the GitHub
+flavored markdown spec.
 }
 \examples{
-md_file = system.file("examples/commonmark.md", package = "md4r")
-parse_md(md_file)
+parse_md(system.file("examples/commonmark.md", package = "md4r"))
+
+parse_gfm(system.file("examples/github.md", package = "md4r"))
 
 }
