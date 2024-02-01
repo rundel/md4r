@@ -2,8 +2,9 @@
 #'
 #' @description Parse either a literal markdown string or a markdown file
 #' given a path. Different dialects and features are supported via the `flags`
-#' argument. See [flags_describe()] for possible flags and their usage, by default
-#' this function uses GitHub Flavored Markdown.
+#' argument. See [flags_describe()] for possible flags and their usage. `parse_md()`
+#' defaults parsing using the commonmark spec while `parse_gfm()` uses the GitHub
+#' flavored markdown spec.
 #'
 #' @param md Character. Either literal string of markdown or a path to a markdown file.
 #' @param flags Character vector. Dialect flags used by the parser.
@@ -11,12 +12,13 @@
 #' @return Returns a markdown ast (`md_block_doc` class) object.
 #'
 #' @examples
-#' md_file = system.file("examples/commonmark.md", package = "md4r")
-#' parse_md(md_file)
+#' parse_md(system.file("examples/commonmark.md", package = "md4r"))
+#'
+#' parse_gfm(system.file("examples/github.md", package = "md4r"))
 #'
 #' @export
 #'
-parse_md = function(md, flags = "MD_DIALECT_GITHUB") {
+parse_md = function(md, flags = "MD_DIALECT_COMMONMARK") {
   checkmate::assert_character(md, min.len = 1, any.missing = FALSE)
   flags_check(flags)
 
@@ -36,6 +38,14 @@ parse_md = function(md, flags = "MD_DIALECT_GITHUB") {
 
   md_block_doc
 }
+
+#' @rdname parse_md
+#'
+#' @export
+parse_gfm = function(md, flags = "MD_DIALECT_GITHUB") {
+  parse_md(md, flags)
+}
+
 
 read_file = function(file) {
   txt = readLines(file)
