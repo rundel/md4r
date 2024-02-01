@@ -130,12 +130,7 @@ to_md.md_block = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_block_doc = function(md, ...) {
-  flags = attr(md, "flags")
-
-  paste(
-    process_child_nodes(md, flags = flags, ..., collapse=""),
-    collapse="\n"
-  )
+  process_child_nodes(md, flags = attr(md, "flags"), ..., collapse="")
 }
 
 
