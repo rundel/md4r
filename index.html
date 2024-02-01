@@ -67,11 +67,11 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>md4r is a wrapper around the <a href="https://github.com/mity/md4c" class="external-link">md4c</a> markdown parsing library. The goal is to provide a low level tool for reading markdown documents into</p>
+<p>Provides an R wrapper for the MD4C (Markdown for C) library.Functions exist for markdown parsing (CommonMark compliant) along with support for other common markdown extensions (e.g. GitHub flavored markdown, LaTeX equation support, etc.). The package also provides a number of high level functions for exploring and manipulating markdown ASTs as well as translating and displaying the documents.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Currently this library is only available from <a href="https://github.com/" class="external-link">GitHub</a> with, and can be installed using <code>devtools</code> with:</p>
+<p>Currently this library is only available from <a href="https://github.com/" class="external-link">GitHub</a>, and can be installed using <code>devtools</code> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rundel/md4r"</span><span class="op">)</span></span></code></pre></div>
@@ -97,7 +97,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">md4r</span><span class="op">)</span></span>
 <span><span class="op">(</span><span class="va">md</span> <span class="op">=</span> <span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; md_block_doc [flags: "MD_DIALECT_GITHUB"]</span></span>
+<span><span class="co">#&gt; md_block_doc [flags: "MD_DIALECT_COMMONMARK"]</span></span>
 <span><span class="co">#&gt; ├── md_block_h [level: 2]</span></span>
 <span><span class="co">#&gt; │   └── md_text_normal - "Try CommonMark"</span></span>
 <span><span class="co">#&gt; ├── md_block_p</span></span>
@@ -122,31 +122,82 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ :List of 1</span></span>
-<span><span class="co">#&gt;   ..$ :List of 1</span></span>
-<span><span class="co">#&gt;   .. ..$ : chr "Try CommonMark"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "md_text_normal" "md_text" "md_node"</span></span>
+<span><span class="co">#&gt;   ..$ : 'md_text_normal' chr "Try CommonMark"</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "level")= num 2</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "class")= chr [1:3] "md_block_h" "md_block" "md_node"</span></span>
 <span><span class="co">#&gt;  $ :List of 6</span></span>
-<span><span class="co">#&gt;   ..$ :List of 1</span></span>
-<span><span class="co">#&gt;   .. ..$ : chr "You can try CommonMark here.  This dingus is powered by"</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "md_text_normal" "md_text" "md_node"</span></span>
+<span><span class="co">#&gt;   ..$ : 'md_text_normal' chr "You can try CommonMark here.  This dingus is powered by"</span></span>
 <span><span class="co">#&gt;   ..$ : list()</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "md_text_softbreak" "md_text" "md_node"</span></span>
 <span><span class="co">#&gt;   ..$ :List of 1</span></span>
-<span><span class="co">#&gt;   .. ..$ :List of 1</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr "commonmark.js"</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr [1:3] "md_text_normal" "md_text" "md_node"</span></span>
+<span><span class="co">#&gt;   .. ..$ : 'md_text_normal' chr "commonmark.js"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "title")= chr ""</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "href")= chr "https://github.com/jgm/commonmark.js"</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "md_span_a" "md_span" "md_node"</span></span>
+<span><span class="co">#&gt;   ..$ : 'md_text_normal' chr ", the"</span></span>
+<span><span class="co">#&gt;   ..$ : list()</span></span>
+<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "md_text_softbreak" "md_text" "md_node"</span></span>
+<span><span class="co">#&gt;   ..$ : 'md_text_normal' chr "JavaScript reference implementation."</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "class")= chr [1:3] "md_block_p" "md_block" "md_node"</span></span>
+<span><span class="co">#&gt;  $ :List of 2</span></span>
 <span><span class="va">...</span></span></code></pre></div>
-<p>The resulting AST can then be manipulated and transformed into HTML</p>
+<p>As the AST is just a collection of R lists - we can use subsetting to extract specific elements of the document</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; md_block_h [level: 2]</span></span>
+<span><span class="co">#&gt; └── md_text_normal - "Try CommonMark"</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; md_block_p</span></span>
+<span><span class="co">#&gt; ├── md_text_normal - "You can try CommonMark here.  This dingus is powered by"</span></span>
+<span><span class="co">#&gt; ├── md_text_softbreak</span></span>
+<span><span class="co">#&gt; ├── md_span_a [title: "", href: "https://github.com/jgm/commonmark.js"]</span></span>
+<span><span class="co">#&gt; │   └── md_text_normal - "commonmark.js"</span></span>
+<span><span class="co">#&gt; ├── md_text_normal - ", the"</span></span>
+<span><span class="co">#&gt; ├── md_text_softbreak</span></span>
+<span><span class="co">#&gt; └── md_text_normal - "JavaScript reference implementation."</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; md_block_ol [start: 1, tight: 1, mark_delimiter: "."]</span></span>
+<span><span class="co">#&gt; ├── md_block_li</span></span>
+<span><span class="co">#&gt; │   └── md_text_normal - "item one"</span></span>
+<span><span class="co">#&gt; └── md_block_li</span></span>
+<span><span class="co">#&gt;     ├── md_text_normal - "item two"</span></span>
+<span><span class="co">#&gt;     └── md_block_ul [tight: 1, mark: "-"]</span></span>
+<span><span class="co">#&gt;         ├── md_block_li</span></span>
+<span><span class="co">#&gt;         │   └── md_text_normal - "sublist"</span></span>
+<span><span class="co">#&gt;         └── md_block_li</span></span>
+<span><span class="co">#&gt;             └── md_text_normal - "sublist"</span></span></code></pre></div>
+<p>or more advanced tools like <code><a href="https://rdrr.io/r/base/rapply.html" class="external-link">rapply()</a></code> to extract text content</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rapply.html" class="external-link">rapply</a></span><span class="op">(</span><span class="va">md</span>, <span class="va">as.character</span>, <span class="st">"md_text"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Try CommonMark"                                         </span></span>
+<span><span class="co">#&gt; [2] "You can try CommonMark here.  This dingus is powered by"</span></span>
+<span><span class="co">#&gt; [3] "commonmark.js"                                          </span></span>
+<span><span class="co">#&gt; [4] ", the"                                                  </span></span>
+<span><span class="co">#&gt; [5] "JavaScript reference implementation."                   </span></span>
+<span><span class="co">#&gt; [6] "item one"                                               </span></span>
+<span><span class="co">#&gt; [7] "item two"                                               </span></span>
+<span><span class="co">#&gt; [8] "sublist"                                                </span></span>
+<span><span class="co">#&gt; [9] "sublist"</span></span></code></pre></div>
+<p>Additionally, the AST and any component can be converted back into markdown</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/to_md.html">to_md</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span>sep<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ## Try CommonMark</span></span>
+<span><span class="co">#&gt; You can try CommonMark here.  This dingus is powered by</span></span>
+<span><span class="co">#&gt; [commonmark.js](&lt;https://github.com/jgm/commonmark.js&gt;), the</span></span>
+<span><span class="co">#&gt; JavaScript reference implementation.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  1. item one</span></span>
+<span><span class="co">#&gt;  2. item two</span></span>
+<span><span class="co">#&gt;      - sublist</span></span>
+<span><span class="co">#&gt;      - sublist</span></span></code></pre></div>
+<p>or into html</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/to_html.html">to_html</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span>sep<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span></span></code></pre></div>
-<h2 id="example-1">
+<blockquote>
+<h2>
 Try CommonMark
-<a class="anchor" aria-label="anchor" href="#example-1"></a>
 </h2>
 <p>
 You can try CommonMark here. This dingus is powered by <a href="https://github.com/jgm/commonmark.js" class="external-link">commonmark.js</a> , the JavaScript reference implementation.
@@ -167,19 +218,7 @@ sublist
 </ul>
 </li>
 </ol>
-<p><br></p>
-<p>or back into markdown</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/to_md.html">to_md</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span>sep<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ## Try CommonMark</span></span>
-<span><span class="co">#&gt; You can try CommonMark here.  This dingus is powered by</span></span>
-<span><span class="co">#&gt; [commonmark.js](&lt;https://github.com/jgm/commonmark.js&gt;), the</span></span>
-<span><span class="co">#&gt; JavaScript reference implementation.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  1. item one</span></span>
-<span><span class="co">#&gt;  2. item two</span></span>
-<span><span class="co">#&gt;      - sublist</span></span>
-<span><span class="co">#&gt;      - sublist</span></span></code></pre></div>
+</blockquote>
 </div>
 </div>
   </div>
