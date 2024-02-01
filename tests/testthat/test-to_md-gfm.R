@@ -28,10 +28,19 @@ gfm_tests_to_md = function() {
       url = glue::glue("https://github.github.com/gfm/#example-{i}")
 
       test_that(label, {
-        sub = (i == skip_tests[["ex"]])
-        if (any(sub))
-          testthat::skip( skip_tests[["msg"]][sub] )
 
+        if (test$disabled) {
+          testthat::skip("Disabled test(s)")
+        }
+
+        sub = (i == skip_tests[["ex"]])
+        if (any(sub)) {
+          testthat::skip( paste0(
+            "gfm #",
+            skip_tests[["ex"]][sub], " - ",
+            skip_tests[["msg"]][sub]
+          ) )
+        }
         flags = "MD_DIALECT_GITHUB"
 
         expect_identical_md(

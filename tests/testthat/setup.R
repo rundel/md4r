@@ -24,6 +24,17 @@ local_cli_config = function(
 
 ######
 
+block_tags = c(
+  'article', 'header', 'aside', 'hgroup', 'blockquote',
+  'hr', 'iframe', 'body', 'li', 'map', 'button', 'object', 'canvas',
+  'ol', 'caption', 'output', 'col', 'p', 'colgroup', 'pre', 'dd',
+  'progress', 'div', 'section', 'dl', 'table', 'td', 'dt',
+  'tbody', 'embed', 'textarea', 'fieldset', 'tfoot', 'figcaption',
+  'th', 'figure', 'thead', 'footer', 'tr', 'form', 'ul',
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'video', 'script', 'style'
+)
+
+
 clean_html = function(x) {
   x = paste(x, collapse="")
   x = gsub("\n", "", x)
@@ -68,8 +79,8 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
       error,
       "",
       paste0("markdown : \"", fix_esc_chars(md_text), "\""),
-      paste0("expected : ", ex_html),
-      paste0("generated: ", md_html),
+      paste0("expected : ", fix_esc_chars(ex_html)),
+      paste0("generated: ", fix_esc_chars(md_html)),
       #comp_txt,
       #"",
       paste0("diff     : ", as.character(diff)),
@@ -248,17 +259,17 @@ read_md4c_tests = function(file) {
 ###                  ###
 ########################
 
-read_commonmark_spec = function(file) {
-  tests = jsonlite::read_json(file)
-
-  purrr::map(
-    tests,
-    function(test) {
-      test$label = glue::glue_data("Ex {example} - {section} (L{start_line}-{end_line})", .x = test)
-      test[c("label", "markdown", "html", "example")]
-    }
-  )
-}
+#read_commonmark_spec = function(file) {
+#  tests = jsonlite::read_json(file)
+#
+#  purrr::map(
+#    tests,
+#    function(test) {
+#      test$label = glue::glue_data("Ex {example} - {section} (L{start_line}-{end_line})", .x = test)
+#      test[c("label", "markdown", "html", "example")]
+#    }
+#  )
+#}
 
 #################
 ###           ###
@@ -273,6 +284,7 @@ read_gfm_tests = function(file) {
   line_start = NA
   in_example = FALSE
   end_md = FALSE
+  disabled = FALSE
   md = character()
   html = character()
 
@@ -290,6 +302,8 @@ read_gfm_tests = function(file) {
       section[2] = sub("^##\\s+","", line)
     }
     else if (grepl(chunk_start_pat, line)) {
+
+      disabled = grepl("disabled", line) # track disabled tests
       in_example = TRUE
       line_start = i+1
     }
@@ -299,9 +313,11 @@ read_gfm_tests = function(file) {
         html = html,
         sec = section,
         line_start = line_start,
-        line_end = i-1
+        line_end = i-1,
+        disabled = disabled
       )
 
+      disabled = FALSE
       in_example = FALSE
       end_md = FALSE
       line_start = NA

@@ -43,8 +43,13 @@ md4c_tests_to_md = function() {
 
           # Check skips
           sub = (i == skip_tests[[name]][["ex"]])
-          if (any(sub))
-            testthat::skip( skip_tests[[name]][["msg"]][sub] )
+          if (any(sub)) {
+            testthat::skip( paste0(
+              name, " #",
+              skip_tests[[name]][["ex"]][sub], " - ",
+              skip_tests[[name]][["msg"]][sub]
+            ) )
+          }
 
           expect_identical_md(
             md = test$md, flags = flags, info = NULL

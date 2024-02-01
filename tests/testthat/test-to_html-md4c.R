@@ -59,12 +59,13 @@ md4c_tests_to_html = function() {
         test_that(label, {
 
           sub = (i == skip_tests[[name]][["ex"]])
-          if (any(sub))
+          if (any(sub)) {
             testthat::skip( paste0(
               name, " #",
               skip_tests[[name]][["ex"]][sub], " - ",
               skip_tests[[name]][["msg"]][sub]
             ) )
+          }
 
 
           if (length(test$md) == 1)
