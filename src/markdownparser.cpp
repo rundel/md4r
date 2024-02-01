@@ -17,9 +17,12 @@ namespace Rcpp {
 // chunk wrappers
 template <> SEXP wrap(md_node const& node) {
 
-  //if (node.l.inherits("text")) {
-  //  return Rcpp::CharacterVector(node.l[0]);
-  //}
+  // Text nodes should be Character vectors (if they have content)
+  if (node.l.inherits("md_text") && node.l.size() == 1) {
+    Rcpp::CharacterVector v(node.l[0]);
+    v.attr("class") = node.l.attr("class");
+    return v;
+  }
 
 
   Rcpp::List res(node.l);
