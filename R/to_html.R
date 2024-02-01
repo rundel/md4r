@@ -43,7 +43,7 @@ to_html.default = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_node = function(md, ...) {
-  content = unlist(lapply(md, to_html, ...))
+  unlist(lapply(md, to_html, ...))
 }
 
 
