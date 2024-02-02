@@ -12,12 +12,18 @@ Authors@R:
         given = "Martin",
         family = "Mitáš",
         role = c("cph"),
-        comment = "md4c author: md4c.c, md4c.h"
+        comment = "md4c author: md4c.c, md4c.h, specs/md4c/"
       ),
       person(
         family = "RStudio, PBC",
         role = c("cph"),
         comment = "httpuv_url_tools.cpp"
+      ),
+      person(
+        given = "John",
+        family = "MacFarlane",
+        role = c("cph"),
+        comment = "specs/gfm/spec.txt, specs/md4c/spec.txt"
       )
     )
 Description: Provides an R wrapper for the MD4C (Markdown for C) library. 
