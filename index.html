@@ -71,16 +71,18 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Currently this library is only available from <a href="https://github.com/" class="external-link">GitHub</a>, and can be installed using <code>devtools</code> with:</p>
+<p>Install md4r from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rundel/md4r"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"md4r"</span><span class="op">)</span></span></code></pre></div>
+<p>or install the latest development version package from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rundel/md4r"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>We will start with a simple example of parsing a markdown file using the basic CommonMark dialect.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">md_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples/commonmark.md"</span>, package <span class="op">=</span> <span class="st">"md4r"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span>sep<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ## Try CommonMark</span></span>
@@ -94,7 +96,7 @@
 <span><span class="co">#&gt;    - sublist</span></span>
 <span><span class="co">#&gt;    - sublist</span></span></code></pre></div>
 <p>this file (or markdown text) can be processed using the <code>parse_md</code> function which creates an abstract syntax tree representation of the document (as a list of lists of lists … with custom S3 classes)</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">md4r</span><span class="op">)</span></span>
 <span><span class="op">(</span><span class="va">md</span> <span class="op">=</span> <span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; md_block_doc [flags: "MD_DIALECT_COMMONMARK"]</span></span>
@@ -118,7 +120,7 @@
 <span><span class="co">#&gt;             │   └── md_text_normal - "sublist"</span></span>
 <span><span class="co">#&gt;             └── md_block_li</span></span>
 <span><span class="co">#&gt;                 └── md_text_normal - "sublist"</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ :List of 1</span></span>
@@ -142,11 +144,11 @@
 <span><span class="co">#&gt;  $ :List of 2</span></span>
 <span><span class="va">...</span></span></code></pre></div>
 <p>As the AST is just a collection of R lists - we can use subsetting to extract specific elements of the document</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt; md_block_h [level: 2]</span></span>
 <span><span class="co">#&gt; └── md_text_normal - "Try CommonMark"</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt; md_block_p</span></span>
 <span><span class="co">#&gt; ├── md_text_normal - "You can try CommonMark here.  This dingus is powered by"</span></span>
@@ -156,7 +158,7 @@
 <span><span class="co">#&gt; ├── md_text_normal - ", the"</span></span>
 <span><span class="co">#&gt; ├── md_text_softbreak</span></span>
 <span><span class="co">#&gt; └── md_text_normal - "JavaScript reference implementation."</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt; md_block_ol [start: 1, tight: 1, mark_delimiter: "."]</span></span>
 <span><span class="co">#&gt; ├── md_block_li</span></span>
@@ -169,7 +171,7 @@
 <span><span class="co">#&gt;         └── md_block_li</span></span>
 <span><span class="co">#&gt;             └── md_text_normal - "sublist"</span></span></code></pre></div>
 <p>or more advanced tools like <code><a href="https://rdrr.io/r/base/rapply.html" class="external-link">rapply()</a></code> to extract text content</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rapply.html" class="external-link">rapply</a></span><span class="op">(</span><span class="va">md</span>, <span class="va">as.character</span>, <span class="st">"md_text"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Try CommonMark"                                         </span></span>
 <span><span class="co">#&gt; [2] "You can try CommonMark here.  This dingus is powered by"</span></span>
@@ -181,7 +183,7 @@
 <span><span class="co">#&gt; [8] "sublist"                                                </span></span>
 <span><span class="co">#&gt; [9] "sublist"</span></span></code></pre></div>
 <p>Additionally, the AST and any component can be converted back into markdown</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/to_md.html">to_md</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span>sep<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ## Try CommonMark</span></span>
 <span><span class="co">#&gt; You can try CommonMark here.  This dingus is powered by</span></span>
@@ -193,7 +195,7 @@
 <span><span class="co">#&gt;      - sublist</span></span>
 <span><span class="co">#&gt;      - sublist</span></span></code></pre></div>
 <p>or into html</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/to_html.html">to_html</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span>sep<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span></span></code></pre></div>
 <blockquote>
 <h2>
