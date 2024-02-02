@@ -7,6 +7,12 @@
 #' variants / options. The parsing of these is controlled by flags passed to the
 #' parser. The following functions provide commonly used utilities for these flags.
 #'
+#' @returns `flags_available()` returns a character vector of available flags accepted by `parse_md()`.
+#'
+#' `flags_describe()` returns a tibble with columns `flag` and `description` describing each flag.
+#'
+#' `flags_used()` returns a character vector of flags used in a parsed markdown document.
+#'
 #' @examples
 #'
 #' flags_available()

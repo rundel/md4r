@@ -16,6 +16,13 @@ flags_used(md)
 \arguments{
 \item{md}{Markdown ast object}
 }
+\value{
+\code{flags_available()} returns a character vector of available flags accepted by \code{parse_md()}.
+
+\code{flags_describe()} returns a tibble with columns \code{flag} and \code{description} describing each flag.
+
+\code{flags_used()} returns a character vector of flags used in a parsed markdown document.
+}
 \description{
 The \href{https://github.com/mity/md4c}{\code{md4c}} library supports a number of markdown
 variants / options. The parsing of these is controlled by flags passed to the

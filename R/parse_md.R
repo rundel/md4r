@@ -9,7 +9,7 @@
 #' @param md Character. Either literal string of markdown or a path to a markdown file.
 #' @param flags Character vector. Dialect flags used by the parser.
 #'
-#' @return Returns a markdown ast (`md_block_doc` class) object.
+#' @returns Both functions return a markdown ast, a list with the `md_block_doc` class.
 #'
 #' @examples
 #' parse_md(system.file("examples/commonmark.md", package = "md4r"))

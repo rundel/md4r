@@ -24,6 +24,8 @@ tag_filter = function(x) {
 #' @param md Markdown object
 #' @param ... Unused, for extensibility.
 #'
+#' @returns Returns a character vector of HTML lines representing the markdown object.
+#'
 #' @examples
 #' md_file = system.file("examples/commonmark.md", package = "md4r")
 #' md = parse_md(md_file)

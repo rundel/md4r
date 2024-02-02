@@ -11,6 +11,9 @@ to_md(md, ...)
 
 \item{...}{Unused, for extensibility.}
 }
+\value{
+Returns a character vector of markdown lines representing the markdown object.
+}
 \description{
 Coverts a markdown object (full ast or node) to markdown text.
 }

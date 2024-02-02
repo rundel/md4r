@@ -15,7 +15,7 @@ parse_gfm(md, flags = "MD_DIALECT_GITHUB")
 \item{flags}{Character vector. Dialect flags used by the parser.}
 }
 \value{
-Returns a markdown ast (\code{md_block_doc} class) object.
+Both functions return a markdown ast, a list with the \code{md_block_doc} class.
 }
 \description{
 Parse either a literal markdown string or a markdown file
