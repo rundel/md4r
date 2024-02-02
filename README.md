@@ -41,7 +41,7 @@ readLines(md_file) |> cat(sep='\n')
 #> ## Try CommonMark
 #> 
 #> You can try CommonMark here.  This dingus is powered by
-#> [commonmark.js](https://github.com/jgm/commonmark.js), the
+#> [commonmark.js](https://github.com/commonmark/commonmark.js), the
 #> JavaScript reference implementation.
 #> 
 #> 1. item one
@@ -63,7 +63,7 @@ library(md4r)
 #> ├── md_block_p
 #> │   ├── md_text_normal - "You can try CommonMark here.  This dingus is powered by"
 #> │   ├── md_text_softbreak
-#> │   ├── md_span_a [title: "", href: "https://github.com/jgm/commonmark.js"]
+#> │   ├── md_span_a [title: "", href: "https://github.com/commonmark/commonmark.js"]
 #> │   │   └── md_text_normal - "commonmark.js"
 #> │   ├── md_text_normal - ", the"
 #> │   ├── md_text_softbreak
@@ -94,7 +94,7 @@ str(md)
 #>   ..$ :List of 1
 #>   .. ..$ : 'md_text_normal' chr "commonmark.js"
 #>   .. ..- attr(*, "title")= chr ""
-#>   .. ..- attr(*, "href")= chr "https://github.com/jgm/commonmark.js"
+#>   .. ..- attr(*, "href")= chr "https://github.com/commonmark/commonmark.js"
 #>   .. ..- attr(*, "class")= chr [1:3] "md_span_a" "md_span" "md_node"
 #>   ..$ : 'md_text_normal' chr ", the"
 #>   ..$ : list()
@@ -119,7 +119,7 @@ parse_md(md_file)[[2]]
 #> md_block_p
 #> ├── md_text_normal - "You can try CommonMark here.  This dingus is powered by"
 #> ├── md_text_softbreak
-#> ├── md_span_a [title: "", href: "https://github.com/jgm/commonmark.js"]
+#> ├── md_span_a [title: "", href: "https://github.com/commonmark/commonmark.js"]
 #> │   └── md_text_normal - "commonmark.js"
 #> ├── md_text_normal - ", the"
 #> ├── md_text_softbreak
@@ -162,7 +162,7 @@ markdown
 to_md(md) |> cat(sep='\n')
 #> ## Try CommonMark
 #> You can try CommonMark here.  This dingus is powered by
-#> [commonmark.js](<https://github.com/jgm/commonmark.js>), the
+#> [commonmark.js](<https://github.com/commonmark/commonmark.js>), the
 #> JavaScript reference implementation.
 #> 
 #>  1. item one
@@ -183,8 +183,8 @@ Try CommonMark
 </h2>
 <p>
 You can try CommonMark here. This dingus is powered by
-<a href="https://github.com/jgm/commonmark.js">commonmark.js</a> , the
-JavaScript reference implementation.
+<a href="https://github.com/commonmark/commonmark.js">commonmark.js</a>
+, the JavaScript reference implementation.
 </p>
 <ol>
 <li>

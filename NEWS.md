@@ -1,4 +1,5 @@
-# md4r (0.5.2.0)
+
+# Changes in md4r 0.5.2.0
 
 * Initial CRAN submission.
 
