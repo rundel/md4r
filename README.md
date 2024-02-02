@@ -18,13 +18,16 @@ translating and displaying the documents.
 
 ## Installation
 
-Currently this library is only available from
-[GitHub](https://github.com/), and can be installed using `devtools`
-with:
+Install md4r from CRAN:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("rundel/md4r")
+install.packages("md4r")
+```
+
+or install the latest development version package from GitHub:
+
+``` r
+remotes::install_github("rundel/md4r")
 ```
 
 ## Example
