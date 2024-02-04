@@ -8,8 +8,10 @@
 
 This is a resubmission. In this version I have:
 
-* Fixed the formatting of NEWS.md to resolve the NOTE.
+* Added single quotes around MD4C, LaTeX, and CommonMark in the description.
 
-* Replaced ASTs in the description with "abstract syntax trees".
+* Added John MacFarlane to the copyright entry.
 
-* I believe that LaTeX and CommonMark are the correct spelling and have been left as is.
+* CRAN feedback also mentioned references to the description field in the 
+  DESCRIPTION file. At this time there are no such references that I am aware
+  of and have therefore not made any additional changes here.
