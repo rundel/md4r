@@ -12,6 +12,6 @@ This is a resubmission. In this version I have:
 
 * Added John MacFarlane to the copyright entry.
 
-* CRAN feedback also mentioned references to the description field in the 
+* CRAN feedback also mentioned adding references to the description field in the 
   DESCRIPTION file. At this time there are no such references that I am aware
   of and have therefore not made any additional changes here.
