@@ -1,3 +1,6 @@
 if (Sys.getenv("CI") == "") {
-  gfm_tests_to_html()
+  exprs <- gfm_tests_to_html()
+  text <- purrr::map(exprs, constructive::deparse_call)
+  flat <- purrr::reduce(text, ~ c(.x, "", .y))
+  writeLines(flat, "test-to_html-gfm.R")
 }
