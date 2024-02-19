@@ -162,8 +162,10 @@ to_md.md_block_h = function(md, ...) {
       cli::cli_abort("Multiline headings not supported with level > 2.")
     }
   } else { # ATX heading
-    paste0(rep_char("#", level), " ", content)
+    content = paste0(rep_char("#", level), " ", content)
   }
+
+  c(content, "")
 }
 
 calc_fence_len = function(content, fence_char, min_len = 3) {
@@ -297,6 +299,12 @@ to_md.md_block_li = function(md, ...) {
         return(character())
 
       content = to_md(child, ...)
+
+      if (inherits(child, "md_block_h")) {
+        # If a header, remove the spacing line
+        # otherwise blank line breaks gfm Ex 278 & 300
+        content = content[-length(content)]
+      }
 
       content = if (i == 1) {
         if (inherits(child, c("md_block_ul", "md_block_ol"))) {
