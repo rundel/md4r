@@ -20,6 +20,12 @@ local_cli_config = function(
   )
 }
 
+#####
+
+indent <- function(x) {
+  if (length(x) == 0) return(character())
+  paste0("  ", x)
+}
 
 
 ######
@@ -515,28 +521,27 @@ gfm_tests_to_html = function() {
       url = glue::glue("https://github.github.com/gfm/#example-{i}")
       sub = (i == skip_tests[["ex"]])
 
-      expr <- rlang::expr(test_that(!!unclass(label), {
-
-        if (!!test$disabled) {
-          testthat::skip("Disabled test(s)")
-        }
-
-        if (!!any(sub)) {
-          testthat::skip( !!paste0(
-            "gfm #", skip_tests[["ex"]][sub],
-            " - ", skip_tests[["msg"]][sub]
-          ) )
-        }
-
-        expect_identical_html(
-          c(!!!test$md), "MD_DIALECT_GITHUB",
-          c(!!!test$html),
-          info = !!unclass(label),
-          url = !!unclass(url)
-        )
-      }))
-
-      constructive::deparse_call(expr)
+      c(
+        paste0("test_that(", rlang::expr_deparse(unclass(label)), ", {"),
+        indent(c(
+          if (test$disabled) rlang::expr_deparse(rlang::expr(testthat::skip("Disabled test(s)"))),
+          if (!!any(sub)) rlang::expr_deparse(rlang::expr(
+            testthat::skip( !!paste0(
+              "gfm #", skip_tests[["ex"]][sub],
+              " - ", skip_tests[["msg"]][sub]
+            ))
+          )),
+          indent(rlang::expr_deparse(width = 20, rlang::expr(
+            expect_identical_html(
+              c(!!!test$md),
+              "MD_DIALECT_GITHUB",
+              c(!!!test$html),
+              info = !!unclass(label),
+              url = !!unclass(url)
+          ))))
+        )),
+        "})"
+      )
     }
   )
 }
