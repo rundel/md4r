@@ -1,57 +1,43 @@
 Package: md4r
 Title: Markdown Parser Implemented using the 'MD4C' Library
 Version: 0.5.2.1
-Authors@R: 
-    c(person(
-        given = "Colin",
-        family = "Rundel",
-        role = c("aut", "cre"),
-        email = "rundel@gmail.com"
-      ),
-      person(
-        given = "Martin",
-        family = "Mitáš",
-        role = c("cph"),
-        comment = "md4c author: md4c.c, md4c.h, specs/md4c/"
-      ),
-      person(
-        family = "RStudio, PBC",
-        role = c("cph"),
-        comment = "httpuv_url_tools.cpp"
-      ),
-      person(
-        given = "John",
-        family = "MacFarlane",
-        role = c("cph"),
-        comment = "specs/gfm/spec.txt, specs/md4c/spec.txt"
-      )
-    )
-Description: Provides an R wrapper for the 'MD4C' (Markdown for 'C') library. 
-    Functions exist for parsing markdown ('CommonMark' compliant) along with support for other common
-    markdown extensions (e.g. 'GitHub' flavored markdown, 'LaTeX' equation support, etc.). The 
-    package also provides a number of higher level functions for exploring and manipulating markdown
-    abstract syntax trees as well as translating and displaying the documents.
+Authors@R: c(
+    person("Colin", "Rundel", , "rundel@gmail.com", role = c("aut", "cre")),
+    person("Martin", "Mitáš", role = "cph",
+           comment = "md4c author: md4c.c, md4c.h, specs/md4c/"),
+    person(, "RStudio, PBC", role = "cph",
+           comment = "httpuv_url_tools.cpp"),
+    person("John", "MacFarlane", role = "cph",
+           comment = "specs/gfm/spec.txt, specs/md4c/spec.txt")
+  )
+Description: Provides an R wrapper for the 'MD4C' (Markdown for 'C')
+    library.  Functions exist for parsing markdown ('CommonMark'
+    compliant) along with support for other common markdown extensions
+    (e.g. 'GitHub' flavored markdown, 'LaTeX' equation support, etc.). The
+    package also provides a number of higher level functions for exploring
+    and manipulating markdown abstract syntax trees as well as translating
+    and displaying the documents.
 License: MIT + file LICENSE
-Copyright: John MacFarlane, RStudio, PBC; Martin Mitáš, Colin Rundel
 URL: https://rundel.github.io/md4r/, https://github.com/rundel/md4r
 BugReports: https://github.com/rundel/md4r/issues
+Imports:
+    checkmate,
+    cli,
+    glue,
+    purrr,
+    Rcpp,
+    stringr,
+    textutils,
+    tibble
+Suggests:
+    diffmatchpatch,
+    testthat (>= 3.0.0),
+    withr
+LinkingTo: 
+    Rcpp
+Config/testthat/edition: 3
+Copyright: John MacFarlane, RStudio, PBC; Martin Mitáš, Colin Rundel
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
-LinkingTo: 
-    Rcpp
-Imports:
-    tibble,
-    Rcpp,
-    cli,
-    checkmate,
-    glue,
-    purrr,
-    textutils,
-    stringr
-Config/testthat/edition: 3
-Suggests:
-    withr,
-    testthat (>= 3.0.0),
-    diffmatchpatch
