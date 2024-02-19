@@ -513,26 +513,26 @@ gfm_tests_to_html = function() {
       section = paste(test$sec, collapse = " > ")
       label = glue::glue("gfm - Ex {i} (L{test$line_start}-{test$line_end}) - {section}")
       url = glue::glue("https://github.github.com/gfm/#example-{i}")
+      sub = (i == skip_tests[["ex"]])
 
-      rlang::expr(test_that(label, {
+      rlang::expr(test_that(!!unclass(label), {
 
-        if (test$disabled) {
+        if (!!test$disabled) {
           testthat::skip("Disabled test(s)")
         }
 
-        sub = (i == skip_tests[["ex"]])
-        if (any(sub)) {
-          testthat::skip( paste0(
+        if (!!any(sub)) {
+          testthat::skip( !!paste0(
             "gfm #", skip_tests[["ex"]][sub],
             " - ", skip_tests[["msg"]][sub]
           ) )
         }
 
         expect_identical_html(
-          test$md, "MD_DIALECT_GITHUB",
-          test$html,
-          info = label,
-          url = url
+          c(!!!test$md), "MD_DIALECT_GITHUB",
+          c(!!!test$html),
+          info = !!unclass(label),
+          url = !!unclass(url)
         )
       }))
     }
