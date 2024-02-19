@@ -9,7 +9,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![R-CMD-check](https://github.com/rundel/md4r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rundel/md4r/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-Provides an R wrapper for the MD4C (Markdown for C) library.Functions
+Provides an R wrapper for the MD4C (Markdown for C) library. Functions
 exist for markdown parsing (CommonMark compliant) along with support for
 other common markdown extensions (e.g. GitHub flavored markdown, LaTeX
 equation support, etc.). The package also provides a number of high

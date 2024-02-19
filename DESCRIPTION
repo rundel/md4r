@@ -1,6 +1,6 @@
 Package: md4r
 Title: Markdown Parser Implemented using the 'MD4C' Library
-Version: 0.5.2.0
+Version: 0.5.2.1
 Authors@R: 
     c(person(
         given = "Colin",

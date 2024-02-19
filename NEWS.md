@@ -1,3 +1,6 @@
+# Changes in md4r 0.5.2.1 (development version)
+
+* Minor tweaks to markdown generation
 
 # Changes in md4r 0.5.2.0
 
