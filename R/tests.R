@@ -515,7 +515,7 @@ gfm_tests_to_html = function() {
       url = glue::glue("https://github.github.com/gfm/#example-{i}")
       sub = (i == skip_tests[["ex"]])
 
-      rlang::expr(test_that(!!unclass(label), {
+      expr <- rlang::expr(test_that(!!unclass(label), {
 
         if (!!test$disabled) {
           testthat::skip("Disabled test(s)")
@@ -535,6 +535,8 @@ gfm_tests_to_html = function() {
           url = !!unclass(url)
         )
       }))
+
+      constructive::deparse_call(expr)
     }
   )
 }
