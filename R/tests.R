@@ -1,7 +1,7 @@
-indent <- function(x) {
+indent = function(x) {
   if (length(x) == 0) return(character())
-  x <- gsub("^( *)(  )([^ ].*[^ ])([)])$", "\\1\\2\\3\n\\1\\4", x)
-  x <- unlist(strsplit(x, "\n"))
+  x = gsub("^( *)(  )([^ ].*[^ ])([)])$", "\\1\\2\\3\n\\1\\4", x)
+  x = unlist(strsplit(x, "\n"))
   paste0("  ", x)
 }
 

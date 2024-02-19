@@ -2,8 +2,8 @@ if (Sys.getenv("CI") == "" && file.exists("../../R/tests.R")) {
   # Only run if tests.R is younger than the output
   if (diff(file.info(c("test-to_html-gfm.R", "../../R/tests.R"))$mtime) > 0) {
     message("Generating test-to_html-gfm.R")
-    text <- gfm_tests_to_html()
-    flat <- purrr::reduce(text, ~ c(.x, "", .y))
+    text = gfm_tests_to_html()
+    flat = purrr::reduce(text, ~ c(.x, "", .y))
     writeLines(flat, "test-to_html-gfm.R")
   }
 }
