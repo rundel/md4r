@@ -1,4 +1,4 @@
-process_child_nodes = function(md, ..., collapse = NULL) {
+process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
   if (is.null(collapse))
     return( unlist(lapply(md, to_md, ...)) )
 
@@ -11,6 +11,8 @@ process_child_nodes = function(md, ..., collapse = NULL) {
   content = to_md(md[[1]], ...)
   if (length(content) == 1 && content == "\n")
     content = ""
+
+  origin = rep(class(md[[1]])[1], length(content))
 
   for(i in seq_along(md)[-1]) {
     new_content = to_md(md[[i]], ...)
@@ -77,7 +79,13 @@ process_child_nodes = function(md, ..., collapse = NULL) {
 
         content = c(content, new_content)
     }
+
+    origin = c(origin, rep(class(md[[i]])[1], length(content) - length(origin)))
+
   }
+
+  if (track_origin)
+    attr(content, "origin") = origin
 
   content
 }
@@ -138,11 +146,20 @@ to_md.md_block_doc = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_block_quote = function(md, ...) {
-  content = process_child_nodes(md, ..., collapse=TRUE)
+  content = process_child_nodes(md, ..., collapse=TRUE, track_origin = TRUE)
 
-  # If it might look like a list or setext heading underline
-  # we need to indent 4-spaces so it stays as text
-  content = sub("^([*-]+ |===+|---+)", "    \\1", content)
+  content = purrr::map2_chr(
+    content, attr(content, "origin"),
+    function(content, origin) {
+      if (origin %in%  c("md_block_ul", "md_block_ol", "md_block_h")) {
+        content
+      } else {
+        # If it might look like a list or setext heading underline
+        # we need to indent 4-spaces so it stays as text
+        sub("^([*-]+ |===+|---+)", "    \\1", content)
+      }
+    }
+  )
 
   paste0("> ", content)
 }
@@ -236,7 +253,7 @@ to_md.md_block_ul = function(md, ...) {
     mark = "-"
   }
 
-  prefix = paste0(" ", mark, " ")
+  prefix = paste0(mark, " ")
 
   res = process_child_nodes(md, prefix = prefix, tight = tight, ...)
   if (res[length(res)] == "")
@@ -261,7 +278,7 @@ to_md.md_block_ol = function(md, ...) {
   n = start+length(md)-1
 
   mark_vals = start:n
-  marks = paste0(" ", mark_vals, delim, " ")
+  marks = paste0(mark_vals, delim, " ")
 
   unlist( purrr::map2(
     md, marks,
