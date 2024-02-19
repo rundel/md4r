@@ -26,7 +26,6 @@ Imports:
     glue,
     purrr,
     Rcpp,
-    rlang,
     stringr,
     textutils,
     tibble
