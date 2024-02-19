@@ -50,7 +50,14 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/rundel/md4r/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -97,7 +104,7 @@
 <span><span class="co">#&gt;    - sublist</span></span></code></pre></div>
 <p>this file (or markdown text) can be processed using the <code>parse_md</code> function which creates an abstract syntax tree representation of the document (as a list of lists of lists … with custom S3 classes)</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">md4r</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rundel.github.io/md4r/" class="external-link">md4r</a></span><span class="op">)</span></span>
 <span><span class="op">(</span><span class="va">md</span> <span class="op">=</span> <span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span><span class="va">md_file</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; md_block_doc [flags: "MD_DIALECT_COMMONMARK"]</span></span>
 <span><span class="co">#&gt; ├── md_block_h [level: 2]</span></span>
@@ -230,6 +237,8 @@ sublist
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=md4r" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/rundel/md4r/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/rundel/md4r/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
