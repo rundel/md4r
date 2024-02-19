@@ -31,6 +31,7 @@ Imports:
     textutils,
     tibble
 Suggests:
+    constructive,
     diffmatchpatch,
     testthat (>= 3.0.0),
     withr
