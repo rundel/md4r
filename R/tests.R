@@ -533,14 +533,14 @@ gfm_tests_to_html = function() {
               " - ", skip_tests[["msg"]][sub]
             ))
           )),
-          indent(rlang::expr_deparse(width = 20, rlang::expr(
+          rlang::expr_deparse(width = 20, rlang::expr(
             expect_identical_html(
               c(!!!test$md),
               "MD_DIALECT_GITHUB",
               c(!!!test$html),
               info = !!unclass(label),
               url = !!unclass(url)
-          ))))
+          )))
         )),
         "})"
       )
