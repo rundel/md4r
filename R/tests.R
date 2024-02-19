@@ -507,14 +507,14 @@ gfm_tests_to_html = function() {
     660, "Minor spacing difference with code span"
   )
 
-  purrr::iwalk(
+  purrr::imap(
     tests,
     function(test, i) {
       section = paste(test$sec, collapse = " > ")
       label = glue::glue("gfm - Ex {i} (L{test$line_start}-{test$line_end}) - {section}")
       url = glue::glue("https://github.github.com/gfm/#example-{i}")
 
-      test_that(label, {
+      rlang::expr(test_that(label, {
 
         if (test$disabled) {
           testthat::skip("Disabled test(s)")
@@ -534,7 +534,7 @@ gfm_tests_to_html = function() {
           info = label,
           url = url
         )
-      })
+      }))
     }
   )
 }
