@@ -3,45 +3,53 @@
 test_that("gfm - Ex 1 (L369-372) - Preliminaries > Tabs", {
   expect_identical_md(
     md = c(
-      "\tfoo\tbaz\t\tbim"),
+      "\tfoo\tbaz\t\tbim"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-1"
+    url = "https://github.github.com/gfm/#example-1"
   )
 })
 
 test_that("gfm - Ex 2 (L376-379) - Preliminaries > Tabs", {
   expect_identical_md(
     md = c(
-      "  \tfoo\tbaz\t\tbim"),
+      "  \tfoo\tbaz\t\tbim"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-2"
+    url = "https://github.github.com/gfm/#example-2"
   )
 })
 
 test_that("gfm - Ex 3 (L383-388) - Preliminaries > Tabs", {
   expect_identical_md(
-    md = c("    a\ta",
-      "    ὐ\ta"),
+    md = c(
+      "    a\ta",
+      "    ὐ\ta"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-3"
+    url = "https://github.github.com/gfm/#example-3"
   )
 })
 
 test_that("gfm - Ex 4 (L396-405) - Preliminaries > Tabs", {
   expect_identical_md(
-    md = c("  - foo",
-      "", "\tbar"),
+    md = c(
+      "  - foo",
+      "", "\tbar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-4"
+    url = "https://github.github.com/gfm/#example-4"
   )
 })
 
 test_that("gfm - Ex 5 (L409-419) - Preliminaries > Tabs", {
   expect_identical_md(
-    md = c("- foo",
-      "", "\t\tbar"),
+    md = c(
+      "- foo",
+      "", "\t\tbar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-5"
+    url = "https://github.github.com/gfm/#example-5"
   )
 })
 
@@ -49,7 +57,7 @@ test_that("gfm - Ex 6 (L432-437) - Preliminaries > Tabs", {
   expect_identical_md(
     md = c(">\t\tfoo"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-6"
+    url = "https://github.github.com/gfm/#example-6"
   )
 })
 
@@ -57,26 +65,30 @@ test_that("gfm - Ex 7 (L441-448) - Preliminaries > Tabs", {
   expect_identical_md(
     md = c("-\t\tfoo"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-7"
+    url = "https://github.github.com/gfm/#example-7"
   )
 })
 
 test_that("gfm - Ex 8 (L453-458) - Preliminaries > Tabs", {
   expect_identical_md(
-    md = c("    foo",
-      "\tbar"),
+    md = c(
+      "    foo",
+      "\tbar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-8"
+    url = "https://github.github.com/gfm/#example-8"
   )
 })
 
 test_that("gfm - Ex 9 (L462-476) - Preliminaries > Tabs", {
   expect_identical_md(
-    md = c(" - foo",
+    md = c(
+      " - foo",
       "   - bar",
-      "\t - baz"),
+      "\t - baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-9"
+    url = "https://github.github.com/gfm/#example-9"
   )
 })
 
@@ -84,34 +96,39 @@ test_that("gfm - Ex 10 (L480-482) - Preliminaries > Tabs", {
   expect_identical_md(
     md = c("#\tFoo"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-10"
+    url = "https://github.github.com/gfm/#example-10"
   )
 })
 
 test_that("gfm - Ex 11 (L486-488) - Preliminaries > Tabs", {
   expect_identical_md(
     md = c(
-      "*\t*\t*\t"),
+      "*\t*\t*\t"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-11"
+    url = "https://github.github.com/gfm/#example-11"
   )
 })
 
 test_that("gfm - Ex 12 (L513-519) - Blocks and inlines > Precedence", {
   expect_identical_md(
-    md = c("- `one",
-      "- two`"),
+    md = c(
+      "- `one",
+      "- two`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-12"
+    url = "https://github.github.com/gfm/#example-12"
   )
 })
 
 test_that("gfm - Ex 13 (L552-558) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
-    md = c("***",
-      "---", "___"),
+    md = c(
+      "***",
+      "---", "___"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-13"
+    url = "https://github.github.com/gfm/#example-13"
   )
 })
 
@@ -119,7 +136,7 @@ test_that("gfm - Ex 14 (L565-567) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
     md = c("+++"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-14"
+    url = "https://github.github.com/gfm/#example-14"
   )
 })
 
@@ -127,25 +144,29 @@ test_that("gfm - Ex 15 (L572-574) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
     md = c("==="),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-15"
+    url = "https://github.github.com/gfm/#example-15"
   )
 })
 
 test_that("gfm - Ex 16 (L581-587) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
-    md = c("--", "**",
-      "__"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-16"
+    md = c(
+      "--", "**",
+      "__"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-16"
   )
 })
 
 test_that("gfm - Ex 17 (L594-600) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
-    md = c(" ***",
+    md = c(
+      " ***",
       "  ***",
-      "   ***"),
+      "   ***"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-17"
+    url = "https://github.github.com/gfm/#example-17"
   )
 })
 
@@ -153,25 +174,28 @@ test_that("gfm - Ex 18 (L607-610) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
     md = c("    ***"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-18"
+    url = "https://github.github.com/gfm/#example-18"
   )
 })
 
 test_that("gfm - Ex 19 (L615-619) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
-    md = c("Foo",
-      "    ***"),
+    md = c(
+      "Foo",
+      "    ***"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-19"
+    url = "https://github.github.com/gfm/#example-19"
   )
 })
 
 test_that("gfm - Ex 20 (L626-628) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
     md = c(
-      "_____________________________________"),
+      "_____________________________________"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-20"
+    url = "https://github.github.com/gfm/#example-20"
   )
 })
 
@@ -179,34 +203,37 @@ test_that("gfm - Ex 21 (L635-637) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
     md = c(" - - -"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-21"
+    url = "https://github.github.com/gfm/#example-21"
   )
 })
 
 test_that("gfm - Ex 22 (L642-644) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
     md = c(
-      " **  * ** * ** * **"),
+      " **  * ** * ** * **"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-22"
+    url = "https://github.github.com/gfm/#example-22"
   )
 })
 
 test_that("gfm - Ex 23 (L649-651) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
     md = c(
-      "-     -      -      -"),
+      "-     -      -      -"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-23"
+    url = "https://github.github.com/gfm/#example-23"
   )
 })
 
 test_that("gfm - Ex 24 (L658-660) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
     md = c(
-      "- - - -    "),
+      "- - - -    "
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-24"
+    url = "https://github.github.com/gfm/#example-24"
   )
 })
 
@@ -215,9 +242,10 @@ test_that("gfm - Ex 25 (L667-675) - Leaf blocks > Thematic breaks", {
     md = c(
       "_ _ _ _ a", "",
       "a------", "",
-      "---a---"),
+      "---a---"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-25"
+    url = "https://github.github.com/gfm/#example-25"
   )
 })
 
@@ -225,84 +253,99 @@ test_that("gfm - Ex 26 (L683-685) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
     md = c(" *-*"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-26"
+    url = "https://github.github.com/gfm/#example-26"
   )
 })
 
 test_that("gfm - Ex 27 (L692-702) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
-    md = c("- foo",
-      "***", "- bar"),
+    md = c(
+      "- foo",
+      "***", "- bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-27"
+    url = "https://github.github.com/gfm/#example-27"
   )
 })
 
 test_that("gfm - Ex 28 (L709-715) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
-    md = c("Foo",
-      "***", "bar"),
+    md = c(
+      "Foo",
+      "***", "bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-28"
+    url = "https://github.github.com/gfm/#example-28"
   )
 })
 
 test_that("gfm - Ex 29 (L726-731) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
-    md = c("Foo",
-      "---", "bar"),
+    md = c(
+      "Foo",
+      "---", "bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-29"
+    url = "https://github.github.com/gfm/#example-29"
   )
 })
 
 test_that("gfm - Ex 30 (L739-749) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
-    md = c("* Foo",
+    md = c(
+      "* Foo",
       "* * *",
-      "* Bar"),
+      "* Bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-30"
+    url = "https://github.github.com/gfm/#example-30"
   )
 })
 
 test_that("gfm - Ex 31 (L756-764) - Leaf blocks > Thematic breaks", {
   expect_identical_md(
-    md = c("- Foo",
-      "- * * *"),
+    md = c(
+      "- Foo",
+      "- * * *"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-31"
+    url = "https://github.github.com/gfm/#example-31"
   )
 })
 
 test_that("gfm - Ex 32 (L785-797) - Leaf blocks > ATX headings", {
   expect_identical_md(
-    md = c("# foo",
+    md = c(
+      "# foo",
       "## foo",
       "### foo",
       "#### foo",
       "##### foo",
-      "###### foo"),
+      "###### foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-32"
+    url = "https://github.github.com/gfm/#example-32"
   )
 })
 
 test_that("gfm - Ex 33 (L804-806) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c(
-      "####### foo"),
+      "####### foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-33"
+    url = "https://github.github.com/gfm/#example-33"
   )
 })
 
 test_that("gfm - Ex 34 (L819-824) - Leaf blocks > ATX headings", {
   expect_identical_md(
-    md = c("#5 bolt",
-      "", "#hashtag"),
+    md = c(
+      "#5 bolt",
+      "", "#hashtag"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-34"
+    url = "https://github.github.com/gfm/#example-34"
   )
 })
 
@@ -310,53 +353,60 @@ test_that("gfm - Ex 35 (L831-833) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c("\\## foo"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-35"
+    url = "https://github.github.com/gfm/#example-35"
   )
 })
 
 test_that("gfm - Ex 36 (L840-842) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c(
-      "# foo *bar* \\*baz\\*"),
+      "# foo *bar* \\*baz\\*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-36"
+    url = "https://github.github.com/gfm/#example-36"
   )
 })
 
 test_that("gfm - Ex 37 (L849-851) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c(
-      "#                  foo                     "),
+      "#                  foo                     "
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-37"
+    url = "https://github.github.com/gfm/#example-37"
   )
 })
 
 test_that("gfm - Ex 38 (L858-864) - Leaf blocks > ATX headings", {
   expect_identical_md(
-    md = c(" ### foo",
+    md = c(
+      " ### foo",
       "  ## foo",
-      "   # foo"),
+      "   # foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-38"
+    url = "https://github.github.com/gfm/#example-38"
   )
 })
 
 test_that("gfm - Ex 39 (L871-874) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c(
-      "    # foo"),
+      "    # foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-39"
+    url = "https://github.github.com/gfm/#example-39"
   )
 })
 
 test_that("gfm - Ex 40 (L879-883) - Leaf blocks > ATX headings", {
   expect_identical_md(
-    md = c("foo",
-      "    # bar"),
+    md = c(
+      "foo",
+      "    # bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-40"
+    url = "https://github.github.com/gfm/#example-40"
   )
 })
 
@@ -364,9 +414,10 @@ test_that("gfm - Ex 41 (L890-894) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c(
       "## foo ##",
-      "  ###   bar    ###"),
+      "  ###   bar    ###"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-41"
+    url = "https://github.github.com/gfm/#example-41"
   )
 })
 
@@ -374,27 +425,30 @@ test_that("gfm - Ex 42 (L901-905) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c(
       "# foo ##################################",
-      "##### foo ##"),
+      "##### foo ##"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-42"
+    url = "https://github.github.com/gfm/#example-42"
   )
 })
 
 test_that("gfm - Ex 43 (L912-914) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c(
-      "### foo ###     "),
+      "### foo ###     "
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-43"
+    url = "https://github.github.com/gfm/#example-43"
   )
 })
 
 test_that("gfm - Ex 44 (L923-925) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c(
-      "### foo ### b"),
+      "### foo ### b"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-44"
+    url = "https://github.github.com/gfm/#example-44"
   )
 })
 
@@ -402,7 +456,7 @@ test_that("gfm - Ex 45 (L932-934) - Leaf blocks > ATX headings", {
   expect_identical_md(
     md = c("# foo#"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-45"
+    url = "https://github.github.com/gfm/#example-45"
   )
 })
 
@@ -411,37 +465,44 @@ test_that("gfm - Ex 46 (L942-948) - Leaf blocks > ATX headings", {
     md = c(
       "### foo \\###",
       "## foo #\\##",
-      "# foo \\#"),
+      "# foo \\#"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-46"
+    url = "https://github.github.com/gfm/#example-46"
   )
 })
 
 test_that("gfm - Ex 47 (L956-962) - Leaf blocks > ATX headings", {
   expect_identical_md(
-    md = c("****",
+    md = c(
+      "****",
       "## foo",
-      "****"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-47"
+      "****"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-47"
   )
 })
 
 test_that("gfm - Ex 48 (L967-973) - Leaf blocks > ATX headings", {
   expect_identical_md(
-    md = c("Foo bar",
+    md = c(
+      "Foo bar",
       "# baz",
-      "Bar foo"),
+      "Bar foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-48"
+    url = "https://github.github.com/gfm/#example-48"
   )
 })
 
 test_that("gfm - Ex 49 (L980-986) - Leaf blocks > ATX headings", {
   expect_identical_md(
-    md = c("## ", "#",
-      "### ###"),
+    md = c(
+      "## ", "#",
+      "### ###"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-49"
+    url = "https://github.github.com/gfm/#example-49"
   )
 })
 
@@ -451,18 +512,21 @@ test_that("gfm - Ex 50 (L1020-1027) - Leaf blocks > Setext headings", {
       "Foo *bar*",
       "=========", "",
       "Foo *bar*",
-      "---------"),
+      "---------"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-50"
+    url = "https://github.github.com/gfm/#example-50"
   )
 })
 
 test_that("gfm - Ex 51 (L1034-1039) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo *bar",
-      "baz*", "===="),
+    md = c(
+      "Foo *bar",
+      "baz*", "===="
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-51"
+    url = "https://github.github.com/gfm/#example-51"
   )
 })
 
@@ -471,142 +535,171 @@ test_that("gfm - Ex 52 (L1048-1053) - Leaf blocks > Setext headings", {
     md = c(
       "  Foo *bar",
       "baz*\t",
-      "===="), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-52"
+      "===="
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-52"
   )
 })
 
 test_that("gfm - Ex 53 (L1060-1067) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo",
+    md = c(
+      "Foo",
       "-------------------------",
-      "", "Foo", "="),
+      "", "Foo", "="
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-53"
+    url = "https://github.github.com/gfm/#example-53"
   )
 })
 
 test_that("gfm - Ex 54 (L1075-1086) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("   Foo",
+    md = c(
+      "   Foo",
       "---", "",
       "  Foo",
       "-----", "",
       "  Foo",
-      "  ==="),
+      "  ==="
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-54"
+    url = "https://github.github.com/gfm/#example-54"
   )
 })
 
 test_that("gfm - Ex 55 (L1093-1104) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("    Foo",
+    md = c(
+      "    Foo",
       "    ---", "",
       "    Foo",
-      "---"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-55"
+      "---"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-55"
   )
 })
 
 test_that("gfm - Ex 56 (L1112-1115) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo",
-      "   ----      "),
+    md = c(
+      "Foo",
+      "   ----      "
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-56"
+    url = "https://github.github.com/gfm/#example-56"
   )
 })
 
 test_that("gfm - Ex 57 (L1122-1126) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo",
-      "    ---"),
+    md = c(
+      "Foo",
+      "    ---"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-57"
+    url = "https://github.github.com/gfm/#example-57"
   )
 })
 
 test_that("gfm - Ex 58 (L1133-1142) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo",
+    md = c(
+      "Foo",
       "= =", "",
-      "Foo", "--- -"),
+      "Foo", "--- -"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-58"
+    url = "https://github.github.com/gfm/#example-58"
   )
 })
 
 test_that("gfm - Ex 59 (L1149-1152) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo  ",
-      "-----"),
+    md = c(
+      "Foo  ",
+      "-----"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-59"
+    url = "https://github.github.com/gfm/#example-59"
   )
 })
 
 test_that("gfm - Ex 60 (L1159-1162) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo\\",
-      "----"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-60"
+    md = c(
+      "Foo\\",
+      "----"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-60"
   )
 })
 
 test_that("gfm - Ex 61 (L1170-1181) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("`Foo",
+    md = c(
+      "`Foo",
       "----", "`", "",
       "<a title=\"a lot",
       "---",
-      "of dashes\"/>"),
+      "of dashes\"/>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-61"
+    url = "https://github.github.com/gfm/#example-61"
   )
 })
 
 test_that("gfm - Ex 62 (L1189-1195) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("> Foo",
-      "---"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-62"
+    md = c(
+      "> Foo",
+      "---"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-62"
   )
 })
 
 test_that("gfm - Ex 63 (L1200-1208) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("> foo",
-      "bar", "==="),
+    md = c(
+      "> foo",
+      "bar", "==="
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-63"
+    url = "https://github.github.com/gfm/#example-63"
   )
 })
 
 test_that("gfm - Ex 64 (L1213-1219) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("- Foo",
-      "---"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-64"
+    md = c(
+      "- Foo",
+      "---"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-64"
   )
 })
 
 test_that("gfm - Ex 65 (L1228-1233) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo",
-      "Bar", "---"),
+    md = c(
+      "Foo",
+      "Bar", "---"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-65"
+    url = "https://github.github.com/gfm/#example-65"
   )
 })
 
 test_that("gfm - Ex 66 (L1241-1251) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("---",
+    md = c(
+      "---",
       "Foo", "---",
       "Bar", "---",
-      "Baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-66"
+      "Baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-66"
   )
 })
 
@@ -614,87 +707,105 @@ test_that("gfm - Ex 67 (L1258-1261) - Leaf blocks > Setext headings", {
   expect_identical_md(
     md = c("", "===="),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-67"
+    url = "https://github.github.com/gfm/#example-67"
   )
 })
 
 test_that("gfm - Ex 68 (L1270-1274) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("---",
-      "---"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-68"
+    md = c(
+      "---",
+      "---"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-68"
   )
 })
 
 test_that("gfm - Ex 69 (L1279-1285) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("- foo",
-      "-----"),
+    md = c(
+      "- foo",
+      "-----"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-69"
+    url = "https://github.github.com/gfm/#example-69"
   )
 })
 
 test_that("gfm - Ex 70 (L1290-1295) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("    foo",
-      "---"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-70"
+    md = c(
+      "    foo",
+      "---"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-70"
   )
 })
 
 test_that("gfm - Ex 71 (L1300-1306) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("> foo",
-      "-----"),
+    md = c(
+      "> foo",
+      "-----"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-71"
+    url = "https://github.github.com/gfm/#example-71"
   )
 })
 
 test_that("gfm - Ex 72 (L1314-1317) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("\\> foo",
-      "------"),
+    md = c(
+      "\\> foo",
+      "------"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-72"
+    url = "https://github.github.com/gfm/#example-72"
   )
 })
 
 test_that("gfm - Ex 73 (L1345-1353) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo", "",
+    md = c(
+      "Foo", "",
       "bar", "---",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-73"
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-73"
   )
 })
 
 test_that("gfm - Ex 74 (L1361-1371) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo",
+    md = c(
+      "Foo",
       "bar", "",
       "---", "",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-74"
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-74"
   )
 })
 
 test_that("gfm - Ex 75 (L1379-1387) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo",
+    md = c(
+      "Foo",
       "bar", "* * *",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-75"
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-75"
   )
 })
 
 test_that("gfm - Ex 76 (L1394-1402) - Leaf blocks > Setext headings", {
   expect_identical_md(
-    md = c("Foo",
+    md = c(
+      "Foo",
       "bar", "\\---",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-76"
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-76"
   )
 })
 
@@ -702,37 +813,44 @@ test_that("gfm - Ex 77 (L1422-1427) - Leaf blocks > Indented code blocks", {
   expect_identical_md(
     md = c(
       "    a simple",
-      "      indented code block"),
+      "      indented code block"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-77"
+    url = "https://github.github.com/gfm/#example-77"
   )
 })
 
 test_that("gfm - Ex 78 (L1436-1445) - Leaf blocks > Indented code blocks", {
   expect_identical_md(
-    md = c("  - foo",
-      "", "    bar"),
+    md = c(
+      "  - foo",
+      "", "    bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-78"
+    url = "https://github.github.com/gfm/#example-78"
   )
 })
 
 test_that("gfm - Ex 79 (L1450-1461) - Leaf blocks > Indented code blocks", {
   expect_identical_md(
-    md = c("1.  foo",
-      "", "    - bar"),
+    md = c(
+      "1.  foo",
+      "", "    - bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-79"
+    url = "https://github.github.com/gfm/#example-79"
   )
 })
 
 test_that("gfm - Ex 80 (L1470-1479) - Leaf blocks > Indented code blocks", {
   expect_identical_md(
-    md = c("    <a/>",
+    md = c(
+      "    <a/>",
       "    *hi*", "",
-      "    - one"),
+      "    - one"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-80"
+    url = "https://github.github.com/gfm/#example-80"
   )
 })
 
@@ -743,9 +861,10 @@ test_that("gfm - Ex 81 (L1486-1501) - Leaf blocks > Indented code blocks", {
       "",
       "    chunk2",
       "  ", " ", " ",
-      "    chunk3"),
+      "    chunk3"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-81"
+    url = "https://github.github.com/gfm/#example-81"
   )
 })
 
@@ -754,26 +873,31 @@ test_that("gfm - Ex 82 (L1509-1516) - Leaf blocks > Indented code blocks", {
     md = c(
       "    chunk1",
       "      ",
-      "      chunk2"),
+      "      chunk2"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-82"
+    url = "https://github.github.com/gfm/#example-82"
   )
 })
 
 test_that("gfm - Ex 83 (L1524-1529) - Leaf blocks > Indented code blocks", {
   expect_identical_md(
-    md = c("Foo",
-      "    bar", ""),
+    md = c(
+      "Foo",
+      "    bar", ""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-83"
+    url = "https://github.github.com/gfm/#example-83"
   )
 })
 
 test_that("gfm - Ex 84 (L1538-1543) - Leaf blocks > Indented code blocks", {
   expect_identical_md(
-    md = c("    foo",
-      "bar"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-84"
+    md = c(
+      "    foo",
+      "bar"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-84"
   )
 })
 
@@ -785,8 +909,9 @@ test_that("gfm - Ex 85 (L1551-1564) - Leaf blocks > Indented code blocks", {
       "Heading",
       "------",
       "    foo",
-      "----"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-85"
+      "----"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-85"
   )
 })
 
@@ -794,92 +919,110 @@ test_that("gfm - Ex 86 (L1571-1576) - Leaf blocks > Indented code blocks", {
   expect_identical_md(
     md = c(
       "        foo",
-      "    bar"),
+      "    bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-86"
+    url = "https://github.github.com/gfm/#example-86"
   )
 })
 
 test_that("gfm - Ex 87 (L1584-1591) - Leaf blocks > Indented code blocks", {
   expect_identical_md(
-    md = c("", "    ",
+    md = c(
+      "", "    ",
       "    foo",
-      "    ", ""),
+      "    ", ""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-87"
+    url = "https://github.github.com/gfm/#example-87"
   )
 })
 
 test_that("gfm - Ex 88 (L1598-1601) - Leaf blocks > Indented code blocks", {
   expect_identical_md(
     md = c(
-      "    foo  "),
+      "    foo  "
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-88"
+    url = "https://github.github.com/gfm/#example-88"
   )
 })
 
 test_that("gfm - Ex 89 (L1653-1660) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("```", "<",
-      " >", "```"),
+    md = c(
+      "```", "<",
+      " >", "```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-89"
+    url = "https://github.github.com/gfm/#example-89"
   )
 })
 
 test_that("gfm - Ex 90 (L1667-1674) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("~~~", "<",
-      " >", "~~~"),
+    md = c(
+      "~~~", "<",
+      " >", "~~~"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-90"
+    url = "https://github.github.com/gfm/#example-90"
   )
 })
 
 test_that("gfm - Ex 91 (L1680-1684) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("``",
-      "foo", "``"),
+    md = c(
+      "``",
+      "foo", "``"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-91"
+    url = "https://github.github.com/gfm/#example-91"
   )
 })
 
 test_that("gfm - Ex 92 (L1691-1698) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("```",
+    md = c(
+      "```",
       "aaa", "~~~",
-      "```"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-92"
+      "```"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-92"
   )
 })
 
 test_that("gfm - Ex 93 (L1703-1710) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("~~~",
+    md = c(
+      "~~~",
       "aaa", "```",
-      "~~~"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-93"
+      "~~~"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-93"
   )
 })
 
 test_that("gfm - Ex 94 (L1717-1724) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("````",
+    md = c(
+      "````",
       "aaa", "```",
-      "``````"),
+      "``````"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-94"
+    url = "https://github.github.com/gfm/#example-94"
   )
 })
 
 test_that("gfm - Ex 95 (L1729-1736) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("~~~~",
+    md = c(
+      "~~~~",
       "aaa", "~~~",
-      "~~~~"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-95"
+      "~~~~"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-95"
   )
 })
 
@@ -887,160 +1030,192 @@ test_that("gfm - Ex 96 (L1744-1746) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
     md = c("```"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-96"
+    url = "https://github.github.com/gfm/#example-96"
   )
 })
 
 test_that("gfm - Ex 97 (L1751-1759) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("`````",
+    md = c(
+      "`````",
       "", "```",
-      "aaa"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-97"
+      "aaa"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-97"
   )
 })
 
 test_that("gfm - Ex 98 (L1764-1773) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("> ```",
+    md = c(
+      "> ```",
       "> aaa", "",
-      "bbb"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-98"
+      "bbb"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-98"
   )
 })
 
 test_that("gfm - Ex 99 (L1780-1787) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("```", "",
-      "  ", "```"),
+    md = c(
+      "```", "",
+      "  ", "```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-99"
+    url = "https://github.github.com/gfm/#example-99"
   )
 })
 
 test_that("gfm - Ex 100 (L1794-1797) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("```",
-      "```"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-100"
+    md = c(
+      "```",
+      "```"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-100"
   )
 })
 
 test_that("gfm - Ex 101 (L1806-1813) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c(" ```",
+    md = c(
+      " ```",
       " aaa", "aaa",
-      "```"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-101"
+      "```"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-101"
   )
 })
 
 test_that("gfm - Ex 102 (L1818-1827) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("  ```",
+    md = c(
+      "  ```",
       "aaa", "  aaa",
-      "aaa", "  ```"),
+      "aaa", "  ```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-102"
+    url = "https://github.github.com/gfm/#example-102"
   )
 })
 
 test_that("gfm - Ex 103 (L1832-1841) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("   ```",
+    md = c(
+      "   ```",
       "   aaa",
       "    aaa",
       "  aaa",
-      "   ```"),
+      "   ```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-103"
+    url = "https://github.github.com/gfm/#example-103"
   )
 })
 
 test_that("gfm - Ex 104 (L1848-1855) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("    ```",
+    md = c(
+      "    ```",
       "    aaa",
-      "    ```"),
+      "    ```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-104"
+    url = "https://github.github.com/gfm/#example-104"
   )
 })
 
 test_that("gfm - Ex 105 (L1863-1868) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("```",
-      "aaa", "  ```"),
+    md = c(
+      "```",
+      "aaa", "  ```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-105"
+    url = "https://github.github.com/gfm/#example-105"
   )
 })
 
 test_that("gfm - Ex 106 (L1873-1878) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("   ```",
-      "aaa", "  ```"),
+    md = c(
+      "   ```",
+      "aaa", "  ```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-106"
+    url = "https://github.github.com/gfm/#example-106"
   )
 })
 
 test_that("gfm - Ex 107 (L1885-1891) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("```",
+    md = c(
+      "```",
       "aaa",
-      "    ```"),
+      "    ```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-107"
+    url = "https://github.github.com/gfm/#example-107"
   )
 })
 
 test_that("gfm - Ex 108 (L1899-1903) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("``` ```",
-      "aaa"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-108"
+    md = c(
+      "``` ```",
+      "aaa"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-108"
   )
 })
 
 test_that("gfm - Ex 109 (L1908-1914) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("~~~~~~",
-      "aaa", "~~~ ~~"),
+    md = c(
+      "~~~~~~",
+      "aaa", "~~~ ~~"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-109"
+    url = "https://github.github.com/gfm/#example-109"
   )
 })
 
 test_that("gfm - Ex 110 (L1922-1931) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("foo",
+    md = c(
+      "foo",
       "```", "bar",
-      "```", "baz"),
+      "```", "baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-110"
+    url = "https://github.github.com/gfm/#example-110"
   )
 })
 
 test_that("gfm - Ex 111 (L1939-1949) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("foo",
+    md = c(
+      "foo",
       "---", "~~~",
       "bar", "~~~",
-      "# baz"),
+      "# baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-111"
+    url = "https://github.github.com/gfm/#example-111"
   )
 })
 
 test_that("gfm - Ex 112 (L1961-1970) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("```ruby",
+    md = c(
+      "```ruby",
       "def foo(x)",
       "  return 3",
-      "end", "```"),
+      "end", "```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-112"
+    url = "https://github.github.com/gfm/#example-112"
   )
 })
 
@@ -1051,17 +1226,20 @@ test_that("gfm - Ex 113 (L1975-1984) - Leaf blocks > Fenced code blocks", {
       "def foo(x)",
       "  return 3",
       "end",
-      "~~~~~~~"),
+      "~~~~~~~"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-113"
+    url = "https://github.github.com/gfm/#example-113"
   )
 })
 
 test_that("gfm - Ex 114 (L1989-1992) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("````;",
-      "````"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-114"
+    md = c(
+      "````;",
+      "````"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-114"
   )
 })
 
@@ -1069,8 +1247,9 @@ test_that("gfm - Ex 115 (L1999-2003) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
     md = c(
       "``` aa ```",
-      "foo"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-115"
+      "foo"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-115"
   )
 })
 
@@ -1078,18 +1257,21 @@ test_that("gfm - Ex 116 (L2010-2015) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
     md = c(
       "~~~ aa ``` ~~~",
-      "foo", "~~~"),
+      "foo", "~~~"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-116"
+    url = "https://github.github.com/gfm/#example-116"
   )
 })
 
 test_that("gfm - Ex 117 (L2022-2027) - Leaf blocks > Fenced code blocks", {
   expect_identical_md(
-    md = c("```",
+    md = c(
+      "```",
       "``` aaa",
-      "```"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-117"
+      "```"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-117"
   )
 })
 
@@ -1101,43 +1283,50 @@ test_that("gfm - Ex 118 (L2101-2114) - Leaf blocks > HTML blocks", {
       "**Hello**,",
       "", "_world_.",
       "</pre>",
-      "</td></tr></table>"),
+      "</td></tr></table>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-118"
+    url = "https://github.github.com/gfm/#example-118"
   )
 })
 
 test_that("gfm - Ex 119 (L2130-2147) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<table>",
+    md = c(
+      "<table>",
       "  <tr>",
       "    <td>",
       "           hi",
       "    </td>",
       "  </tr>",
       "</table>", "",
-      "okay."),
+      "okay."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-119"
+    url = "https://github.github.com/gfm/#example-119"
   )
 })
 
 test_that("gfm - Ex 120 (L2152-2158) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c(" <div>",
+    md = c(
+      " <div>",
       "  *hello*",
-      "         <foo><a>"),
+      "         <foo><a>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-120"
+    url = "https://github.github.com/gfm/#example-120"
   )
 })
 
 test_that("gfm - Ex 121 (L2165-2169) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("</div>",
-      "*foo*"),
+    md = c(
+      "</div>",
+      "*foo*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-121"
+    url = "https://github.github.com/gfm/#example-121"
   )
 })
 
@@ -1147,9 +1336,10 @@ test_that("gfm - Ex 122 (L2176-2184) - Leaf blocks > HTML blocks", {
       "<DIV CLASS=\"foo\">",
       "",
       "*Markdown*",
-      "", "</DIV>"),
+      "", "</DIV>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-122"
+    url = "https://github.github.com/gfm/#example-122"
   )
 })
 
@@ -1158,9 +1348,10 @@ test_that("gfm - Ex 123 (L2192-2198) - Leaf blocks > HTML blocks", {
     md = c(
       "<div id=\"foo\"",
       "  class=\"bar\">",
-      "</div>"),
+      "</div>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-123"
+    url = "https://github.github.com/gfm/#example-123"
   )
 })
 
@@ -1169,19 +1360,22 @@ test_that("gfm - Ex 124 (L2203-2209) - Leaf blocks > HTML blocks", {
     md = c(
       "<div id=\"foo\" class=\"bar",
       "  baz\">",
-      "</div>"),
+      "</div>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-124"
+    url = "https://github.github.com/gfm/#example-124"
   )
 })
 
 test_that("gfm - Ex 125 (L2215-2222) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<div>",
+    md = c(
+      "<div>",
       "*foo*", "",
-      "*bar*"),
+      "*bar*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-125"
+    url = "https://github.github.com/gfm/#example-125"
   )
 })
 
@@ -1189,8 +1383,9 @@ test_that("gfm - Ex 126 (L2231-2235) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
       "<div id=\"foo\"",
-      "*hi*"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-126"
+      "*hi*"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-126"
   )
 })
 
@@ -1198,8 +1393,9 @@ test_that("gfm - Ex 127 (L2240-2244) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
       "<div class",
-      "foo"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-127"
+      "foo"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-127"
   )
 })
 
@@ -1207,18 +1403,20 @@ test_that("gfm - Ex 128 (L2252-2256) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
       "<div *???-&&&-<---",
-      "*foo*"),
+      "*foo*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-128"
+    url = "https://github.github.com/gfm/#example-128"
   )
 })
 
 test_that("gfm - Ex 129 (L2264-2266) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
-      "<div><a href=\"bar\">*foo*</a></div>"),
+      "<div><a href=\"bar\">*foo*</a></div>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-129"
+    url = "https://github.github.com/gfm/#example-129"
   )
 })
 
@@ -1227,9 +1425,10 @@ test_that("gfm - Ex 130 (L2271-2277) - Leaf blocks > HTML blocks", {
     md = c(
       "<table><tr><td>",
       "foo",
-      "</td></tr></table>"),
+      "</td></tr></table>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-130"
+    url = "https://github.github.com/gfm/#example-130"
   )
 })
 
@@ -1239,8 +1438,9 @@ test_that("gfm - Ex 131 (L2288-2296) - Leaf blocks > HTML blocks", {
       "<div></div>",
       "``` c",
       "int x = 33;",
-      "```"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-131"
+      "```"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-131"
   )
 })
 
@@ -1248,9 +1448,10 @@ test_that("gfm - Ex 132 (L2305-2311) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
       "<a href=\"foo\">",
-      "*bar*", "</a>"),
+      "*bar*", "</a>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-132"
+    url = "https://github.github.com/gfm/#example-132"
   )
 })
 
@@ -1259,9 +1460,10 @@ test_that("gfm - Ex 133 (L2318-2324) - Leaf blocks > HTML blocks", {
     md = c(
       "<Warning>",
       "*bar*",
-      "</Warning>"),
+      "</Warning>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-133"
+    url = "https://github.github.com/gfm/#example-133"
   )
 })
 
@@ -1269,47 +1471,55 @@ test_that("gfm - Ex 134 (L2329-2335) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
       "<i class=\"foo\">",
-      "*bar*", "</i>"),
+      "*bar*", "</i>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-134"
+    url = "https://github.github.com/gfm/#example-134"
   )
 })
 
 test_that("gfm - Ex 135 (L2340-2344) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("</ins>",
-      "*bar*"),
+    md = c(
+      "</ins>",
+      "*bar*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-135"
+    url = "https://github.github.com/gfm/#example-135"
   )
 })
 
 test_that("gfm - Ex 136 (L2355-2361) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<del>",
+    md = c(
+      "<del>",
       "*foo*",
-      "</del>"),
+      "</del>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-136"
+    url = "https://github.github.com/gfm/#example-136"
   )
 })
 
 test_that("gfm - Ex 137 (L2370-2378) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<del>",
+    md = c(
+      "<del>",
       "", "*foo*", "",
-      "</del>"),
+      "</del>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-137"
+    url = "https://github.github.com/gfm/#example-137"
   )
 })
 
 test_that("gfm - Ex 138 (L2388-2390) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
-      "<del>*foo*</del>"),
+      "<del>*foo*</del>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-138"
+    url = "https://github.github.com/gfm/#example-138"
   )
 })
 
@@ -1322,8 +1532,9 @@ test_that("gfm - Ex 139 (L2404-2418) - Leaf blocks > HTML blocks", {
       "main :: IO ()",
       "main = print $ parseTags tags",
       "</code></pre>",
-      "okay"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-139"
+      "okay"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-139"
   )
 })
 
@@ -1335,49 +1546,58 @@ test_that("gfm - Ex 140 (L2425-2437) - Leaf blocks > HTML blocks", {
       "",
       "document.getElementById(\"demo\").innerHTML = \"Hello JavaScript!\";",
       "</script>",
-      "okay"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-140"
+      "okay"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-140"
   )
 })
 
 test_that("gfm - Ex 141 (L2444-2458) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<style",
+    md = c(
+      "<style",
       "  type=\"text/css\">",
       "h1 {color:red;}",
       "",
       "p {color:blue;}",
       "</style>",
-      "okay"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-141"
+      "okay"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-141"
   )
 })
 
 test_that("gfm - Ex 142 (L2467-2475) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<style",
+    md = c(
+      "<style",
       "  type=\"text/css\">",
-      "", "foo"),
+      "", "foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-142"
+    url = "https://github.github.com/gfm/#example-142"
   )
 })
 
 test_that("gfm - Ex 143 (L2480-2489) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("> <div>",
+    md = c(
+      "> <div>",
       "> foo", "",
-      "bar"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-143"
+      "bar"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-143"
   )
 })
 
 test_that("gfm - Ex 144 (L2494-2502) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("- <div>",
-      "- foo"),
+    md = c(
+      "- <div>",
+      "- foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-144"
+    url = "https://github.github.com/gfm/#example-144"
   )
 })
 
@@ -1385,9 +1605,10 @@ test_that("gfm - Ex 145 (L2509-2513) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
       "<style>p{color:red;}</style>",
-      "*foo*"),
+      "*foo*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-145"
+    url = "https://github.github.com/gfm/#example-145"
   )
 })
 
@@ -1395,49 +1616,57 @@ test_that("gfm - Ex 146 (L2518-2522) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
       "<!-- foo -->*bar*",
-      "*baz*"),
+      "*baz*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-146"
+    url = "https://github.github.com/gfm/#example-146"
   )
 })
 
 test_that("gfm - Ex 147 (L2530-2536) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<script>",
+    md = c(
+      "<script>",
       "foo",
-      "</script>1. *bar*"),
+      "</script>1. *bar*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-147"
+    url = "https://github.github.com/gfm/#example-147"
   )
 })
 
 test_that("gfm - Ex 148 (L2543-2553) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<!-- Foo",
+    md = c(
+      "<!-- Foo",
       "", "bar",
       "   baz -->",
-      "okay"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-148"
+      "okay"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-148"
   )
 })
 
 test_that("gfm - Ex 149 (L2561-2573) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<?php",
+    md = c(
+      "<?php",
       "",
       "  echo '>';",
       "", "?>",
-      "okay"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-149"
+      "okay"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-149"
   )
 })
 
 test_that("gfm - Ex 150 (L2580-2582) - Leaf blocks > HTML blocks", {
   expect_identical_md(
     md = c(
-      "<!DOCTYPE html>"),
+      "<!DOCTYPE html>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-150"
+    url = "https://github.github.com/gfm/#example-150"
   )
 })
 
@@ -1454,9 +1683,10 @@ test_that("gfm - Ex 151 (L2589-2615) - Leaf blocks > HTML blocks", {
       "",
       "    return 0;",
       "  }", "}",
-      "]]>", "okay"),
+      "]]>", "okay"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-151"
+    url = "https://github.github.com/gfm/#example-151"
   )
 })
 
@@ -1465,95 +1695,112 @@ test_that("gfm - Ex 152 (L2622-2628) - Leaf blocks > HTML blocks", {
     md = c(
       "  <!-- foo -->",
       "",
-      "    <!-- foo -->"),
+      "    <!-- foo -->"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-152"
+    url = "https://github.github.com/gfm/#example-152"
   )
 })
 
 test_that("gfm - Ex 153 (L2633-2639) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("  <div>",
-      "", "    <div>"),
+    md = c(
+      "  <div>",
+      "", "    <div>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-153"
+    url = "https://github.github.com/gfm/#example-153"
   )
 })
 
 test_that("gfm - Ex 154 (L2647-2655) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("Foo",
+    md = c(
+      "Foo",
       "<div>", "bar",
-      "</div>"),
+      "</div>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-154"
+    url = "https://github.github.com/gfm/#example-154"
   )
 })
 
 test_that("gfm - Ex 155 (L2664-2672) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<div>",
+    md = c(
+      "<div>",
       "bar", "</div>",
-      "*foo*"),
+      "*foo*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-155"
+    url = "https://github.github.com/gfm/#example-155"
   )
 })
 
 test_that("gfm - Ex 156 (L2679-2685) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("Foo",
+    md = c(
+      "Foo",
       "<a href=\"bar\">",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-156"
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-156"
   )
 })
 
 test_that("gfm - Ex 157 (L2720-2728) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<div>",
+    md = c(
+      "<div>",
       "",
       "*Emphasized* text.",
-      "", "</div>"),
+      "", "</div>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-157"
+    url = "https://github.github.com/gfm/#example-157"
   )
 })
 
 test_that("gfm - Ex 158 (L2733-2739) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<div>",
+    md = c(
+      "<div>",
       "*Emphasized* text.",
-      "</div>"),
+      "</div>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-158"
+    url = "https://github.github.com/gfm/#example-158"
   )
 })
 
 test_that("gfm - Ex 159 (L2755-2773) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<table>",
+    md = c(
+      "<table>",
       "", "<tr>", "",
       "<td>", "Hi",
       "</td>", "",
       "</tr>", "",
-      "</table>"),
+      "</table>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-159"
+    url = "https://github.github.com/gfm/#example-159"
   )
 })
 
 test_that("gfm - Ex 160 (L2782-2801) - Leaf blocks > HTML blocks", {
   expect_identical_md(
-    md = c("<table>",
+    md = c(
+      "<table>",
       "", "  <tr>",
       "", "    <td>",
       "      Hi",
       "    </td>", "",
       "  </tr>", "",
-      "</table>"),
+      "</table>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-160"
+    url = "https://github.github.com/gfm/#example-160"
   )
 })
 
@@ -1561,9 +1808,10 @@ test_that("gfm - Ex 161 (L2830-2834) - Leaf blocks > Link reference definitions"
   expect_identical_md(
     md = c(
       "[foo]: /url \"title\"",
-      "", "[foo]"),
+      "", "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-161"
+    url = "https://github.github.com/gfm/#example-161"
   )
 })
 
@@ -1573,9 +1821,10 @@ test_that("gfm - Ex 162 (L2839-2845) - Leaf blocks > Link reference definitions"
       "   [foo]: ",
       "      /url  ",
       "           'the title'  ",
-      "", "[foo]"),
+      "", "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-162"
+    url = "https://github.github.com/gfm/#example-162"
   )
 })
 
@@ -1584,9 +1833,10 @@ test_that("gfm - Ex 163 (L2850-2854) - Leaf blocks > Link reference definitions"
     md = c(
       "[Foo*bar\\]]:my_(url) 'title (with parens)'",
       "",
-      "[Foo*bar\\]]"),
+      "[Foo*bar\\]]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-163"
+    url = "https://github.github.com/gfm/#example-163"
   )
 })
 
@@ -1596,9 +1846,10 @@ test_that("gfm - Ex 164 (L2859-2865) - Leaf blocks > Link reference definitions"
       "[Foo bar]:",
       "<my url>",
       "'title'", "",
-      "[Foo bar]"),
+      "[Foo bar]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-164"
+    url = "https://github.github.com/gfm/#example-164"
   )
 })
 
@@ -1609,9 +1860,10 @@ test_that("gfm - Ex 165 (L2872-2884) - Leaf blocks > Link reference definitions"
       "title",
       "line1",
       "line2", "'",
-      "", "[foo]"),
+      "", "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-165"
+    url = "https://github.github.com/gfm/#example-165"
   )
 })
 
@@ -1621,28 +1873,33 @@ test_that("gfm - Ex 166 (L2891-2899) - Leaf blocks > Link reference definitions"
       "[foo]: /url 'title",
       "",
       "with blank line'",
-      "", "[foo]"),
+      "", "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-166"
+    url = "https://github.github.com/gfm/#example-166"
   )
 })
 
 test_that("gfm - Ex 167 (L2906-2911) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
-    md = c("[foo]:",
+    md = c(
+      "[foo]:",
       "/url", "",
-      "[foo]"),
+      "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-167"
+    url = "https://github.github.com/gfm/#example-167"
   )
 })
 
 test_that("gfm - Ex 168 (L2918-2923) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
-    md = c("[foo]:",
-      "", "[foo]"),
+    md = c(
+      "[foo]:",
+      "", "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-168"
+    url = "https://github.github.com/gfm/#example-168"
   )
 })
 
@@ -1650,9 +1907,10 @@ test_that("gfm - Ex 169 (L2930-2934) - Leaf blocks > Link reference definitions"
   expect_identical_md(
     md = c(
       "[foo]: <>", "",
-      "[foo]"),
+      "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-169"
+    url = "https://github.github.com/gfm/#example-169"
   )
 })
 
@@ -1660,9 +1918,10 @@ test_that("gfm - Ex 170 (L2941-2946) - Leaf blocks > Link reference definitions"
   expect_identical_md(
     md = c(
       "[foo]: <bar>(baz)",
-      "", "[foo]"),
+      "", "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-170"
+    url = "https://github.github.com/gfm/#example-170"
   )
 })
 
@@ -1670,30 +1929,35 @@ test_that("gfm - Ex 171 (L2954-2958) - Leaf blocks > Link reference definitions"
   expect_identical_md(
     md = c(
       "[foo]: /url\\bar\\*baz \"foo\\\"bar\\baz\"",
-      "", "[foo]"),
+      "", "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-171"
+    url = "https://github.github.com/gfm/#example-171"
   )
 })
 
 test_that("gfm - Ex 172 (L2965-2969) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
-    md = c("[foo]",
+    md = c(
+      "[foo]",
       "",
-      "[foo]: url"),
+      "[foo]: url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-172"
+    url = "https://github.github.com/gfm/#example-172"
   )
 })
 
 test_that("gfm - Ex 173 (L2977-2982) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
-    md = c("[foo]",
+    md = c(
+      "[foo]",
       "",
       "[foo]: first",
-      "[foo]: second"),
+      "[foo]: second"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-173"
+    url = "https://github.github.com/gfm/#example-173"
   )
 })
 
@@ -1701,9 +1965,10 @@ test_that("gfm - Ex 174 (L2990-2994) - Leaf blocks > Link reference definitions"
   expect_identical_md(
     md = c(
       "[FOO]: /url",
-      "", "[Foo]"),
+      "", "[Foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-174"
+    url = "https://github.github.com/gfm/#example-174"
   )
 })
 
@@ -1711,36 +1976,41 @@ test_that("gfm - Ex 175 (L2999-3003) - Leaf blocks > Link reference definitions"
   expect_identical_md(
     md = c(
       "[ΑΓΩ]: /φου",
-      "", "[αγω]"),
+      "", "[αγω]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-175"
+    url = "https://github.github.com/gfm/#example-175"
   )
 })
 
 test_that("gfm - Ex 176 (L3011-3012) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
     md = c(
-      "[foo]: /url"),
+      "[foo]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-176"
+    url = "https://github.github.com/gfm/#example-176"
   )
 })
 
 test_that("gfm - Ex 177 (L3019-3024) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
-    md = c("[", "foo",
+    md = c(
+      "[", "foo",
       "]: /url",
-      "bar"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-177"
+      "bar"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-177"
   )
 })
 
 test_that("gfm - Ex 178 (L3032-3034) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
     md = c(
-      "[foo]: /url \"title\" ok"),
+      "[foo]: /url \"title\" ok"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-178"
+    url = "https://github.github.com/gfm/#example-178"
   )
 })
 
@@ -1748,9 +2018,10 @@ test_that("gfm - Ex 179 (L3041-3044) - Leaf blocks > Link reference definitions"
   expect_identical_md(
     md = c(
       "[foo]: /url",
-      "\"title\" ok"),
+      "\"title\" ok"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-179"
+    url = "https://github.github.com/gfm/#example-179"
   )
 })
 
@@ -1758,40 +2029,47 @@ test_that("gfm - Ex 180 (L3052-3058) - Leaf blocks > Link reference definitions"
   expect_identical_md(
     md = c(
       "    [foo]: /url \"title\"",
-      "", "[foo]"),
+      "", "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-180"
+    url = "https://github.github.com/gfm/#example-180"
   )
 })
 
 test_that("gfm - Ex 181 (L3066-3074) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
-    md = c("```",
+    md = c(
+      "```",
       "[foo]: /url",
       "```", "",
-      "[foo]"),
+      "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-181"
+    url = "https://github.github.com/gfm/#example-181"
   )
 })
 
 test_that("gfm - Ex 182 (L3081-3088) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
-    md = c("Foo",
+    md = c(
+      "Foo",
       "[bar]: /baz",
-      "", "[bar]"),
+      "", "[bar]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-182"
+    url = "https://github.github.com/gfm/#example-182"
   )
 })
 
 test_that("gfm - Ex 183 (L3096-3103) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
-    md = c("# [Foo]",
+    md = c(
+      "# [Foo]",
       "[foo]: /url",
-      "> bar"),
+      "> bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-183"
+    url = "https://github.github.com/gfm/#example-183"
   )
 })
 
@@ -1800,9 +2078,10 @@ test_that("gfm - Ex 184 (L3107-3113) - Leaf blocks > Link reference definitions"
     md = c(
       "[foo]: /url",
       "bar", "===",
-      "[foo]"),
+      "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-184"
+    url = "https://github.github.com/gfm/#example-184"
   )
 })
 
@@ -1810,9 +2089,10 @@ test_that("gfm - Ex 185 (L3117-3122) - Leaf blocks > Link reference definitions"
   expect_identical_md(
     md = c(
       "[foo]: /url",
-      "===", "[foo]"),
+      "===", "[foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-185"
+    url = "https://github.github.com/gfm/#example-185"
   )
 })
 
@@ -1825,108 +2105,130 @@ test_that("gfm - Ex 186 (L3130-3141) - Leaf blocks > Link reference definitions"
       "[baz]: /baz-url",
       "", "[foo],",
       "[bar],",
-      "[baz]"),
+      "[baz]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-186"
+    url = "https://github.github.com/gfm/#example-186"
   )
 })
 
 test_that("gfm - Ex 187 (L3151-3157) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
-    md = c("[foo]",
+    md = c(
+      "[foo]",
       "",
-      "> [foo]: /url"),
+      "> [foo]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-187"
+    url = "https://github.github.com/gfm/#example-187"
   )
 })
 
 test_that("gfm - Ex 188 (L3168-3169) - Leaf blocks > Link reference definitions", {
   expect_identical_md(
     md = c(
-      "[foo]: /url"),
+      "[foo]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-188"
+    url = "https://github.github.com/gfm/#example-188"
   )
 })
 
 test_that("gfm - Ex 189 (L3185-3190) - Leaf blocks > Paragraphs", {
   expect_identical_md(
-    md = c("aaa", "",
-      "bbb"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-189"
+    md = c(
+      "aaa", "",
+      "bbb"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-189"
   )
 })
 
 test_that("gfm - Ex 190 (L3197-3206) - Leaf blocks > Paragraphs", {
   expect_identical_md(
-    md = c("aaa",
+    md = c(
+      "aaa",
       "bbb", "",
-      "ccc", "ddd"),
+      "ccc", "ddd"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-190"
+    url = "https://github.github.com/gfm/#example-190"
   )
 })
 
 test_that("gfm - Ex 191 (L3213-3219) - Leaf blocks > Paragraphs", {
   expect_identical_md(
-    md = c("aaa", "",
-      "", "bbb"),
+    md = c(
+      "aaa", "",
+      "", "bbb"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-191"
+    url = "https://github.github.com/gfm/#example-191"
   )
 })
 
 test_that("gfm - Ex 192 (L3226-3230) - Leaf blocks > Paragraphs", {
   expect_identical_md(
-    md = c("  aaa",
-      " bbb"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-192"
+    md = c(
+      "  aaa",
+      " bbb"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-192"
   )
 })
 
 test_that("gfm - Ex 193 (L3238-3244) - Leaf blocks > Paragraphs", {
   expect_identical_md(
-    md = c("aaa",
+    md = c(
+      "aaa",
       "             bbb",
-      "                                       ccc"),
+      "                                       ccc"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-193"
+    url = "https://github.github.com/gfm/#example-193"
   )
 })
 
 test_that("gfm - Ex 194 (L3252-3256) - Leaf blocks > Paragraphs", {
   expect_identical_md(
-    md = c("   aaa",
-      "bbb"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-194"
+    md = c(
+      "   aaa",
+      "bbb"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-194"
   )
 })
 
 test_that("gfm - Ex 195 (L3261-3266) - Leaf blocks > Paragraphs", {
   expect_identical_md(
-    md = c("    aaa",
-      "bbb"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-195"
+    md = c(
+      "    aaa",
+      "bbb"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-195"
   )
 })
 
 test_that("gfm - Ex 196 (L3275-3279) - Leaf blocks > Paragraphs", {
   expect_identical_md(
-    md = c("aaa     ",
-      "bbb     "),
+    md = c(
+      "aaa     ",
+      "bbb     "
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-196"
+    url = "https://github.github.com/gfm/#example-196"
   )
 })
 
 test_that("gfm - Ex 197 (L3292-3302) - Leaf blocks > Blank lines", {
   expect_identical_md(
-    md = c("  ", "",
+    md = c(
+      "  ", "",
       "aaa", "  ", "",
       "# aaa", "",
-      "  "), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-197"
+      "  "
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-197"
   )
 })
 
@@ -1935,9 +2237,10 @@ test_that("gfm - Ex 198 (L3327-3344) - Leaf blocks > Tables (extension)", {
     md = c(
       "| foo | bar |",
       "| --- | --- |",
-      "| baz | bim |"),
+      "| baz | bim |"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-198"
+    url = "https://github.github.com/gfm/#example-198"
   )
 })
 
@@ -1946,9 +2249,10 @@ test_that("gfm - Ex 199 (L3351-3368) - Leaf blocks > Tables (extension)", {
     md = c(
       "| abc | defghi |",
       ":-: | -----------:",
-      "bar | baz"),
+      "bar | baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-199"
+    url = "https://github.github.com/gfm/#example-199"
   )
 })
 
@@ -1958,9 +2262,10 @@ test_that("gfm - Ex 200 (L3375-3394) - Leaf blocks > Tables (extension)", {
       "| f\\|oo  |",
       "| ------ |",
       "| b `\\|` az |",
-      "| b **\\|** im |"),
+      "| b **\\|** im |"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-200"
+    url = "https://github.github.com/gfm/#example-200"
   )
 })
 
@@ -1970,9 +2275,10 @@ test_that("gfm - Ex 201 (L3401-3422) - Leaf blocks > Tables (extension)", {
       "| abc | def |",
       "| --- | --- |",
       "| bar | baz |",
-      "> bar"),
+      "> bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-201"
+    url = "https://github.github.com/gfm/#example-201"
   )
 })
 
@@ -1983,8 +2289,9 @@ test_that("gfm - Ex 202 (L3426-3451) - Leaf blocks > Tables (extension)", {
       "| --- | --- |",
       "| bar | baz |",
       "bar", "",
-      "bar"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-202"
+      "bar"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-202"
   )
 })
 
@@ -1993,9 +2300,10 @@ test_that("gfm - Ex 203 (L3458-3464) - Leaf blocks > Tables (extension)", {
     md = c(
       "| abc | def |",
       "| --- |",
-      "| bar |"),
+      "| bar |"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-203"
+    url = "https://github.github.com/gfm/#example-203"
   )
 })
 
@@ -2005,9 +2313,10 @@ test_that("gfm - Ex 204 (L3472-3494) - Leaf blocks > Tables (extension)", {
       "| abc | def |",
       "| --- | --- |",
       "| bar |",
-      "| bar | baz | boo |"),
+      "| bar | baz | boo |"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-204"
+    url = "https://github.github.com/gfm/#example-204"
   )
 })
 
@@ -2015,28 +2324,33 @@ test_that("gfm - Ex 205 (L3500-3510) - Leaf blocks > Tables (extension)", {
   expect_identical_md(
     md = c(
       "| abc | def |",
-      "| --- | --- |"),
+      "| --- | --- |"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-205"
+    url = "https://github.github.com/gfm/#example-205"
   )
 })
 
 test_that("gfm - Ex 206 (L3566-3574) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> # Foo",
+    md = c(
+      "> # Foo",
       "> bar",
-      "> baz"),
+      "> baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-206"
+    url = "https://github.github.com/gfm/#example-206"
   )
 })
 
 test_that("gfm - Ex 207 (L3581-3589) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("># Foo",
-      ">bar", "> baz"),
+    md = c(
+      "># Foo",
+      ">bar", "> baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-207"
+    url = "https://github.github.com/gfm/#example-207"
   )
 })
 
@@ -2045,9 +2359,10 @@ test_that("gfm - Ex 208 (L3596-3604) - Container blocks > Block quotes", {
     md = c(
       "   > # Foo",
       "   > bar",
-      " > baz"),
+      " > baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-208"
+    url = "https://github.github.com/gfm/#example-208"
   )
 })
 
@@ -2056,44 +2371,53 @@ test_that("gfm - Ex 209 (L3611-3618) - Container blocks > Block quotes", {
     md = c(
       "    > # Foo",
       "    > bar",
-      "    > baz"),
+      "    > baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-209"
+    url = "https://github.github.com/gfm/#example-209"
   )
 })
 
 test_that("gfm - Ex 210 (L3626-3634) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> # Foo",
-      "> bar", "baz"),
+    md = c(
+      "> # Foo",
+      "> bar", "baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-210"
+    url = "https://github.github.com/gfm/#example-210"
   )
 })
 
 test_that("gfm - Ex 211 (L3642-3650) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> bar",
-      "baz", "> foo"),
+    md = c(
+      "> bar",
+      "baz", "> foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-211"
+    url = "https://github.github.com/gfm/#example-211"
   )
 })
 
 test_that("gfm - Ex 212 (L3666-3672) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> foo",
-      "---"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-212"
+    md = c(
+      "> foo",
+      "---"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-212"
   )
 })
 
 test_that("gfm - Ex 213 (L3686-3696) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> - foo",
-      "- bar"),
+    md = c(
+      "> - foo",
+      "- bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-213"
+    url = "https://github.github.com/gfm/#example-213"
   )
 })
 
@@ -2101,27 +2425,32 @@ test_that("gfm - Ex 214 (L3704-3712) - Container blocks > Block quotes", {
   expect_identical_md(
     md = c(
       ">     foo",
-      "    bar"),
+      "    bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-214"
+    url = "https://github.github.com/gfm/#example-214"
   )
 })
 
 test_that("gfm - Ex 215 (L3717-3725) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> ```",
-      "foo", "```"),
+    md = c(
+      "> ```",
+      "foo", "```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-215"
+    url = "https://github.github.com/gfm/#example-215"
   )
 })
 
 test_that("gfm - Ex 216 (L3733-3739) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> foo",
-      "    - bar"),
+    md = c(
+      "> foo",
+      "    - bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-216"
+    url = "https://github.github.com/gfm/#example-216"
   )
 })
 
@@ -2129,95 +2458,115 @@ test_that("gfm - Ex 217 (L3757-3760) - Container blocks > Block quotes", {
   expect_identical_md(
     md = c(">"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-217"
+    url = "https://github.github.com/gfm/#example-217"
   )
 })
 
 test_that("gfm - Ex 218 (L3765-3770) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c(">", ">  ",
-      "> "), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-218"
+    md = c(
+      ">", ">  ",
+      "> "
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-218"
   )
 })
 
 test_that("gfm - Ex 219 (L3777-3783) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c(">",
-      "> foo", ">  "),
+    md = c(
+      ">",
+      "> foo", ">  "
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-219"
+    url = "https://github.github.com/gfm/#example-219"
   )
 })
 
 test_that("gfm - Ex 220 (L3790-3799) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> foo",
-      "", "> bar"),
+    md = c(
+      "> foo",
+      "", "> bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-220"
+    url = "https://github.github.com/gfm/#example-220"
   )
 })
 
 test_that("gfm - Ex 221 (L3812-3818) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> foo",
-      "> bar"),
+    md = c(
+      "> foo",
+      "> bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-221"
+    url = "https://github.github.com/gfm/#example-221"
   )
 })
 
 test_that("gfm - Ex 222 (L3825-3832) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> foo",
-      ">", "> bar"),
+    md = c(
+      "> foo",
+      ">", "> bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-222"
+    url = "https://github.github.com/gfm/#example-222"
   )
 })
 
 test_that("gfm - Ex 223 (L3839-3845) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("foo",
-      "> bar"),
+    md = c(
+      "foo",
+      "> bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-223"
+    url = "https://github.github.com/gfm/#example-223"
   )
 })
 
 test_that("gfm - Ex 224 (L3853-3863) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> aaa",
-      "***", "> bbb"),
+    md = c(
+      "> aaa",
+      "***", "> bbb"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-224"
+    url = "https://github.github.com/gfm/#example-224"
   )
 })
 
 test_that("gfm - Ex 225 (L3871-3877) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> bar",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-225"
+    md = c(
+      "> bar",
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-225"
   )
 })
 
 test_that("gfm - Ex 226 (L3882-3889) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> bar",
-      "", "baz"),
+    md = c(
+      "> bar",
+      "", "baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-226"
+    url = "https://github.github.com/gfm/#example-226"
   )
 })
 
 test_that("gfm - Ex 227 (L3894-3901) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c("> bar",
-      ">", "baz"),
+    md = c(
+      "> bar",
+      ">", "baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-227"
+    url = "https://github.github.com/gfm/#example-227"
   )
 })
 
@@ -2225,18 +2574,21 @@ test_that("gfm - Ex 228 (L3910-3920) - Container blocks > Block quotes", {
   expect_identical_md(
     md = c(
       "> > > foo",
-      "bar"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-228"
+      "bar"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-228"
   )
 })
 
 test_that("gfm - Ex 229 (L3925-3937) - Container blocks > Block quotes", {
   expect_identical_md(
-    md = c(">>> foo",
+    md = c(
+      ">>> foo",
       "> bar",
-      ">>baz"),
+      ">>baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-229"
+    url = "https://github.github.com/gfm/#example-229"
   )
 })
 
@@ -2245,9 +2597,10 @@ test_that("gfm - Ex 230 (L3947-3957) - Container blocks > Block quotes", {
     md = c(
       ">     code",
       "",
-      ">    not code"),
+      ">    not code"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-230"
+    url = "https://github.github.com/gfm/#example-230"
   )
 })
 
@@ -2259,9 +2612,10 @@ test_that("gfm - Ex 231 (L4001-4014) - Container blocks > List items", {
       "",
       "    indented code",
       "",
-      "> A block quote."),
+      "> A block quote."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-231"
+    url = "https://github.github.com/gfm/#example-231"
   )
 })
 
@@ -2273,27 +2627,32 @@ test_that("gfm - Ex 232 (L4023-4040) - Container blocks > List items", {
       "",
       "        indented code",
       "",
-      "    > A block quote."),
+      "    > A block quote."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-232"
+    url = "https://github.github.com/gfm/#example-232"
   )
 })
 
 test_that("gfm - Ex 233 (L4056-4063) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- one",
-      "", " two"),
+    md = c(
+      "- one",
+      "", " two"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-233"
+    url = "https://github.github.com/gfm/#example-233"
   )
 })
 
 test_that("gfm - Ex 234 (L4068-4077) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- one",
-      "", "  two"),
+    md = c(
+      "- one",
+      "", "  two"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-234"
+    url = "https://github.github.com/gfm/#example-234"
   )
 })
 
@@ -2302,9 +2661,10 @@ test_that("gfm - Ex 235 (L4082-4090) - Container blocks > List items", {
   expect_identical_md(
     md = c(
       " -    one", "",
-      "     two"),
+      "     two"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-235"
+    url = "https://github.github.com/gfm/#example-235"
   )
 })
 
@@ -2312,9 +2672,10 @@ test_that("gfm - Ex 236 (L4095-4104) - Container blocks > List items", {
   expect_identical_md(
     md = c(
       " -    one", "",
-      "      two"),
+      "      two"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-236"
+    url = "https://github.github.com/gfm/#example-236"
   )
 })
 
@@ -2323,79 +2684,92 @@ test_that("gfm - Ex 237 (L4117-4130) - Container blocks > List items", {
     md = c(
       "   > > 1.  one",
       ">>",
-      ">>     two"),
+      ">>     two"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-237"
+    url = "https://github.github.com/gfm/#example-237"
   )
 })
 
 test_that("gfm - Ex 238 (L4144-4155) - Container blocks > List items", {
   expect_identical_md(
-    md = c(">>- one",
+    md = c(
+      ">>- one",
       ">>",
-      "  >  > two"),
+      "  >  > two"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-238"
+    url = "https://github.github.com/gfm/#example-238"
   )
 })
 
 test_that("gfm - Ex 239 (L4163-4168) - Container blocks > List items", {
   expect_identical_md(
-    md = c("-one", "",
-      "2.two"),
+    md = c(
+      "-one", "",
+      "2.two"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-239"
+    url = "https://github.github.com/gfm/#example-239"
   )
 })
 
 test_that("gfm - Ex 240 (L4176-4186) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- foo",
-      "", "", "  bar"),
+    md = c(
+      "- foo",
+      "", "", "  bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-240"
+    url = "https://github.github.com/gfm/#example-240"
   )
 })
 
 test_that("gfm - Ex 241 (L4193-4213) - Container blocks > List items", {
   expect_identical_md(
-    md = c("1.  foo",
+    md = c(
+      "1.  foo",
       "", "    ```",
       "    bar",
       "    ```", "",
       "    baz", "",
-      "    > bam"),
+      "    > bam"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-241"
+    url = "https://github.github.com/gfm/#example-241"
   )
 })
 
 test_that("gfm - Ex 242 (L4221-4237) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- Foo",
+    md = c(
+      "- Foo",
       "", "      bar",
       "", "",
-      "      baz"),
+      "      baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-242"
+    url = "https://github.github.com/gfm/#example-242"
   )
 })
 
 test_that("gfm - Ex 243 (L4243-4247) - Container blocks > List items", {
   expect_identical_md(
     md = c(
-      "123456789. ok"),
+      "123456789. ok"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-243"
+    url = "https://github.github.com/gfm/#example-243"
   )
 })
 
 test_that("gfm - Ex 244 (L4252-4254) - Container blocks > List items", {
   expect_identical_md(
     md = c(
-      "1234567890. not ok"),
+      "1234567890. not ok"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-244"
+    url = "https://github.github.com/gfm/#example-244"
   )
 })
 
@@ -2403,7 +2777,7 @@ test_that("gfm - Ex 245 (L4261-4265) - Container blocks > List items", {
   expect_identical_md(
     md = c("0. ok"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-245"
+    url = "https://github.github.com/gfm/#example-245"
   )
 })
 
@@ -2411,25 +2785,28 @@ test_that("gfm - Ex 246 (L4270-4274) - Container blocks > List items", {
   expect_identical_md(
     md = c("003. ok"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-246"
+    url = "https://github.github.com/gfm/#example-246"
   )
 })
 
 test_that("gfm - Ex 247 (L4281-4283) - Container blocks > List items", {
   expect_identical_md(
     md = c(
-      "-1. not ok"),
+      "-1. not ok"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-247"
+    url = "https://github.github.com/gfm/#example-247"
   )
 })
 
 test_that("gfm - Ex 248 (L4304-4314) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- foo",
-      "", "      bar"),
+    md = c(
+      "- foo",
+      "", "      bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-248"
+    url = "https://github.github.com/gfm/#example-248"
   )
 })
 
@@ -2438,9 +2815,10 @@ test_that("gfm - Ex 249 (L4321-4331) - Container blocks > List items", {
     md = c(
       "  10.  foo",
       "",
-      "           bar"),
+      "           bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-249"
+    url = "https://github.github.com/gfm/#example-249"
   )
 })
 
@@ -2450,9 +2828,10 @@ test_that("gfm - Ex 250 (L4340-4350) - Container blocks > List items", {
       "    indented code",
       "", "paragraph",
       "",
-      "    more code"),
+      "    more code"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-250"
+    url = "https://github.github.com/gfm/#example-250"
   )
 })
 
@@ -2463,9 +2842,10 @@ test_that("gfm - Ex 251 (L4355-4369) - Container blocks > List items", {
       "",
       "   paragraph",
       "",
-      "       more code"),
+      "       more code"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-251"
+    url = "https://github.github.com/gfm/#example-251"
   )
 })
 
@@ -2476,94 +2856,113 @@ test_that("gfm - Ex 252 (L4377-4391) - Container blocks > List items", {
       "",
       "   paragraph",
       "",
-      "       more code"),
+      "       more code"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-252"
+    url = "https://github.github.com/gfm/#example-252"
   )
 })
 
 test_that("gfm - Ex 253 (L4404-4409) - Container blocks > List items", {
   expect_identical_md(
-    md = c("   foo",
-      "", "bar"),
+    md = c(
+      "   foo",
+      "", "bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-253"
+    url = "https://github.github.com/gfm/#example-253"
   )
 })
 
 test_that("gfm - Ex 254 (L4414-4421) - Container blocks > List items", {
   expect_identical_md(
-    md = c("-    foo",
-      "", "  bar"),
+    md = c(
+      "-    foo",
+      "", "  bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-254"
+    url = "https://github.github.com/gfm/#example-254"
   )
 })
 
 test_that("gfm - Ex 255 (L4431-4440) - Container blocks > List items", {
   expect_identical_md(
-    md = c("-  foo",
-      "", "   bar"),
+    md = c(
+      "-  foo",
+      "", "   bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-255"
+    url = "https://github.github.com/gfm/#example-255"
   )
 })
 
 test_that("gfm - Ex 256 (L4459-4478) - Container blocks > List items", {
   expect_identical_md(
-    md = c("-",
+    md = c(
+      "-",
       "  foo", "-",
       "  ```",
       "  bar",
       "  ```", "-",
-      "      baz"),
+      "      baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-256"
+    url = "https://github.github.com/gfm/#example-256"
   )
 })
 
 test_that("gfm - Ex 257 (L4485-4490) - Container blocks > List items", {
   expect_identical_md(
-    md = c("-   ",
-      "  foo"),
+    md = c(
+      "-   ",
+      "  foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-257"
+    url = "https://github.github.com/gfm/#example-257"
   )
 })
 
 test_that("gfm - Ex 258 (L4499-4506) - Container blocks > List items", {
   expect_identical_md(
-    md = c("-", "",
-      "  foo"),
+    md = c(
+      "-", "",
+      "  foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-258"
+    url = "https://github.github.com/gfm/#example-258"
   )
 })
 
 test_that("gfm - Ex 259 (L4513-4521) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- foo",
-      "-", "- bar"),
+    md = c(
+      "- foo",
+      "-", "- bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-259"
+    url = "https://github.github.com/gfm/#example-259"
   )
 })
 
 test_that("gfm - Ex 260 (L4528-4536) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- foo",
-      "-   ", "- bar"),
+    md = c(
+      "- foo",
+      "-   ", "- bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-260"
+    url = "https://github.github.com/gfm/#example-260"
   )
 })
 
 test_that("gfm - Ex 261 (L4543-4551) - Container blocks > List items", {
   expect_identical_md(
-    md = c("1. foo",
-      "2.", "3. bar"),
+    md = c(
+      "1. foo",
+      "2.", "3. bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-261"
+    url = "https://github.github.com/gfm/#example-261"
   )
 })
 
@@ -2571,16 +2970,18 @@ test_that("gfm - Ex 262 (L4558-4562) - Container blocks > List items", {
   expect_identical_md(
     md = c("*"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-262"
+    url = "https://github.github.com/gfm/#example-262"
   )
 })
 
 test_that("gfm - Ex 263 (L4568-4577) - Container blocks > List items", {
   expect_identical_md(
-    md = c("foo", "*",
-      "", "foo", "1."),
+    md = c(
+      "foo", "*",
+      "", "foo", "1."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-263"
+    url = "https://github.github.com/gfm/#example-263"
   )
 })
 
@@ -2592,9 +2993,10 @@ test_that("gfm - Ex 264 (L4590-4607) - Container blocks > List items", {
       "",
       "         indented code",
       "",
-      "     > A block quote."),
+      "     > A block quote."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-264"
+    url = "https://github.github.com/gfm/#example-264"
   )
 })
 
@@ -2606,9 +3008,10 @@ test_that("gfm - Ex 265 (L4614-4631) - Container blocks > List items", {
       "",
       "          indented code",
       "",
-      "      > A block quote."),
+      "      > A block quote."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-265"
+    url = "https://github.github.com/gfm/#example-265"
   )
 })
 
@@ -2620,9 +3023,10 @@ test_that("gfm - Ex 266 (L4638-4655) - Container blocks > List items", {
       "",
       "           indented code",
       "",
-      "       > A block quote."),
+      "       > A block quote."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-266"
+    url = "https://github.github.com/gfm/#example-266"
   )
 })
 
@@ -2634,9 +3038,10 @@ test_that("gfm - Ex 267 (L4662-4675) - Container blocks > List items", {
       "",
       "            indented code",
       "",
-      "        > A block quote."),
+      "        > A block quote."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-267"
+    url = "https://github.github.com/gfm/#example-267"
   )
 })
 
@@ -2648,9 +3053,10 @@ test_that("gfm - Ex 268 (L4692-4709) - Container blocks > List items", {
       "",
       "          indented code",
       "",
-      "      > A block quote."),
+      "      > A block quote."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-268"
+    url = "https://github.github.com/gfm/#example-268"
   )
 })
 
@@ -2658,9 +3064,10 @@ test_that("gfm - Ex 269 (L4716-4722) - Container blocks > List items", {
   expect_identical_md(
     md = c(
       "  1.  A paragraph",
-      "    with two lines."),
+      "    with two lines."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-269"
+    url = "https://github.github.com/gfm/#example-269"
   )
 })
 
@@ -2668,9 +3075,10 @@ test_that("gfm - Ex 270 (L4729-4741) - Container blocks > List items", {
   expect_identical_md(
     md = c(
       "> 1. > Blockquote",
-      "continued here."),
+      "continued here."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-270"
+    url = "https://github.github.com/gfm/#example-270"
   )
 })
 
@@ -2678,49 +3086,58 @@ test_that("gfm - Ex 271 (L4746-4758) - Container blocks > List items", {
   expect_identical_md(
     md = c(
       "> 1. > Blockquote",
-      "> continued here."),
+      "> continued here."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-271"
+    url = "https://github.github.com/gfm/#example-271"
   )
 })
 
 test_that("gfm - Ex 272 (L4774-4793) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- foo",
+    md = c(
+      "- foo",
       "  - bar",
       "    - baz",
-      "      - boo"),
+      "      - boo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-272"
+    url = "https://github.github.com/gfm/#example-272"
   )
 })
 
 test_that("gfm - Ex 273 (L4800-4810) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- foo",
+    md = c(
+      "- foo",
       " - bar",
       "  - baz",
-      "   - boo"),
+      "   - boo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-273"
+    url = "https://github.github.com/gfm/#example-273"
   )
 })
 
 test_that("gfm - Ex 274 (L4817-4826) - Container blocks > List items", {
   expect_identical_md(
-    md = c("10) foo",
-      "    - bar"),
+    md = c(
+      "10) foo",
+      "    - bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-274"
+    url = "https://github.github.com/gfm/#example-274"
   )
 })
 
 test_that("gfm - Ex 275 (L4833-4841) - Container blocks > List items", {
   expect_identical_md(
-    md = c("10) foo",
-      "   - bar"),
+    md = c(
+      "10) foo",
+      "   - bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-275"
+    url = "https://github.github.com/gfm/#example-275"
   )
 })
 
@@ -2728,27 +3145,30 @@ test_that("gfm - Ex 276 (L4848-4856) - Container blocks > List items", {
   expect_identical_md(
     md = c("- - foo"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-276"
+    url = "https://github.github.com/gfm/#example-276"
   )
 })
 
 test_that("gfm - Ex 277 (L4861-4873) - Container blocks > List items", {
   expect_identical_md(
     md = c(
-      "1. - 2. foo"),
+      "1. - 2. foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-277"
+    url = "https://github.github.com/gfm/#example-277"
   )
 })
 
 test_that("gfm - Ex 278 (L4880-4892) - Container blocks > List items", {
   expect_identical_md(
-    md = c("- # Foo",
+    md = c(
+      "- # Foo",
       "- Bar",
       "  ---",
-      "  baz"),
+      "  baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-278"
+    url = "https://github.github.com/gfm/#example-278"
   )
 })
 
@@ -2757,9 +3177,10 @@ test_that("gfm - Ex 279 (L5109-5115) - Container blocks > Task list items (exten
   expect_identical_md(
     md = c(
       "- [ ] foo",
-      "- [x] bar"),
+      "- [x] bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-279"
+    url = "https://github.github.com/gfm/#example-279"
   )
 })
 
@@ -2770,39 +3191,46 @@ test_that("gfm - Ex 280 (L5121-5134) - Container blocks > Task list items (exten
       "- [x] foo",
       "  - [ ] bar",
       "  - [x] baz",
-      "- [ ] bim"),
+      "- [ ] bim"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-280"
+    url = "https://github.github.com/gfm/#example-280"
   )
 })
 
 test_that("gfm - Ex 281 (L5173-5183) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- foo",
+    md = c(
+      "- foo",
       "- bar",
-      "+ baz"),
+      "+ baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-281"
+    url = "https://github.github.com/gfm/#example-281"
   )
 })
 
 test_that("gfm - Ex 282 (L5188-5198) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("1. foo",
+    md = c(
+      "1. foo",
       "2. bar",
-      "3) baz"),
+      "3) baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-282"
+    url = "https://github.github.com/gfm/#example-282"
   )
 })
 
 test_that("gfm - Ex 283 (L5207-5215) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("Foo",
+    md = c(
+      "Foo",
       "- bar",
-      "- baz"),
+      "- baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-283"
+    url = "https://github.github.com/gfm/#example-283"
   )
 })
 
@@ -2810,9 +3238,10 @@ test_that("gfm - Ex 284 (L5284-5288) - Container blocks > Lists", {
   expect_identical_md(
     md = c(
       "The number of windows in my house is",
-      "14.  The number of doors is 6."),
+      "14.  The number of doors is 6."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-284"
+    url = "https://github.github.com/gfm/#example-284"
   )
 })
 
@@ -2820,176 +3249,209 @@ test_that("gfm - Ex 285 (L5294-5300) - Container blocks > Lists", {
   expect_identical_md(
     md = c(
       "The number of windows in my house is",
-      "1.  The number of doors is 6."),
+      "1.  The number of doors is 6."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-285"
+    url = "https://github.github.com/gfm/#example-285"
   )
 })
 
 test_that("gfm - Ex 286 (L5308-5325) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- foo",
+    md = c(
+      "- foo",
       "", "- bar", "",
-      "", "- baz"),
+      "", "- baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-286"
+    url = "https://github.github.com/gfm/#example-286"
   )
 })
 
 test_that("gfm - Ex 287 (L5329-5349) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- foo",
+    md = c(
+      "- foo",
       "  - bar",
       "    - baz", "",
-      "", "      bim"),
+      "", "      bim"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-287"
+    url = "https://github.github.com/gfm/#example-287"
   )
 })
 
 test_that("gfm - Ex 288 (L5359-5375) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- foo",
+    md = c(
+      "- foo",
       "- bar", "",
       "<!-- -->", "",
       "- baz",
-      "- bim"),
+      "- bim"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-288"
+    url = "https://github.github.com/gfm/#example-288"
   )
 })
 
 test_that("gfm - Ex 289 (L5380-5401) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("-   foo",
+    md = c(
+      "-   foo",
       "",
       "    notcode",
       "", "-   foo",
       "", "<!-- -->",
-      "", "    code"),
+      "", "    code"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-289"
+    url = "https://github.github.com/gfm/#example-289"
   )
 })
 
 test_that("gfm - Ex 290 (L5411-5427) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
+    md = c(
+      "- a",
       " - b", "  - c",
       "   - d",
       "  - e", " - f",
-      "- g"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-290"
+      "- g"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-290"
   )
 })
 
 test_that("gfm - Ex 291 (L5432-5448) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("1. a", "",
+    md = c(
+      "1. a", "",
       "  2. b", "",
-      "   3. c"),
+      "   3. c"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-291"
+    url = "https://github.github.com/gfm/#example-291"
   )
 })
 
 test_that("gfm - Ex 292 (L5456-5468) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
+    md = c(
+      "- a",
       " - b", "  - c",
       "   - d",
-      "    - e"),
+      "    - e"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-292"
+    url = "https://github.github.com/gfm/#example-292"
   )
 })
 
 test_that("gfm - Ex 293 (L5476-5491) - Container blocks > Lists", {
   testthat::skip("gfm #293 - Ambiguous list to code block case #293")
   expect_identical_md(
-    md = c("1. a", "",
+    md = c(
+      "1. a", "",
       "  2. b", "",
-      "    3. c"),
+      "    3. c"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-293"
+    url = "https://github.github.com/gfm/#example-293"
   )
 })
 
 test_that("gfm - Ex 294 (L5499-5514) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
+    md = c(
+      "- a",
       "- b", "",
-      "- c"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-294"
+      "- c"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-294"
   )
 })
 
 test_that("gfm - Ex 295 (L5521-5534) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("* a", "*",
-      "", "* c"),
+    md = c(
+      "* a", "*",
+      "", "* c"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-295"
+    url = "https://github.github.com/gfm/#example-295"
   )
 })
 
 test_that("gfm - Ex 296 (L5543-5560) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
+    md = c(
+      "- a",
       "- b", "",
-      "  c", "- d"),
+      "  c", "- d"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-296"
+    url = "https://github.github.com/gfm/#example-296"
   )
 })
 
 test_that("gfm - Ex 297 (L5565-5581) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
+    md = c(
+      "- a",
       "- b", "",
       "  [ref]: /url",
-      "- d"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-297"
+      "- d"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-297"
   )
 })
 
 test_that("gfm - Ex 298 (L5588-5605) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
+    md = c(
+      "- a",
       "- ```", "  b",
       "", "", "  ```",
-      "- c"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-298"
+      "- c"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-298"
   )
 })
 
 test_that("gfm - Ex 299 (L5614-5630) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
+    md = c(
+      "- a",
       "  - b", "",
-      "    c", "- d"),
+      "    c", "- d"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-299"
+    url = "https://github.github.com/gfm/#example-299"
   )
 })
 
 test_that("gfm - Ex 300 (L5638-5650) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("* a",
+    md = c(
+      "* a",
       "  > b", "  >",
-      "* c"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-300"
+      "* c"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-300"
   )
 })
 
 test_that("gfm - Ex 301 (L5658-5674) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
+    md = c(
+      "- a",
       "  > b",
       "  ```", "  c",
-      "  ```", "- d"),
+      "  ```", "- d"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-301"
+    url = "https://github.github.com/gfm/#example-301"
   )
 })
 
@@ -2997,49 +3459,57 @@ test_that("gfm - Ex 302 (L5681-5685) - Container blocks > Lists", {
   expect_identical_md(
     md = c("- a"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-302"
+    url = "https://github.github.com/gfm/#example-302"
   )
 })
 
 test_that("gfm - Ex 303 (L5690-5699) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
-      "  - b"),
+    md = c(
+      "- a",
+      "  - b"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-303"
+    url = "https://github.github.com/gfm/#example-303"
   )
 })
 
 test_that("gfm - Ex 304 (L5707-5719) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("1. ```",
+    md = c(
+      "1. ```",
       "   foo",
       "   ```", "",
-      "   bar"),
+      "   bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-304"
+    url = "https://github.github.com/gfm/#example-304"
   )
 })
 
 test_that("gfm - Ex 305 (L5726-5739) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("* foo",
+    md = c(
+      "* foo",
       "  * bar", "",
-      "  baz"),
+      "  baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-305"
+    url = "https://github.github.com/gfm/#example-305"
   )
 })
 
 test_that("gfm - Ex 306 (L5744-5767) - Container blocks > Lists", {
   expect_identical_md(
-    md = c("- a",
+    md = c(
+      "- a",
       "  - b",
       "  - c", "",
       "- d", "  - e",
-      "  - f"),
+      "  - f"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-306"
+    url = "https://github.github.com/gfm/#example-306"
   )
 })
 
@@ -3047,25 +3517,27 @@ test_that("gfm - Ex 307 (L5778-5780) - Inlines > Lists", {
   expect_identical_md(
     md = c("`hi`lo`"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-307"
+    url = "https://github.github.com/gfm/#example-307"
   )
 })
 
 test_that("gfm - Ex 308 (L5792-5794) - Inlines > Backslash escapes", {
   expect_identical_md(
     md = c(
-      "\\!\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~"),
+      "\\!\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-308"
+    url = "https://github.github.com/gfm/#example-308"
   )
 })
 
 test_that("gfm - Ex 309 (L5802-5804) - Inlines > Backslash escapes", {
   expect_identical_md(
     md = c(
-      "\\\t\\A\\a\\ \\3\\φ\\«"),
+      "\\\t\\A\\a\\ \\3\\φ\\«"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-309"
+    url = "https://github.github.com/gfm/#example-309"
   )
 })
 
@@ -3080,90 +3552,103 @@ test_that("gfm - Ex 310 (L5812-5830) - Inlines > Backslash escapes", {
       "\\* not a list",
       "\\# not a heading",
       "\\[foo]: /url \"not a reference\"",
-      "\\&ouml; not a character entity"),
+      "\\&ouml; not a character entity"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-310"
+    url = "https://github.github.com/gfm/#example-310"
   )
 })
 
 test_that("gfm - Ex 311 (L5837-5839) - Inlines > Backslash escapes", {
   expect_identical_md(
     md = c(
-      "\\\\*emphasis*"),
+      "\\\\*emphasis*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-311"
+    url = "https://github.github.com/gfm/#example-311"
   )
 })
 
 test_that("gfm - Ex 312 (L5846-5850) - Inlines > Backslash escapes", {
   expect_identical_md(
-    md = c("foo\\",
-      "bar"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-312"
+    md = c(
+      "foo\\",
+      "bar"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-312"
   )
 })
 
 test_that("gfm - Ex 313 (L5858-5860) - Inlines > Backslash escapes", {
   expect_identical_md(
     md = c(
-      "`` \\[\\` ``"),
+      "`` \\[\\` ``"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-313"
+    url = "https://github.github.com/gfm/#example-313"
   )
 })
 
 test_that("gfm - Ex 314 (L5865-5868) - Inlines > Backslash escapes", {
   expect_identical_md(
     md = c(
-      "    \\[\\]"),
+      "    \\[\\]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-314"
+    url = "https://github.github.com/gfm/#example-314"
   )
 })
 
 test_that("gfm - Ex 315 (L5873-5878) - Inlines > Backslash escapes", {
   expect_identical_md(
-    md = c("~~~",
-      "\\[\\]", "~~~"),
+    md = c(
+      "~~~",
+      "\\[\\]", "~~~"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-315"
+    url = "https://github.github.com/gfm/#example-315"
   )
 })
 
 test_that("gfm - Ex 316 (L5883-5885) - Inlines > Backslash escapes", {
   expect_identical_md(
     md = c(
-      "<http://example.com?find=\\*>"),
+      "<http://example.com?find=\\*>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-316"
+    url = "https://github.github.com/gfm/#example-316"
   )
 })
 
 test_that("gfm - Ex 317 (L5890-5892) - Inlines > Backslash escapes", {
   expect_identical_md(
     md = c(
-      "<a href=\"/bar\\/)\">"),
+      "<a href=\"/bar\\/)\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-317"
+    url = "https://github.github.com/gfm/#example-317"
   )
 })
 
 test_that("gfm - Ex 318 (L5900-5902) - Inlines > Backslash escapes", {
   expect_identical_md(
     md = c(
-      "[foo](/bar\\* \"ti\\*tle\")"),
+      "[foo](/bar\\* \"ti\\*tle\")"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-318"
+    url = "https://github.github.com/gfm/#example-318"
   )
 })
 
 test_that("gfm - Ex 319 (L5907-5911) - Inlines > Backslash escapes", {
   expect_identical_md(
-    md = c("[foo]",
+    md = c(
+      "[foo]",
       "",
-      "[foo]: /bar\\* \"ti\\*tle\""),
+      "[foo]: /bar\\* \"ti\\*tle\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-319"
+    url = "https://github.github.com/gfm/#example-319"
   )
 })
 
@@ -3171,9 +3656,10 @@ test_that("gfm - Ex 320 (L5916-5921) - Inlines > Backslash escapes", {
   expect_identical_md(
     md = c(
       "``` foo\\+bar",
-      "foo", "```"),
+      "foo", "```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-320"
+    url = "https://github.github.com/gfm/#example-320"
   )
 })
 
@@ -3182,27 +3668,30 @@ test_that("gfm - Ex 321 (L5953-5959) - Inlines > Entity and numeric character re
     md = c(
       "&nbsp; &amp; &copy; &AElig; &Dcaron;",
       "&frac34; &HilbertSpace; &DifferentialD;",
-      "&ClockwiseContourIntegral; &ngE;"),
+      "&ClockwiseContourIntegral; &ngE;"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-321"
+    url = "https://github.github.com/gfm/#example-321"
   )
 })
 
 test_that("gfm - Ex 322 (L5972-5974) - Inlines > Entity and numeric character references", {
   expect_identical_md(
     md = c(
-      "&#35; &#1234; &#992; &#0;"),
+      "&#35; &#1234; &#992; &#0;"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-322"
+    url = "https://github.github.com/gfm/#example-322"
   )
 })
 
 test_that("gfm - Ex 323 (L5985-5987) - Inlines > Entity and numeric character references", {
   expect_identical_md(
     md = c(
-      "&#X22; &#XD06; &#xcab;"),
+      "&#X22; &#XD06; &#xcab;"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-323"
+    url = "https://github.github.com/gfm/#example-323"
   )
 })
 
@@ -3212,9 +3701,10 @@ test_that("gfm - Ex 324 (L5994-6002) - Inlines > Entity and numeric character re
       "&nbsp &x; &#; &#x;",
       "&#987654321;",
       "&#abcdef0;",
-      "&ThisIsNotDefined; &hi?;"),
+      "&ThisIsNotDefined; &hi?;"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-324"
+    url = "https://github.github.com/gfm/#example-324"
   )
 })
 
@@ -3222,44 +3712,49 @@ test_that("gfm - Ex 325 (L6011-6013) - Inlines > Entity and numeric character re
   expect_identical_md(
     md = c("&copy"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-325"
+    url = "https://github.github.com/gfm/#example-325"
   )
 })
 
 test_that("gfm - Ex 326 (L6021-6023) - Inlines > Entity and numeric character references", {
   expect_identical_md(
     md = c(
-      "&MadeUpEntity;"),
+      "&MadeUpEntity;"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-326"
+    url = "https://github.github.com/gfm/#example-326"
   )
 })
 
 test_that("gfm - Ex 327 (L6032-6034) - Inlines > Entity and numeric character references", {
   expect_identical_md(
     md = c(
-      "<a href=\"&ouml;&ouml;.html\">"),
+      "<a href=\"&ouml;&ouml;.html\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-327"
+    url = "https://github.github.com/gfm/#example-327"
   )
 })
 
 test_that("gfm - Ex 328 (L6039-6041) - Inlines > Entity and numeric character references", {
   expect_identical_md(
     md = c(
-      "[foo](/f&ouml;&ouml; \"f&ouml;&ouml;\")"),
+      "[foo](/f&ouml;&ouml; \"f&ouml;&ouml;\")"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-328"
+    url = "https://github.github.com/gfm/#example-328"
   )
 })
 
 test_that("gfm - Ex 329 (L6046-6050) - Inlines > Entity and numeric character references", {
   expect_identical_md(
-    md = c("[foo]",
+    md = c(
+      "[foo]",
       "",
-      "[foo]: /f&ouml;&ouml; \"f&ouml;&ouml;\""),
+      "[foo]: /f&ouml;&ouml; \"f&ouml;&ouml;\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-329"
+    url = "https://github.github.com/gfm/#example-329"
   )
 })
 
@@ -3267,27 +3762,30 @@ test_that("gfm - Ex 330 (L6055-6060) - Inlines > Entity and numeric character re
   expect_identical_md(
     md = c(
       "``` f&ouml;&ouml;",
-      "foo", "```"),
+      "foo", "```"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-330"
+    url = "https://github.github.com/gfm/#example-330"
   )
 })
 
 test_that("gfm - Ex 331 (L6068-6070) - Inlines > Entity and numeric character references", {
   expect_identical_md(
     md = c(
-      "`f&ouml;&ouml;`"),
+      "`f&ouml;&ouml;`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-331"
+    url = "https://github.github.com/gfm/#example-331"
   )
 })
 
 test_that("gfm - Ex 332 (L6075-6078) - Inlines > Entity and numeric character references", {
   expect_identical_md(
     md = c(
-      "    f&ouml;f&ouml;"),
+      "    f&ouml;f&ouml;"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-332"
+    url = "https://github.github.com/gfm/#example-332"
   )
 })
 
@@ -3295,9 +3793,10 @@ test_that("gfm - Ex 333 (L6087-6091) - Inlines > Entity and numeric character re
   expect_identical_md(
     md = c(
       "&#42;foo&#42;",
-      "*foo*"),
+      "*foo*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-333"
+    url = "https://github.github.com/gfm/#example-333"
   )
 })
 
@@ -3305,18 +3804,20 @@ test_that("gfm - Ex 334 (L6095-6102) - Inlines > Entity and numeric character re
   expect_identical_md(
     md = c(
       "&#42; foo", "",
-      "* foo"),
+      "* foo"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-334"
+    url = "https://github.github.com/gfm/#example-334"
   )
 })
 
 test_that("gfm - Ex 335 (L6106-6110) - Inlines > Entity and numeric character references", {
   expect_identical_md(
     md = c(
-      "foo&#10;&#10;bar"),
+      "foo&#10;&#10;bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-335"
+    url = "https://github.github.com/gfm/#example-335"
   )
 })
 
@@ -3324,16 +3825,17 @@ test_that("gfm - Ex 336 (L6114-6116) - Inlines > Entity and numeric character re
   expect_identical_md(
     md = c("&#9;foo"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-336"
+    url = "https://github.github.com/gfm/#example-336"
   )
 })
 
 test_that("gfm - Ex 337 (L6121-6123) - Inlines > Entity and numeric character references", {
   expect_identical_md(
     md = c(
-      "[a](url &quot;tit&quot;)"),
+      "[a](url &quot;tit&quot;)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-337"
+    url = "https://github.github.com/gfm/#example-337"
   )
 })
 
@@ -3341,16 +3843,17 @@ test_that("gfm - Ex 338 (L6149-6151) - Inlines > Code spans", {
   expect_identical_md(
     md = c("`foo`"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-338"
+    url = "https://github.github.com/gfm/#example-338"
   )
 })
 
 test_that("gfm - Ex 339 (L6160-6162) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "`` foo ` bar ``"),
+      "`` foo ` bar ``"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-339"
+    url = "https://github.github.com/gfm/#example-339"
   )
 })
 
@@ -3358,7 +3861,7 @@ test_that("gfm - Ex 340 (L6170-6172) - Inlines > Code spans", {
   expect_identical_md(
     md = c("` `` `"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-340"
+    url = "https://github.github.com/gfm/#example-340"
   )
 })
 
@@ -3366,7 +3869,7 @@ test_that("gfm - Ex 341 (L6178-6180) - Inlines > Code spans", {
   expect_identical_md(
     md = c("`  ``  `"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-341"
+    url = "https://github.github.com/gfm/#example-341"
   )
 })
 
@@ -3374,7 +3877,7 @@ test_that("gfm - Ex 342 (L6187-6189) - Inlines > Code spans", {
   expect_identical_md(
     md = c("` a`"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-342"
+    url = "https://github.github.com/gfm/#example-342"
   )
 })
 
@@ -3382,34 +3885,40 @@ test_that("gfm - Ex 343 (L6196-6198) - Inlines > Code spans", {
   expect_identical_md(
     md = c("` b `"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-343"
+    url = "https://github.github.com/gfm/#example-343"
   )
 })
 
 test_that("gfm - Ex 344 (L6204-6208) - Inlines > Code spans", {
   expect_identical_md(
-    md = c("` `",
-      "`  `"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-344"
+    md = c(
+      "` `",
+      "`  `"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-344"
   )
 })
 
 test_that("gfm - Ex 345 (L6215-6221) - Inlines > Code spans", {
   expect_identical_md(
-    md = c("``",
+    md = c(
+      "``",
       "foo", "bar  ",
-      "baz", "``"),
+      "baz", "``"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-345"
+    url = "https://github.github.com/gfm/#example-345"
   )
 })
 
 test_that("gfm - Ex 346 (L6225-6229) - Inlines > Code spans", {
   expect_identical_md(
-    md = c("``",
-      "foo ", "``"),
+    md = c(
+      "``",
+      "foo ", "``"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-346"
+    url = "https://github.github.com/gfm/#example-346"
   )
 })
 
@@ -3417,35 +3926,39 @@ test_that("gfm - Ex 347 (L6236-6239) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
       "`foo   bar ",
-      "baz`"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-347"
+      "baz`"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-347"
   )
 })
 
 test_that("gfm - Ex 348 (L6253-6255) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "`foo\\`bar`"),
+      "`foo\\`bar`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-348"
+    url = "https://github.github.com/gfm/#example-348"
   )
 })
 
 test_that("gfm - Ex 349 (L6264-6266) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "``foo`bar``"),
+      "``foo`bar``"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-349"
+    url = "https://github.github.com/gfm/#example-349"
   )
 })
 
 test_that("gfm - Ex 350 (L6270-6272) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "` foo `` bar `"),
+      "` foo `` bar `"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-350"
+    url = "https://github.github.com/gfm/#example-350"
   )
 })
 
@@ -3453,52 +3966,57 @@ test_that("gfm - Ex 351 (L6282-6284) - Inlines > Code spans", {
   expect_identical_md(
     md = c("*foo`*`"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-351"
+    url = "https://github.github.com/gfm/#example-351"
   )
 })
 
 test_that("gfm - Ex 352 (L6291-6293) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "[not a `link](/foo`)"),
+      "[not a `link](/foo`)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-352"
+    url = "https://github.github.com/gfm/#example-352"
   )
 })
 
 test_that("gfm - Ex 353 (L6301-6303) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "`<a href=\"`\">`"),
+      "`<a href=\"`\">`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-353"
+    url = "https://github.github.com/gfm/#example-353"
   )
 })
 
 test_that("gfm - Ex 354 (L6310-6312) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "<a href=\"`\">`"),
+      "<a href=\"`\">`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-354"
+    url = "https://github.github.com/gfm/#example-354"
   )
 })
 
 test_that("gfm - Ex 355 (L6319-6321) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "`<http://foo.bar.`baz>`"),
+      "`<http://foo.bar.`baz>`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-355"
+    url = "https://github.github.com/gfm/#example-355"
   )
 })
 
 test_that("gfm - Ex 356 (L6328-6330) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "<http://foo.bar.`baz>`"),
+      "<http://foo.bar.`baz>`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-356"
+    url = "https://github.github.com/gfm/#example-356"
   )
 })
 
@@ -3506,7 +4024,7 @@ test_that("gfm - Ex 357 (L6338-6340) - Inlines > Code spans", {
   expect_identical_md(
     md = c("```foo``"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-357"
+    url = "https://github.github.com/gfm/#example-357"
   )
 })
 
@@ -3514,43 +4032,47 @@ test_that("gfm - Ex 358 (L6345-6347) - Inlines > Code spans", {
   expect_identical_md(
     md = c("`foo"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-358"
+    url = "https://github.github.com/gfm/#example-358"
   )
 })
 
 test_that("gfm - Ex 359 (L6354-6356) - Inlines > Code spans", {
   expect_identical_md(
     md = c(
-      "`foo``bar``"),
+      "`foo``bar``"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-359"
+    url = "https://github.github.com/gfm/#example-359"
   )
 })
 
 test_that("gfm - Ex 360 (L6571-6573) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo bar*"),
+      "*foo bar*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-360"
+    url = "https://github.github.com/gfm/#example-360"
   )
 })
 
 test_that("gfm - Ex 361 (L6581-6583) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "a * foo bar*"),
+      "a * foo bar*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-361"
+    url = "https://github.github.com/gfm/#example-361"
   )
 })
 
 test_that("gfm - Ex 362 (L6592-6594) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "a*\"foo\"*"),
+      "a*\"foo\"*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-362"
+    url = "https://github.github.com/gfm/#example-362"
   )
 })
 
@@ -3558,7 +4080,7 @@ test_that("gfm - Ex 363 (L6601-6603) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("* a *"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-363"
+    url = "https://github.github.com/gfm/#example-363"
   )
 })
 
@@ -3566,7 +4088,7 @@ test_that("gfm - Ex 364 (L6610-6612) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("foo*bar*"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-364"
+    url = "https://github.github.com/gfm/#example-364"
   )
 })
 
@@ -3574,34 +4096,37 @@ test_that("gfm - Ex 365 (L6617-6619) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("5*6*78"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-365"
+    url = "https://github.github.com/gfm/#example-365"
   )
 })
 
 test_that("gfm - Ex 366 (L6626-6628) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_foo bar_"),
+      "_foo bar_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-366"
+    url = "https://github.github.com/gfm/#example-366"
   )
 })
 
 test_that("gfm - Ex 367 (L6636-6638) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_ foo bar_"),
+      "_ foo bar_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-367"
+    url = "https://github.github.com/gfm/#example-367"
   )
 })
 
 test_that("gfm - Ex 368 (L6646-6648) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "a_\"foo\"_"),
+      "a_\"foo\"_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-368"
+    url = "https://github.github.com/gfm/#example-368"
   )
 })
 
@@ -3609,7 +4134,7 @@ test_that("gfm - Ex 369 (L6655-6657) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("foo_bar_"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-369"
+    url = "https://github.github.com/gfm/#example-369"
   )
 })
 
@@ -3617,34 +4142,37 @@ test_that("gfm - Ex 370 (L6662-6664) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("5_6_78"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-370"
+    url = "https://github.github.com/gfm/#example-370"
   )
 })
 
 test_that("gfm - Ex 371 (L6669-6671) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "пристаням_стремятся_"),
+      "пристаням_стремятся_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-371"
+    url = "https://github.github.com/gfm/#example-371"
   )
 })
 
 test_that("gfm - Ex 372 (L6679-6681) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "aa_\"bb\"_cc"),
+      "aa_\"bb\"_cc"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-372"
+    url = "https://github.github.com/gfm/#example-372"
   )
 })
 
 test_that("gfm - Ex 373 (L6690-6692) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo-_(bar)_"),
+      "foo-_(bar)_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-373"
+    url = "https://github.github.com/gfm/#example-373"
   )
 })
 
@@ -3652,24 +4180,27 @@ test_that("gfm - Ex 374 (L6702-6704) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("_foo*"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-374"
+    url = "https://github.github.com/gfm/#example-374"
   )
 })
 
 test_that("gfm - Ex 375 (L6712-6714) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo bar *"),
+      "*foo bar *"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-375"
+    url = "https://github.github.com/gfm/#example-375"
   )
 })
 
 test_that("gfm - Ex 376 (L6721-6725) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
-    md = c("*foo bar",
-      "*"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-376"
+    md = c(
+      "*foo bar",
+      "*"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-376"
   )
 })
 
@@ -3677,16 +4208,17 @@ test_that("gfm - Ex 377 (L6734-6736) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("*(*foo)"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-377"
+    url = "https://github.github.com/gfm/#example-377"
   )
 })
 
 test_that("gfm - Ex 378 (L6744-6746) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*(*foo*)*"),
+      "*(*foo*)*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-378"
+    url = "https://github.github.com/gfm/#example-378"
   )
 })
 
@@ -3694,16 +4226,17 @@ test_that("gfm - Ex 379 (L6753-6755) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("*foo*bar"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-379"
+    url = "https://github.github.com/gfm/#example-379"
   )
 })
 
 test_that("gfm - Ex 380 (L6766-6768) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_foo bar _"),
+      "_foo bar _"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-380"
+    url = "https://github.github.com/gfm/#example-380"
   )
 })
 
@@ -3711,16 +4244,17 @@ test_that("gfm - Ex 381 (L6776-6778) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("_(_foo)"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-381"
+    url = "https://github.github.com/gfm/#example-381"
   )
 })
 
 test_that("gfm - Ex 382 (L6785-6787) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_(_foo_)_"),
+      "_(_foo_)_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-382"
+    url = "https://github.github.com/gfm/#example-382"
   )
 })
 
@@ -3728,25 +4262,27 @@ test_that("gfm - Ex 383 (L6794-6796) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("_foo_bar"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-383"
+    url = "https://github.github.com/gfm/#example-383"
   )
 })
 
 test_that("gfm - Ex 384 (L6801-6803) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_пристаням_стремятся"),
+      "_пристаням_стремятся"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-384"
+    url = "https://github.github.com/gfm/#example-384"
   )
 })
 
 test_that("gfm - Ex 385 (L6808-6810) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_foo_bar_baz_"),
+      "_foo_bar_baz_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-385"
+    url = "https://github.github.com/gfm/#example-385"
   )
 })
 
@@ -3754,88 +4290,98 @@ test_that("gfm - Ex 386 (L6819-6821) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("_(bar)_."),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-386"
+    url = "https://github.github.com/gfm/#example-386"
   )
 })
 
 test_that("gfm - Ex 387 (L6828-6830) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo bar**"),
+      "**foo bar**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-387"
+    url = "https://github.github.com/gfm/#example-387"
   )
 })
 
 test_that("gfm - Ex 388 (L6838-6840) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "** foo bar**"),
+      "** foo bar**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-388"
+    url = "https://github.github.com/gfm/#example-388"
   )
 })
 
 test_that("gfm - Ex 389 (L6849-6851) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "a**\"foo\"**"),
+      "a**\"foo\"**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-389"
+    url = "https://github.github.com/gfm/#example-389"
   )
 })
 
 test_that("gfm - Ex 390 (L6858-6860) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo**bar**"),
+      "foo**bar**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-390"
+    url = "https://github.github.com/gfm/#example-390"
   )
 })
 
 test_that("gfm - Ex 391 (L6867-6869) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__foo bar__"),
+      "__foo bar__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-391"
+    url = "https://github.github.com/gfm/#example-391"
   )
 })
 
 test_that("gfm - Ex 392 (L6877-6879) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__ foo bar__"),
+      "__ foo bar__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-392"
+    url = "https://github.github.com/gfm/#example-392"
   )
 })
 
 test_that("gfm - Ex 393 (L6885-6889) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
-    md = c("__",
-      "foo bar__"),
+    md = c(
+      "__",
+      "foo bar__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-393"
+    url = "https://github.github.com/gfm/#example-393"
   )
 })
 
 test_that("gfm - Ex 394 (L6897-6899) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "a__\"foo\"__"),
+      "a__\"foo\"__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-394"
+    url = "https://github.github.com/gfm/#example-394"
   )
 })
 
 test_that("gfm - Ex 395 (L6906-6908) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo__bar__"),
+      "foo__bar__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-395"
+    url = "https://github.github.com/gfm/#example-395"
   )
 })
 
@@ -3843,61 +4389,67 @@ test_that("gfm - Ex 396 (L6913-6915) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("5__6__78"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-396"
+    url = "https://github.github.com/gfm/#example-396"
   )
 })
 
 test_that("gfm - Ex 397 (L6920-6922) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "пристаням__стремятся__"),
+      "пристаням__стремятся__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-397"
+    url = "https://github.github.com/gfm/#example-397"
   )
 })
 
 test_that("gfm - Ex 398 (L6927-6929) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__foo, __bar__, baz__"),
+      "__foo, __bar__, baz__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-398"
+    url = "https://github.github.com/gfm/#example-398"
   )
 })
 
 test_that("gfm - Ex 399 (L6938-6940) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo-__(bar)__"),
+      "foo-__(bar)__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-399"
+    url = "https://github.github.com/gfm/#example-399"
   )
 })
 
 test_that("gfm - Ex 400 (L6951-6953) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo bar **"),
+      "**foo bar **"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-400"
+    url = "https://github.github.com/gfm/#example-400"
   )
 })
 
 test_that("gfm - Ex 401 (L6964-6966) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**(**foo)"),
+      "**(**foo)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-401"
+    url = "https://github.github.com/gfm/#example-401"
   )
 })
 
 test_that("gfm - Ex 402 (L6974-6976) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*(**foo**)*"),
+      "*(**foo**)*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-402"
+    url = "https://github.github.com/gfm/#example-402"
   )
 })
 
@@ -3905,341 +4457,381 @@ test_that("gfm - Ex 403 (L6981-6985) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c(
       "**Gomphocarpus (*Gomphocarpus physocarpus*, syn.",
-      "*Asclepias physocarpa*)**"),
+      "*Asclepias physocarpa*)**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-403"
+    url = "https://github.github.com/gfm/#example-403"
   )
 })
 
 test_that("gfm - Ex 404 (L6990-6992) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo \"*bar*\" foo**"),
+      "**foo \"*bar*\" foo**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-404"
+    url = "https://github.github.com/gfm/#example-404"
   )
 })
 
 test_that("gfm - Ex 405 (L6999-7001) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo**bar"),
+      "**foo**bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-405"
+    url = "https://github.github.com/gfm/#example-405"
   )
 })
 
 test_that("gfm - Ex 406 (L7011-7013) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__foo bar __"),
+      "__foo bar __"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-406"
+    url = "https://github.github.com/gfm/#example-406"
   )
 })
 
 test_that("gfm - Ex 407 (L7021-7023) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__(__foo)"),
+      "__(__foo)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-407"
+    url = "https://github.github.com/gfm/#example-407"
   )
 })
 
 test_that("gfm - Ex 408 (L7031-7033) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_(__foo__)_"),
+      "_(__foo__)_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-408"
+    url = "https://github.github.com/gfm/#example-408"
   )
 })
 
 test_that("gfm - Ex 409 (L7040-7042) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__foo__bar"),
+      "__foo__bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-409"
+    url = "https://github.github.com/gfm/#example-409"
   )
 })
 
 test_that("gfm - Ex 410 (L7047-7049) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__пристаням__стремятся"),
+      "__пристаням__стремятся"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-410"
+    url = "https://github.github.com/gfm/#example-410"
   )
 })
 
 test_that("gfm - Ex 411 (L7054-7056) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__foo__bar__baz__"),
+      "__foo__bar__baz__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-411"
+    url = "https://github.github.com/gfm/#example-411"
   )
 })
 
 test_that("gfm - Ex 412 (L7065-7067) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__(bar)__."),
+      "__(bar)__."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-412"
+    url = "https://github.github.com/gfm/#example-412"
   )
 })
 
 test_that("gfm - Ex 413 (L7077-7079) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo [bar](/url)*"),
+      "*foo [bar](/url)*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-413"
+    url = "https://github.github.com/gfm/#example-413"
   )
 })
 
 test_that("gfm - Ex 414 (L7084-7088) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
-    md = c("*foo",
-      "bar*"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-414"
+    md = c(
+      "*foo",
+      "bar*"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-414"
   )
 })
 
 test_that("gfm - Ex 415 (L7096-7098) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_foo __bar__ baz_"),
+      "_foo __bar__ baz_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-415"
+    url = "https://github.github.com/gfm/#example-415"
   )
 })
 
 test_that("gfm - Ex 416 (L7103-7105) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_foo _bar_ baz_"),
+      "_foo _bar_ baz_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-416"
+    url = "https://github.github.com/gfm/#example-416"
   )
 })
 
 test_that("gfm - Ex 417 (L7110-7112) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__foo_ bar_"),
+      "__foo_ bar_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-417"
+    url = "https://github.github.com/gfm/#example-417"
   )
 })
 
 test_that("gfm - Ex 418 (L7117-7119) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo *bar**"),
+      "*foo *bar**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-418"
+    url = "https://github.github.com/gfm/#example-418"
   )
 })
 
 test_that("gfm - Ex 419 (L7124-7126) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo **bar** baz*"),
+      "*foo **bar** baz*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-419"
+    url = "https://github.github.com/gfm/#example-419"
   )
 })
 
 test_that("gfm - Ex 420 (L7130-7132) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo**bar**baz*"),
+      "*foo**bar**baz*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-420"
+    url = "https://github.github.com/gfm/#example-420"
   )
 })
 
 test_that("gfm - Ex 421 (L7154-7156) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo**bar*"),
+      "*foo**bar*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-421"
+    url = "https://github.github.com/gfm/#example-421"
   )
 })
 
 test_that("gfm - Ex 422 (L7167-7169) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "***foo** bar*"),
+      "***foo** bar*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-422"
+    url = "https://github.github.com/gfm/#example-422"
   )
 })
 
 test_that("gfm - Ex 423 (L7174-7176) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo **bar***"),
+      "*foo **bar***"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-423"
+    url = "https://github.github.com/gfm/#example-423"
   )
 })
 
 test_that("gfm - Ex 424 (L7181-7183) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo**bar***"),
+      "*foo**bar***"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-424"
+    url = "https://github.github.com/gfm/#example-424"
   )
 })
 
 test_that("gfm - Ex 425 (L7192-7194) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo***bar***baz"),
+      "foo***bar***baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-425"
+    url = "https://github.github.com/gfm/#example-425"
   )
 })
 
 test_that("gfm - Ex 426 (L7198-7200) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo******bar*********baz"),
+      "foo******bar*********baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-426"
+    url = "https://github.github.com/gfm/#example-426"
   )
 })
 
 test_that("gfm - Ex 427 (L7207-7209) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo **bar *baz* bim** bop*"),
+      "*foo **bar *baz* bim** bop*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-427"
+    url = "https://github.github.com/gfm/#example-427"
   )
 })
 
 test_that("gfm - Ex 428 (L7214-7216) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo [*bar*](/url)*"),
+      "*foo [*bar*](/url)*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-428"
+    url = "https://github.github.com/gfm/#example-428"
   )
 })
 
 test_that("gfm - Ex 429 (L7223-7225) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "** is not an empty emphasis"),
+      "** is not an empty emphasis"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-429"
+    url = "https://github.github.com/gfm/#example-429"
   )
 })
 
 test_that("gfm - Ex 430 (L7230-7232) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**** is not an empty strong emphasis"),
+      "**** is not an empty strong emphasis"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-430"
+    url = "https://github.github.com/gfm/#example-430"
   )
 })
 
 test_that("gfm - Ex 431 (L7243-7245) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo [bar](/url)**"),
+      "**foo [bar](/url)**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-431"
+    url = "https://github.github.com/gfm/#example-431"
   )
 })
 
 test_that("gfm - Ex 432 (L7250-7254) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
-    md = c("**foo",
-      "bar**"),
+    md = c(
+      "**foo",
+      "bar**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-432"
+    url = "https://github.github.com/gfm/#example-432"
   )
 })
 
 test_that("gfm - Ex 433 (L7262-7264) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__foo _bar_ baz__"),
+      "__foo _bar_ baz__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-433"
+    url = "https://github.github.com/gfm/#example-433"
   )
 })
 
 test_that("gfm - Ex 434 (L7269-7271) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__foo __bar__ baz__"),
+      "__foo __bar__ baz__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-434"
+    url = "https://github.github.com/gfm/#example-434"
   )
 })
 
 test_that("gfm - Ex 435 (L7276-7278) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "____foo__ bar__"),
+      "____foo__ bar__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-435"
+    url = "https://github.github.com/gfm/#example-435"
   )
 })
 
 test_that("gfm - Ex 436 (L7283-7285) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo **bar****"),
+      "**foo **bar****"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-436"
+    url = "https://github.github.com/gfm/#example-436"
   )
 })
 
 test_that("gfm - Ex 437 (L7290-7292) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo *bar* baz**"),
+      "**foo *bar* baz**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-437"
+    url = "https://github.github.com/gfm/#example-437"
   )
 })
 
 test_that("gfm - Ex 438 (L7297-7299) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo*bar*baz**"),
+      "**foo*bar*baz**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-438"
+    url = "https://github.github.com/gfm/#example-438"
   )
 })
 
 test_that("gfm - Ex 439 (L7304-7306) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "***foo* bar**"),
+      "***foo* bar**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-439"
+    url = "https://github.github.com/gfm/#example-439"
   )
 })
 
 test_that("gfm - Ex 440 (L7311-7313) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo *bar***"),
+      "**foo *bar***"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-440"
+    url = "https://github.github.com/gfm/#example-440"
   )
 })
 
@@ -4247,36 +4839,40 @@ test_that("gfm - Ex 441 (L7320-7324) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c(
       "**foo *bar **baz**",
-      "bim* bop**"),
+      "bim* bop**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-441"
+    url = "https://github.github.com/gfm/#example-441"
   )
 })
 
 test_that("gfm - Ex 442 (L7329-7331) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo [*bar*](/url)**"),
+      "**foo [*bar*](/url)**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-442"
+    url = "https://github.github.com/gfm/#example-442"
   )
 })
 
 test_that("gfm - Ex 443 (L7338-7340) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__ is not an empty emphasis"),
+      "__ is not an empty emphasis"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-443"
+    url = "https://github.github.com/gfm/#example-443"
   )
 })
 
 test_that("gfm - Ex 444 (L7345-7347) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "____ is not an empty strong emphasis"),
+      "____ is not an empty strong emphasis"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-444"
+    url = "https://github.github.com/gfm/#example-444"
   )
 })
 
@@ -4284,16 +4880,17 @@ test_that("gfm - Ex 445 (L7355-7357) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("foo ***"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-445"
+    url = "https://github.github.com/gfm/#example-445"
   )
 })
 
 test_that("gfm - Ex 446 (L7362-7364) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo *\\**"),
+      "foo *\\**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-446"
+    url = "https://github.github.com/gfm/#example-446"
   )
 })
 
@@ -4301,34 +4898,37 @@ test_that("gfm - Ex 447 (L7369-7371) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("foo *_*"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-447"
+    url = "https://github.github.com/gfm/#example-447"
   )
 })
 
 test_that("gfm - Ex 448 (L7376-7378) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo *****"),
+      "foo *****"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-448"
+    url = "https://github.github.com/gfm/#example-448"
   )
 })
 
 test_that("gfm - Ex 449 (L7383-7385) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo **\\***"),
+      "foo **\\***"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-449"
+    url = "https://github.github.com/gfm/#example-449"
   )
 })
 
 test_that("gfm - Ex 450 (L7390-7392) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo **_**"),
+      "foo **_**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-450"
+    url = "https://github.github.com/gfm/#example-450"
   )
 })
 
@@ -4336,7 +4936,7 @@ test_that("gfm - Ex 451 (L7401-7403) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("**foo*"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-451"
+    url = "https://github.github.com/gfm/#example-451"
   )
 })
 
@@ -4344,7 +4944,7 @@ test_that("gfm - Ex 452 (L7408-7410) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("*foo**"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-452"
+    url = "https://github.github.com/gfm/#example-452"
   )
 })
 
@@ -4352,7 +4952,7 @@ test_that("gfm - Ex 453 (L7415-7417) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("***foo**"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-453"
+    url = "https://github.github.com/gfm/#example-453"
   )
 })
 
@@ -4360,7 +4960,7 @@ test_that("gfm - Ex 454 (L7422-7424) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("****foo*"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-454"
+    url = "https://github.github.com/gfm/#example-454"
   )
 })
 
@@ -4368,7 +4968,7 @@ test_that("gfm - Ex 455 (L7429-7431) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("**foo***"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-455"
+    url = "https://github.github.com/gfm/#example-455"
   )
 })
 
@@ -4376,7 +4976,7 @@ test_that("gfm - Ex 456 (L7436-7438) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("*foo****"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-456"
+    url = "https://github.github.com/gfm/#example-456"
   )
 })
 
@@ -4384,16 +4984,17 @@ test_that("gfm - Ex 457 (L7446-7448) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("foo ___"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-457"
+    url = "https://github.github.com/gfm/#example-457"
   )
 })
 
 test_that("gfm - Ex 458 (L7453-7455) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo _\\__"),
+      "foo _\\__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-458"
+    url = "https://github.github.com/gfm/#example-458"
   )
 })
 
@@ -4401,34 +5002,37 @@ test_that("gfm - Ex 459 (L7460-7462) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("foo _*_"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-459"
+    url = "https://github.github.com/gfm/#example-459"
   )
 })
 
 test_that("gfm - Ex 460 (L7467-7469) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo _____"),
+      "foo _____"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-460"
+    url = "https://github.github.com/gfm/#example-460"
   )
 })
 
 test_that("gfm - Ex 461 (L7474-7476) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo __\\___"),
+      "foo __\\___"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-461"
+    url = "https://github.github.com/gfm/#example-461"
   )
 })
 
 test_that("gfm - Ex 462 (L7481-7483) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "foo __*__"),
+      "foo __*__"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-462"
+    url = "https://github.github.com/gfm/#example-462"
   )
 })
 
@@ -4436,7 +5040,7 @@ test_that("gfm - Ex 463 (L7488-7490) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("__foo_"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-463"
+    url = "https://github.github.com/gfm/#example-463"
   )
 })
 
@@ -4444,7 +5048,7 @@ test_that("gfm - Ex 464 (L7499-7501) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("_foo__"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-464"
+    url = "https://github.github.com/gfm/#example-464"
   )
 })
 
@@ -4452,7 +5056,7 @@ test_that("gfm - Ex 465 (L7506-7508) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("___foo__"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-465"
+    url = "https://github.github.com/gfm/#example-465"
   )
 })
 
@@ -4460,7 +5064,7 @@ test_that("gfm - Ex 466 (L7513-7515) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("____foo_"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-466"
+    url = "https://github.github.com/gfm/#example-466"
   )
 })
 
@@ -4468,7 +5072,7 @@ test_that("gfm - Ex 467 (L7520-7522) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("__foo___"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-467"
+    url = "https://github.github.com/gfm/#example-467"
   )
 })
 
@@ -4476,7 +5080,7 @@ test_that("gfm - Ex 468 (L7527-7529) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("_foo____"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-468"
+    url = "https://github.github.com/gfm/#example-468"
   )
 })
 
@@ -4484,7 +5088,7 @@ test_that("gfm - Ex 469 (L7537-7539) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("**foo**"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-469"
+    url = "https://github.github.com/gfm/#example-469"
   )
 })
 
@@ -4492,7 +5096,7 @@ test_that("gfm - Ex 470 (L7544-7546) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("*_foo_*"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-470"
+    url = "https://github.github.com/gfm/#example-470"
   )
 })
 
@@ -4500,7 +5104,7 @@ test_that("gfm - Ex 471 (L7551-7553) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("__foo__"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-471"
+    url = "https://github.github.com/gfm/#example-471"
   )
 })
 
@@ -4508,133 +5112,147 @@ test_that("gfm - Ex 472 (L7558-7560) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("_*foo*_"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-472"
+    url = "https://github.github.com/gfm/#example-472"
   )
 })
 
 test_that("gfm - Ex 473 (L7568-7570) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "****foo****"),
+      "****foo****"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-473"
+    url = "https://github.github.com/gfm/#example-473"
   )
 })
 
 test_that("gfm - Ex 474 (L7575-7577) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "____foo____"),
+      "____foo____"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-474"
+    url = "https://github.github.com/gfm/#example-474"
   )
 })
 
 test_that("gfm - Ex 475 (L7586-7588) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "******foo******"),
+      "******foo******"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-475"
+    url = "https://github.github.com/gfm/#example-475"
   )
 })
 
 test_that("gfm - Ex 476 (L7595-7597) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "***foo***"),
+      "***foo***"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-476"
+    url = "https://github.github.com/gfm/#example-476"
   )
 })
 
 test_that("gfm - Ex 477 (L7602-7604) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_____foo_____"),
+      "_____foo_____"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-477"
+    url = "https://github.github.com/gfm/#example-477"
   )
 })
 
 test_that("gfm - Ex 478 (L7611-7613) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo _bar* baz_"),
+      "*foo _bar* baz_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-478"
+    url = "https://github.github.com/gfm/#example-478"
   )
 })
 
 test_that("gfm - Ex 479 (L7618-7620) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo __bar *baz bim__ bam*"),
+      "*foo __bar *baz bim__ bam*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-479"
+    url = "https://github.github.com/gfm/#example-479"
   )
 })
 
 test_that("gfm - Ex 480 (L7627-7629) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**foo **bar baz**"),
+      "**foo **bar baz**"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-480"
+    url = "https://github.github.com/gfm/#example-480"
   )
 })
 
 test_that("gfm - Ex 481 (L7634-7636) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*foo *bar baz*"),
+      "*foo *bar baz*"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-481"
+    url = "https://github.github.com/gfm/#example-481"
   )
 })
 
 test_that("gfm - Ex 482 (L7643-7645) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*[bar*](/url)"),
+      "*[bar*](/url)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-482"
+    url = "https://github.github.com/gfm/#example-482"
   )
 })
 
 test_that("gfm - Ex 483 (L7650-7652) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "_foo [bar_](/url)"),
+      "_foo [bar_](/url)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-483"
+    url = "https://github.github.com/gfm/#example-483"
   )
 })
 
 test_that("gfm - Ex 484 (L7657-7659) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "*<img src=\"foo\" title=\"*\"/>"),
+      "*<img src=\"foo\" title=\"*\"/>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-484"
+    url = "https://github.github.com/gfm/#example-484"
   )
 })
 
 test_that("gfm - Ex 485 (L7664-7666) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**<a href=\"**\">"),
+      "**<a href=\"**\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-485"
+    url = "https://github.github.com/gfm/#example-485"
   )
 })
 
 test_that("gfm - Ex 486 (L7671-7673) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__<a href=\"__\">"),
+      "__<a href=\"__\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-486"
+    url = "https://github.github.com/gfm/#example-486"
   )
 })
 
@@ -4642,7 +5260,7 @@ test_that("gfm - Ex 487 (L7678-7680) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("*a `*`*"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-487"
+    url = "https://github.github.com/gfm/#example-487"
   )
 })
 
@@ -4650,34 +5268,37 @@ test_that("gfm - Ex 488 (L7685-7687) - Inlines > Emphasis and strong emphasis", 
   expect_identical_md(
     md = c("_a `_`_"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-488"
+    url = "https://github.github.com/gfm/#example-488"
   )
 })
 
 test_that("gfm - Ex 489 (L7692-7694) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "**a<http://foo.bar/?q=**>"),
+      "**a<http://foo.bar/?q=**>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-489"
+    url = "https://github.github.com/gfm/#example-489"
   )
 })
 
 test_that("gfm - Ex 490 (L7699-7701) - Inlines > Emphasis and strong emphasis", {
   expect_identical_md(
     md = c(
-      "__a<http://foo.bar/?q=__>"),
+      "__a<http://foo.bar/?q=__>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-490"
+    url = "https://github.github.com/gfm/#example-490"
   )
 })
 
 test_that("gfm - Ex 491 (L7715-7717) - Inlines > Strikethrough (extension)", {
   expect_identical_md(
     md = c(
-      "~~Hi~~ Hello, world!"),
+      "~~Hi~~ Hello, world!"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-491"
+    url = "https://github.github.com/gfm/#example-491"
   )
 })
 
@@ -4686,27 +5307,30 @@ test_that("gfm - Ex 492 (L7724-7729) - Inlines > Strikethrough (extension)", {
     md = c(
       "This ~~has a",
       "",
-      "new paragraph~~."),
+      "new paragraph~~."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-492"
+    url = "https://github.github.com/gfm/#example-492"
   )
 })
 
 test_that("gfm - Ex 493 (L7810-7812) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](/uri \"title\")"),
+      "[link](/uri \"title\")"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-493"
+    url = "https://github.github.com/gfm/#example-493"
   )
 })
 
 test_that("gfm - Ex 494 (L7819-7821) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](/uri)"),
+      "[link](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-494"
+    url = "https://github.github.com/gfm/#example-494"
   )
 })
 
@@ -4714,34 +5338,37 @@ test_that("gfm - Ex 495 (L7828-7830) - Inlines > Links", {
   expect_identical_md(
     md = c("[link]()"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-495"
+    url = "https://github.github.com/gfm/#example-495"
   )
 })
 
 test_that("gfm - Ex 496 (L7835-7837) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](<>)"),
+      "[link](<>)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-496"
+    url = "https://github.github.com/gfm/#example-496"
   )
 })
 
 test_that("gfm - Ex 497 (L7844-7846) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](/my uri)"),
+      "[link](/my uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-497"
+    url = "https://github.github.com/gfm/#example-497"
   )
 })
 
 test_that("gfm - Ex 498 (L7850-7852) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](</my uri>)"),
+      "[link](</my uri>)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-498"
+    url = "https://github.github.com/gfm/#example-498"
   )
 })
 
@@ -4749,8 +5376,9 @@ test_that("gfm - Ex 499 (L7859-7863) - Inlines > Links", {
   expect_identical_md(
     md = c(
       "[link](foo",
-      "bar)"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-499"
+      "bar)"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-499"
   )
 })
 
@@ -4758,82 +5386,92 @@ test_that("gfm - Ex 500 (L7867-7871) - Inlines > Links", {
   expect_identical_md(
     md = c(
       "[link](<foo",
-      "bar>)"),
+      "bar>)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-500"
+    url = "https://github.github.com/gfm/#example-500"
   )
 })
 
 test_that("gfm - Ex 501 (L7878-7880) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[a](<b)c>)"),
+      "[a](<b)c>)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-501"
+    url = "https://github.github.com/gfm/#example-501"
   )
 })
 
 test_that("gfm - Ex 502 (L7886-7888) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](<foo\\>)"),
+      "[link](<foo\\>)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-502"
+    url = "https://github.github.com/gfm/#example-502"
   )
 })
 
 test_that("gfm - Ex 503 (L7895-7901) - Inlines > Links", {
   expect_identical_md(
-    md = c("[a](<b)c",
+    md = c(
+      "[a](<b)c",
       "[a](<b)c>",
-      "[a](<b>c)"),
+      "[a](<b>c)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-503"
+    url = "https://github.github.com/gfm/#example-503"
   )
 })
 
 test_that("gfm - Ex 504 (L7907-7909) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](\\(foo\\))"),
+      "[link](\\(foo\\))"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-504"
+    url = "https://github.github.com/gfm/#example-504"
   )
 })
 
 test_that("gfm - Ex 505 (L7916-7918) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](foo(and(bar)))"),
+      "[link](foo(and(bar)))"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-505"
+    url = "https://github.github.com/gfm/#example-505"
   )
 })
 
 test_that("gfm - Ex 506 (L7925-7927) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](foo\\(and\\(bar\\))"),
+      "[link](foo\\(and\\(bar\\))"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-506"
+    url = "https://github.github.com/gfm/#example-506"
   )
 })
 
 test_that("gfm - Ex 507 (L7932-7934) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](<foo(and(bar)>)"),
+      "[link](<foo(and(bar)>)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-507"
+    url = "https://github.github.com/gfm/#example-507"
   )
 })
 
 test_that("gfm - Ex 508 (L7942-7944) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](foo\\)\\:)"),
+      "[link](foo\\)\\:)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-508"
+    url = "https://github.github.com/gfm/#example-508"
   )
 })
 
@@ -4844,36 +5482,40 @@ test_that("gfm - Ex 509 (L7951-7959) - Inlines > Links", {
       "",
       "[link](http://example.com#fragment)",
       "",
-      "[link](http://example.com?foo=3#frag)"),
+      "[link](http://example.com?foo=3#frag)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-509"
+    url = "https://github.github.com/gfm/#example-509"
   )
 })
 
 test_that("gfm - Ex 510 (L7967-7969) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](foo\\bar)"),
+      "[link](foo\\bar)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-510"
+    url = "https://github.github.com/gfm/#example-510"
   )
 })
 
 test_that("gfm - Ex 511 (L7983-7985) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](foo%20b&auml;)"),
+      "[link](foo%20b&auml;)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-511"
+    url = "https://github.github.com/gfm/#example-511"
   )
 })
 
 test_that("gfm - Ex 512 (L7994-7996) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](\"title\")"),
+      "[link](\"title\")"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-512"
+    url = "https://github.github.com/gfm/#example-512"
   )
 })
 
@@ -4882,45 +5524,50 @@ test_that("gfm - Ex 513 (L8003-8009) - Inlines > Links", {
     md = c(
       "[link](/url \"title\")",
       "[link](/url 'title')",
-      "[link](/url (title))"),
+      "[link](/url (title))"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-513"
+    url = "https://github.github.com/gfm/#example-513"
   )
 })
 
 test_that("gfm - Ex 514 (L8017-8019) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](/url \"title \\\"&quot;\")"),
+      "[link](/url \"title \\\"&quot;\")"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-514"
+    url = "https://github.github.com/gfm/#example-514"
   )
 })
 
 test_that("gfm - Ex 515 (L8027-8029) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](/url \"title\")"),
+      "[link](/url \"title\")"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-515"
+    url = "https://github.github.com/gfm/#example-515"
   )
 })
 
 test_that("gfm - Ex 516 (L8036-8038) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](/url \"title \"and\" title\")"),
+      "[link](/url \"title \"and\" title\")"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-516"
+    url = "https://github.github.com/gfm/#example-516"
   )
 })
 
 test_that("gfm - Ex 517 (L8045-8047) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link](/url 'title \"and\" title')"),
+      "[link](/url 'title \"and\" title')"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-517"
+    url = "https://github.github.com/gfm/#example-517"
   )
 })
 
@@ -4928,90 +5575,100 @@ test_that("gfm - Ex 518 (L8069-8072) - Inlines > Links", {
   expect_identical_md(
     md = c(
       "[link](   /uri",
-      "  \"title\"  )"),
+      "  \"title\"  )"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-518"
+    url = "https://github.github.com/gfm/#example-518"
   )
 })
 
 test_that("gfm - Ex 519 (L8080-8082) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link] (/uri)"),
+      "[link] (/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-519"
+    url = "https://github.github.com/gfm/#example-519"
   )
 })
 
 test_that("gfm - Ex 520 (L8090-8092) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link [foo [bar]]](/uri)"),
+      "[link [foo [bar]]](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-520"
+    url = "https://github.github.com/gfm/#example-520"
   )
 })
 
 test_that("gfm - Ex 521 (L8097-8099) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link] bar](/uri)"),
+      "[link] bar](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-521"
+    url = "https://github.github.com/gfm/#example-521"
   )
 })
 
 test_that("gfm - Ex 522 (L8104-8106) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link [bar](/uri)"),
+      "[link [bar](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-522"
+    url = "https://github.github.com/gfm/#example-522"
   )
 })
 
 test_that("gfm - Ex 523 (L8111-8113) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link \\[bar](/uri)"),
+      "[link \\[bar](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-523"
+    url = "https://github.github.com/gfm/#example-523"
   )
 })
 
 test_that("gfm - Ex 524 (L8120-8122) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[link *foo **bar** `#`*](/uri)"),
+      "[link *foo **bar** `#`*](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-524"
+    url = "https://github.github.com/gfm/#example-524"
   )
 })
 
 test_that("gfm - Ex 525 (L8127-8129) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[![moon](moon.jpg)](/uri)"),
+      "[![moon](moon.jpg)](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-525"
+    url = "https://github.github.com/gfm/#example-525"
   )
 })
 
 test_that("gfm - Ex 526 (L8136-8138) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[foo [bar](/uri)](/uri)"),
+      "[foo [bar](/uri)](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-526"
+    url = "https://github.github.com/gfm/#example-526"
   )
 })
 
 test_that("gfm - Ex 527 (L8143-8145) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[foo *[bar [baz](/uri)](/uri)*](/uri)"),
+      "[foo *[bar [baz](/uri)](/uri)*](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-527"
+    url = "https://github.github.com/gfm/#example-527"
   )
 })
 
@@ -5019,63 +5676,70 @@ test_that("gfm - Ex 528 (L8150-8152) - Inlines > Links", {
   testthat::skip("gfm #528 - Ambiguous normal text escaping #528")
   expect_identical_md(
     md = c(
-      "![[[foo](uri1)](uri2)](uri3)"),
+      "![[[foo](uri1)](uri2)](uri3)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-528"
+    url = "https://github.github.com/gfm/#example-528"
   )
 })
 
 test_that("gfm - Ex 529 (L8160-8162) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "*[foo*](/uri)"),
+      "*[foo*](/uri)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-529"
+    url = "https://github.github.com/gfm/#example-529"
   )
 })
 
 test_that("gfm - Ex 530 (L8167-8169) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[foo *bar](baz*)"),
+      "[foo *bar](baz*)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-530"
+    url = "https://github.github.com/gfm/#example-530"
   )
 })
 
 test_that("gfm - Ex 531 (L8177-8179) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "*foo [bar* baz]"),
+      "*foo [bar* baz]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-531"
+    url = "https://github.github.com/gfm/#example-531"
   )
 })
 
 test_that("gfm - Ex 532 (L8187-8189) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[foo <bar attr=\"](baz)\">"),
+      "[foo <bar attr=\"](baz)\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-532"
+    url = "https://github.github.com/gfm/#example-532"
   )
 })
 
 test_that("gfm - Ex 533 (L8194-8196) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[foo`](/uri)`"),
+      "[foo`](/uri)`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-533"
+    url = "https://github.github.com/gfm/#example-533"
   )
 })
 
 test_that("gfm - Ex 534 (L8201-8203) - Inlines > Links", {
   expect_identical_md(
     md = c(
-      "[foo<http://example.com/?search=](uri)>"),
+      "[foo<http://example.com/?search=](uri)>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-534"
+    url = "https://github.github.com/gfm/#example-534"
   )
 })
 
@@ -5084,9 +5748,10 @@ test_that("gfm - Ex 535 (L8239-8243) - Inlines > Links", {
     md = c(
       "[foo][bar]",
       "",
-      "[bar]: /url \"title\""),
+      "[bar]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-535"
+    url = "https://github.github.com/gfm/#example-535"
   )
 })
 
@@ -5095,9 +5760,10 @@ test_that("gfm - Ex 536 (L8254-8258) - Inlines > Links", {
     md = c(
       "[link [foo [bar]]][ref]",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-536"
+    url = "https://github.github.com/gfm/#example-536"
   )
 })
 
@@ -5106,9 +5772,10 @@ test_that("gfm - Ex 537 (L8263-8267) - Inlines > Links", {
     md = c(
       "[link \\[bar][ref]",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-537"
+    url = "https://github.github.com/gfm/#example-537"
   )
 })
 
@@ -5117,9 +5784,10 @@ test_that("gfm - Ex 538 (L8274-8278) - Inlines > Links", {
     md = c(
       "[link *foo **bar** `#`*][ref]",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-538"
+    url = "https://github.github.com/gfm/#example-538"
   )
 })
 
@@ -5128,9 +5796,10 @@ test_that("gfm - Ex 539 (L8283-8287) - Inlines > Links", {
     md = c(
       "[![moon](moon.jpg)][ref]",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-539"
+    url = "https://github.github.com/gfm/#example-539"
   )
 })
 
@@ -5139,9 +5808,10 @@ test_that("gfm - Ex 540 (L8294-8298) - Inlines > Links", {
     md = c(
       "[foo [bar](/uri)][ref]",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-540"
+    url = "https://github.github.com/gfm/#example-540"
   )
 })
 
@@ -5150,9 +5820,10 @@ test_that("gfm - Ex 541 (L8303-8307) - Inlines > Links", {
     md = c(
       "[foo *bar [baz][ref]*][ref]",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-541"
+    url = "https://github.github.com/gfm/#example-541"
   )
 })
 
@@ -5161,9 +5832,10 @@ test_that("gfm - Ex 542 (L8318-8322) - Inlines > Links", {
     md = c(
       "*[foo*][ref]",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-542"
+    url = "https://github.github.com/gfm/#example-542"
   )
 })
 
@@ -5172,9 +5844,10 @@ test_that("gfm - Ex 543 (L8327-8331) - Inlines > Links", {
     md = c(
       "[foo *bar][ref]",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-543"
+    url = "https://github.github.com/gfm/#example-543"
   )
 })
 
@@ -5183,9 +5856,10 @@ test_that("gfm - Ex 544 (L8339-8343) - Inlines > Links", {
     md = c(
       "[foo <bar attr=\"][ref]\">",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-544"
+    url = "https://github.github.com/gfm/#example-544"
   )
 })
 
@@ -5194,9 +5868,10 @@ test_that("gfm - Ex 545 (L8348-8352) - Inlines > Links", {
     md = c(
       "[foo`][ref]`",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-545"
+    url = "https://github.github.com/gfm/#example-545"
   )
 })
 
@@ -5205,9 +5880,10 @@ test_that("gfm - Ex 546 (L8357-8361) - Inlines > Links", {
     md = c(
       "[foo<http://example.com/?search=][ref]>",
       "",
-      "[ref]: /uri"),
+      "[ref]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-546"
+    url = "https://github.github.com/gfm/#example-546"
   )
 })
 
@@ -5216,9 +5892,10 @@ test_that("gfm - Ex 547 (L8368-8372) - Inlines > Links", {
     md = c(
       "[foo][BaR]",
       "",
-      "[bar]: /url \"title\""),
+      "[bar]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-547"
+    url = "https://github.github.com/gfm/#example-547"
   )
 })
 
@@ -5227,20 +5904,23 @@ test_that("gfm - Ex 548 (L8379-8383) - Inlines > Links", {
     md = c(
       "[Толпой][Толпой] is a Russian word.",
       "",
-      "[ТОЛПОЙ]: /url"),
+      "[ТОЛПОЙ]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-548"
+    url = "https://github.github.com/gfm/#example-548"
   )
 })
 
 test_that("gfm - Ex 549 (L8391-8396) - Inlines > Links", {
   expect_identical_md(
-    md = c("[Foo",
+    md = c(
+      "[Foo",
       "  bar]: /url",
       "",
-      "[Baz][Foo bar]"),
+      "[Baz][Foo bar]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-549"
+    url = "https://github.github.com/gfm/#example-549"
   )
 })
 
@@ -5249,19 +5929,22 @@ test_that("gfm - Ex 550 (L8404-8408) - Inlines > Links", {
     md = c(
       "[foo] [bar]",
       "",
-      "[bar]: /url \"title\""),
+      "[bar]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-550"
+    url = "https://github.github.com/gfm/#example-550"
   )
 })
 
 test_that("gfm - Ex 551 (L8413-8419) - Inlines > Links", {
   expect_identical_md(
-    md = c("[foo]",
+    md = c(
+      "[foo]",
       "[bar]", "",
-      "[bar]: /url \"title\""),
+      "[bar]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-551"
+    url = "https://github.github.com/gfm/#example-551"
   )
 })
 
@@ -5272,9 +5955,10 @@ test_that("gfm - Ex 552 (L8454-8460) - Inlines > Links", {
       "",
       "[foo]: /url2",
       "",
-      "[bar][foo]"),
+      "[bar][foo]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-552"
+    url = "https://github.github.com/gfm/#example-552"
   )
 })
 
@@ -5283,9 +5967,10 @@ test_that("gfm - Ex 553 (L8469-8473) - Inlines > Links", {
     md = c(
       "[bar][foo\\!]",
       "",
-      "[foo!]: /url"),
+      "[foo!]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-553"
+    url = "https://github.github.com/gfm/#example-553"
   )
 })
 
@@ -5294,9 +5979,10 @@ test_that("gfm - Ex 554 (L8481-8486) - Inlines > Links", {
     md = c(
       "[foo][ref[]",
       "",
-      "[ref[]: /uri"),
+      "[ref[]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-554"
+    url = "https://github.github.com/gfm/#example-554"
   )
 })
 
@@ -5305,9 +5991,10 @@ test_that("gfm - Ex 555 (L8491-8496) - Inlines > Links", {
     md = c(
       "[foo][ref[bar]]",
       "",
-      "[ref[bar]]: /uri"),
+      "[ref[bar]]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-555"
+    url = "https://github.github.com/gfm/#example-555"
   )
 })
 
@@ -5315,9 +6002,10 @@ test_that("gfm - Ex 556 (L8501-8506) - Inlines > Links", {
   expect_identical_md(
     md = c(
       "[[[foo]]]", "",
-      "[[[foo]]]: /url"),
+      "[[[foo]]]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-556"
+    url = "https://github.github.com/gfm/#example-556"
   )
 })
 
@@ -5326,9 +6014,10 @@ test_that("gfm - Ex 557 (L8511-8515) - Inlines > Links", {
     md = c(
       "[foo][ref\\[]",
       "",
-      "[ref\\[]: /uri"),
+      "[ref\\[]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-557"
+    url = "https://github.github.com/gfm/#example-557"
   )
 })
 
@@ -5336,38 +6025,45 @@ test_that("gfm - Ex 558 (L8522-8526) - Inlines > Links", {
   expect_identical_md(
     md = c(
       "[bar\\\\]: /uri",
-      "", "[bar\\\\]"),
+      "", "[bar\\\\]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-558"
+    url = "https://github.github.com/gfm/#example-558"
   )
 })
 
 test_that("gfm - Ex 559 (L8533-8538) - Inlines > Links", {
   expect_identical_md(
-    md = c("[]", "",
-      "[]: /uri"),
+    md = c(
+      "[]", "",
+      "[]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-559"
+    url = "https://github.github.com/gfm/#example-559"
   )
 })
 
 test_that("gfm - Ex 560 (L8543-8552) - Inlines > Links", {
   expect_identical_md(
-    md = c("[", " ]",
+    md = c(
+      "[", " ]",
       "", "[",
-      " ]: /uri"),
+      " ]: /uri"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-560"
+    url = "https://github.github.com/gfm/#example-560"
   )
 })
 
 test_that("gfm - Ex 561 (L8566-8570) - Inlines > Links", {
   expect_identical_md(
-    md = c("[foo][]",
+    md = c(
+      "[foo][]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-561"
+    url = "https://github.github.com/gfm/#example-561"
   )
 })
 
@@ -5376,39 +6072,46 @@ test_that("gfm - Ex 562 (L8575-8579) - Inlines > Links", {
     md = c(
       "[*foo* bar][]",
       "",
-      "[*foo* bar]: /url \"title\""),
+      "[*foo* bar]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-562"
+    url = "https://github.github.com/gfm/#example-562"
   )
 })
 
 test_that("gfm - Ex 563 (L8586-8590) - Inlines > Links", {
   expect_identical_md(
-    md = c("[Foo][]",
+    md = c(
+      "[Foo][]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-563"
+    url = "https://github.github.com/gfm/#example-563"
   )
 })
 
 test_that("gfm - Ex 564 (L8599-8605) - Inlines > Links", {
   expect_identical_md(
-    md = c("[foo] ",
+    md = c(
+      "[foo] ",
       "[]", "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-564"
+    url = "https://github.github.com/gfm/#example-564"
   )
 })
 
 test_that("gfm - Ex 565 (L8619-8623) - Inlines > Links", {
   expect_identical_md(
-    md = c("[foo]",
+    md = c(
+      "[foo]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-565"
+    url = "https://github.github.com/gfm/#example-565"
   )
 })
 
@@ -5417,9 +6120,10 @@ test_that("gfm - Ex 566 (L8628-8632) - Inlines > Links", {
     md = c(
       "[*foo* bar]",
       "",
-      "[*foo* bar]: /url \"title\""),
+      "[*foo* bar]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-566"
+    url = "https://github.github.com/gfm/#example-566"
   )
 })
 
@@ -5428,9 +6132,10 @@ test_that("gfm - Ex 567 (L8637-8641) - Inlines > Links", {
     md = c(
       "[[*foo* bar]]",
       "",
-      "[*foo* bar]: /url \"title\""),
+      "[*foo* bar]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-567"
+    url = "https://github.github.com/gfm/#example-567"
   )
 })
 
@@ -5439,19 +6144,22 @@ test_that("gfm - Ex 568 (L8646-8650) - Inlines > Links", {
     md = c(
       "[[bar [foo]",
       "",
-      "[foo]: /url"),
+      "[foo]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-568"
+    url = "https://github.github.com/gfm/#example-568"
   )
 })
 
 test_that("gfm - Ex 569 (L8657-8661) - Inlines > Links", {
   expect_identical_md(
-    md = c("[Foo]",
+    md = c(
+      "[Foo]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-569"
+    url = "https://github.github.com/gfm/#example-569"
   )
 })
 
@@ -5459,19 +6167,22 @@ test_that("gfm - Ex 570 (L8668-8672) - Inlines > Links", {
   expect_identical_md(
     md = c(
       "[foo] bar", "",
-      "[foo]: /url"),
+      "[foo]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-570"
+    url = "https://github.github.com/gfm/#example-570"
   )
 })
 
 test_that("gfm - Ex 571 (L8680-8684) - Inlines > Links", {
   expect_identical_md(
-    md = c("\\[foo]",
+    md = c(
+      "\\[foo]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-571"
+    url = "https://github.github.com/gfm/#example-571"
   )
 })
 
@@ -5479,9 +6190,10 @@ test_that("gfm - Ex 572 (L8692-8696) - Inlines > Links", {
   expect_identical_md(
     md = c(
       "[foo*]: /url",
-      "", "*[foo*]"),
+      "", "*[foo*]"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-572"
+    url = "https://github.github.com/gfm/#example-572"
   )
 })
 
@@ -5491,29 +6203,34 @@ test_that("gfm - Ex 573 (L8704-8709) - Inlines > Links", {
       "[foo][bar]",
       "",
       "[foo]: /url1",
-      "[bar]: /url2"),
+      "[bar]: /url2"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-573"
+    url = "https://github.github.com/gfm/#example-573"
   )
 })
 
 test_that("gfm - Ex 574 (L8713-8717) - Inlines > Links", {
   expect_identical_md(
-    md = c("[foo][]",
+    md = c(
+      "[foo][]",
       "",
-      "[foo]: /url1"),
+      "[foo]: /url1"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-574"
+    url = "https://github.github.com/gfm/#example-574"
   )
 })
 
 test_that("gfm - Ex 575 (L8723-8727) - Inlines > Links", {
   expect_identical_md(
-    md = c("[foo]()",
+    md = c(
+      "[foo]()",
       "",
-      "[foo]: /url1"),
+      "[foo]: /url1"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-575"
+    url = "https://github.github.com/gfm/#example-575"
   )
 })
 
@@ -5522,9 +6239,10 @@ test_that("gfm - Ex 576 (L8731-8735) - Inlines > Links", {
     md = c(
       "[foo](not a link)",
       "",
-      "[foo]: /url1"),
+      "[foo]: /url1"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-576"
+    url = "https://github.github.com/gfm/#example-576"
   )
 })
 
@@ -5533,9 +6251,10 @@ test_that("gfm - Ex 577 (L8742-8746) - Inlines > Links", {
     md = c(
       "[foo][bar][baz]",
       "",
-      "[baz]: /url"),
+      "[baz]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-577"
+    url = "https://github.github.com/gfm/#example-577"
   )
 })
 
@@ -5545,9 +6264,10 @@ test_that("gfm - Ex 578 (L8754-8759) - Inlines > Links", {
       "[foo][bar][baz]",
       "",
       "[baz]: /url1",
-      "[bar]: /url2"),
+      "[bar]: /url2"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-578"
+    url = "https://github.github.com/gfm/#example-578"
   )
 })
 
@@ -5557,18 +6277,20 @@ test_that("gfm - Ex 579 (L8767-8772) - Inlines > Links", {
       "[foo][bar][baz]",
       "",
       "[baz]: /url1",
-      "[foo]: /url2"),
+      "[foo]: /url2"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-579"
+    url = "https://github.github.com/gfm/#example-579"
   )
 })
 
 test_that("gfm - Ex 580 (L8790-8792) - Inlines > Images", {
   expect_identical_md(
     md = c(
-      "![foo](/url \"title\")"),
+      "![foo](/url \"title\")"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-580"
+    url = "https://github.github.com/gfm/#example-580"
   )
 })
 
@@ -5577,27 +6299,30 @@ test_that("gfm - Ex 581 (L8797-8801) - Inlines > Images", {
     md = c(
       "![foo *bar*]",
       "",
-      "[foo *bar*]: train.jpg \"train & tracks\""),
+      "[foo *bar*]: train.jpg \"train & tracks\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-581"
+    url = "https://github.github.com/gfm/#example-581"
   )
 })
 
 test_that("gfm - Ex 582 (L8806-8808) - Inlines > Images", {
   expect_identical_md(
     md = c(
-      "![foo ![bar](/url)](/url2)"),
+      "![foo ![bar](/url)](/url2)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-582"
+    url = "https://github.github.com/gfm/#example-582"
   )
 })
 
 test_that("gfm - Ex 583 (L8813-8815) - Inlines > Images", {
   expect_identical_md(
     md = c(
-      "![foo [bar](/url)](/url2)"),
+      "![foo [bar](/url)](/url2)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-583"
+    url = "https://github.github.com/gfm/#example-583"
   )
 })
 
@@ -5606,9 +6331,10 @@ test_that("gfm - Ex 584 (L8827-8831) - Inlines > Images", {
     md = c(
       "![foo *bar*][]",
       "",
-      "[foo *bar*]: train.jpg \"train & tracks\""),
+      "[foo *bar*]: train.jpg \"train & tracks\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-584"
+    url = "https://github.github.com/gfm/#example-584"
   )
 })
 
@@ -5617,45 +6343,50 @@ test_that("gfm - Ex 585 (L8836-8840) - Inlines > Images", {
     md = c(
       "![foo *bar*][foobar]",
       "",
-      "[FOOBAR]: train.jpg \"train & tracks\""),
+      "[FOOBAR]: train.jpg \"train & tracks\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-585"
+    url = "https://github.github.com/gfm/#example-585"
   )
 })
 
 test_that("gfm - Ex 586 (L8845-8847) - Inlines > Images", {
   expect_identical_md(
     md = c(
-      "![foo](train.jpg)"),
+      "![foo](train.jpg)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-586"
+    url = "https://github.github.com/gfm/#example-586"
   )
 })
 
 test_that("gfm - Ex 587 (L8852-8854) - Inlines > Images", {
   expect_identical_md(
     md = c(
-      "My ![foo bar](/path/to/train.jpg  \"title\"   )"),
+      "My ![foo bar](/path/to/train.jpg  \"title\"   )"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-587"
+    url = "https://github.github.com/gfm/#example-587"
   )
 })
 
 test_that("gfm - Ex 588 (L8859-8861) - Inlines > Images", {
   expect_identical_md(
     md = c(
-      "![foo](<url>)"),
+      "![foo](<url>)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-588"
+    url = "https://github.github.com/gfm/#example-588"
   )
 })
 
 test_that("gfm - Ex 589 (L8866-8868) - Inlines > Images", {
   expect_identical_md(
     md = c(
-      "![](/url)"),
+      "![](/url)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-589"
+    url = "https://github.github.com/gfm/#example-589"
   )
 })
 
@@ -5664,9 +6395,10 @@ test_that("gfm - Ex 590 (L8875-8879) - Inlines > Images", {
     md = c(
       "![foo][bar]",
       "",
-      "[bar]: /url"),
+      "[bar]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-590"
+    url = "https://github.github.com/gfm/#example-590"
   )
 })
 
@@ -5675,19 +6407,22 @@ test_that("gfm - Ex 591 (L8884-8888) - Inlines > Images", {
     md = c(
       "![foo][bar]",
       "",
-      "[BAR]: /url"),
+      "[BAR]: /url"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-591"
+    url = "https://github.github.com/gfm/#example-591"
   )
 })
 
 test_that("gfm - Ex 592 (L8895-8899) - Inlines > Images", {
   expect_identical_md(
-    md = c("![foo][]",
+    md = c(
+      "![foo][]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-592"
+    url = "https://github.github.com/gfm/#example-592"
   )
 })
 
@@ -5696,39 +6431,46 @@ test_that("gfm - Ex 593 (L8904-8908) - Inlines > Images", {
     md = c(
       "![*foo* bar][]",
       "",
-      "[*foo* bar]: /url \"title\""),
+      "[*foo* bar]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-593"
+    url = "https://github.github.com/gfm/#example-593"
   )
 })
 
 test_that("gfm - Ex 594 (L8915-8919) - Inlines > Images", {
   expect_identical_md(
-    md = c("![Foo][]",
+    md = c(
+      "![Foo][]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-594"
+    url = "https://github.github.com/gfm/#example-594"
   )
 })
 
 test_that("gfm - Ex 595 (L8927-8933) - Inlines > Images", {
   expect_identical_md(
-    md = c("![foo] ",
+    md = c(
+      "![foo] ",
       "[]", "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-595"
+    url = "https://github.github.com/gfm/#example-595"
   )
 })
 
 test_that("gfm - Ex 596 (L8940-8944) - Inlines > Images", {
   expect_identical_md(
-    md = c("![foo]",
+    md = c(
+      "![foo]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-596"
+    url = "https://github.github.com/gfm/#example-596"
   )
 })
 
@@ -5737,166 +6479,188 @@ test_that("gfm - Ex 597 (L8949-8953) - Inlines > Images", {
     md = c(
       "![*foo* bar]",
       "",
-      "[*foo* bar]: /url \"title\""),
+      "[*foo* bar]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-597"
+    url = "https://github.github.com/gfm/#example-597"
   )
 })
 
 test_that("gfm - Ex 598 (L8960-8965) - Inlines > Images", {
   expect_identical_md(
-    md = c("![[foo]]",
+    md = c(
+      "![[foo]]",
       "",
-      "[[foo]]: /url \"title\""),
+      "[[foo]]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-598"
+    url = "https://github.github.com/gfm/#example-598"
   )
 })
 
 test_that("gfm - Ex 599 (L8972-8976) - Inlines > Images", {
   expect_identical_md(
-    md = c("![Foo]",
+    md = c(
+      "![Foo]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-599"
+    url = "https://github.github.com/gfm/#example-599"
   )
 })
 
 test_that("gfm - Ex 600 (L8984-8988) - Inlines > Images", {
   expect_identical_md(
-    md = c("!\\[foo]",
+    md = c(
+      "!\\[foo]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-600"
+    url = "https://github.github.com/gfm/#example-600"
   )
 })
 
 test_that("gfm - Ex 601 (L8996-9000) - Inlines > Images", {
   expect_identical_md(
-    md = c("\\![foo]",
+    md = c(
+      "\\![foo]",
       "",
-      "[foo]: /url \"title\""),
+      "[foo]: /url \"title\""
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-601"
+    url = "https://github.github.com/gfm/#example-601"
   )
 })
 
 test_that("gfm - Ex 602 (L9029-9031) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<http://foo.bar.baz>"),
+      "<http://foo.bar.baz>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-602"
+    url = "https://github.github.com/gfm/#example-602"
   )
 })
 
 test_that("gfm - Ex 603 (L9036-9038) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<http://foo.bar.baz/test?q=hello&id=22&boolean>"),
+      "<http://foo.bar.baz/test?q=hello&id=22&boolean>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-603"
+    url = "https://github.github.com/gfm/#example-603"
   )
 })
 
 test_that("gfm - Ex 604 (L9043-9045) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<irc://foo.bar:2233/baz>"),
+      "<irc://foo.bar:2233/baz>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-604"
+    url = "https://github.github.com/gfm/#example-604"
   )
 })
 
 test_that("gfm - Ex 605 (L9052-9054) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<MAILTO:FOO@BAR.BAZ>"),
+      "<MAILTO:FOO@BAR.BAZ>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-605"
+    url = "https://github.github.com/gfm/#example-605"
   )
 })
 
 test_that("gfm - Ex 606 (L9064-9066) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<a+b+c:d>"),
+      "<a+b+c:d>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-606"
+    url = "https://github.github.com/gfm/#example-606"
   )
 })
 
 test_that("gfm - Ex 607 (L9071-9073) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<made-up-scheme://foo,bar>"),
+      "<made-up-scheme://foo,bar>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-607"
+    url = "https://github.github.com/gfm/#example-607"
   )
 })
 
 test_that("gfm - Ex 608 (L9078-9080) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<http://../>"),
+      "<http://../>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-608"
+    url = "https://github.github.com/gfm/#example-608"
   )
 })
 
 test_that("gfm - Ex 609 (L9085-9087) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<localhost:5001/foo>"),
+      "<localhost:5001/foo>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-609"
+    url = "https://github.github.com/gfm/#example-609"
   )
 })
 
 test_that("gfm - Ex 610 (L9094-9096) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<http://foo.bar/baz bim>"),
+      "<http://foo.bar/baz bim>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-610"
+    url = "https://github.github.com/gfm/#example-610"
   )
 })
 
 test_that("gfm - Ex 611 (L9103-9105) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<http://example.com/\\[\\>"),
+      "<http://example.com/\\[\\>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-611"
+    url = "https://github.github.com/gfm/#example-611"
   )
 })
 
 test_that("gfm - Ex 612 (L9125-9127) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<foo@bar.example.com>"),
+      "<foo@bar.example.com>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-612"
+    url = "https://github.github.com/gfm/#example-612"
   )
 })
 
 test_that("gfm - Ex 613 (L9132-9134) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<foo+special@Bar.baz-bar0.com>"),
+      "<foo+special@Bar.baz-bar0.com>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-613"
+    url = "https://github.github.com/gfm/#example-613"
   )
 })
 
 test_that("gfm - Ex 614 (L9141-9143) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<foo\\+@bar.example.com>"),
+      "<foo\\+@bar.example.com>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-614"
+    url = "https://github.github.com/gfm/#example-614"
   )
 })
 
@@ -5904,16 +6668,17 @@ test_that("gfm - Ex 615 (L9150-9152) - Inlines > Autolinks", {
   expect_identical_md(
     md = c("<>"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-615"
+    url = "https://github.github.com/gfm/#example-615"
   )
 })
 
 test_that("gfm - Ex 616 (L9157-9159) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "< http://foo.bar >"),
+      "< http://foo.bar >"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-616"
+    url = "https://github.github.com/gfm/#example-616"
   )
 })
 
@@ -5921,52 +6686,57 @@ test_that("gfm - Ex 617 (L9164-9166) - Inlines > Autolinks", {
   expect_identical_md(
     md = c("<m:abc>"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-617"
+    url = "https://github.github.com/gfm/#example-617"
   )
 })
 
 test_that("gfm - Ex 618 (L9171-9173) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "<foo.bar.baz>"),
+      "<foo.bar.baz>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-618"
+    url = "https://github.github.com/gfm/#example-618"
   )
 })
 
 test_that("gfm - Ex 619 (L9178-9180) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "http://example.com"),
+      "http://example.com"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-619"
+    url = "https://github.github.com/gfm/#example-619"
   )
 })
 
 test_that("gfm - Ex 620 (L9185-9187) - Inlines > Autolinks", {
   expect_identical_md(
     md = c(
-      "foo@bar.example.com"),
+      "foo@bar.example.com"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-620"
+    url = "https://github.github.com/gfm/#example-620"
   )
 })
 
 test_that("gfm - Ex 621 (L9214-9216) - Inlines > Autolinks (extension)", {
   expect_identical_md(
     md = c(
-      "www.commonmark.org"),
+      "www.commonmark.org"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-621"
+    url = "https://github.github.com/gfm/#example-621"
   )
 })
 
 test_that("gfm - Ex 622 (L9222-9224) - Inlines > Autolinks (extension)", {
   expect_identical_md(
     md = c(
-      "Visit www.commonmark.org/help for more information."),
+      "Visit www.commonmark.org/help for more information."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-622"
+    url = "https://github.github.com/gfm/#example-622"
   )
 })
 
@@ -5976,9 +6746,10 @@ test_that("gfm - Ex 623 (L9234-9239) - Inlines > Autolinks (extension)", {
     md = c(
       "Visit www.commonmark.org.",
       "",
-      "Visit www.commonmark.org/a.b."),
+      "Visit www.commonmark.org/a.b."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-623"
+    url = "https://github.github.com/gfm/#example-623"
   )
 })
 
@@ -5992,18 +6763,20 @@ test_that("gfm - Ex 624 (L9248-9259) - Inlines > Autolinks (extension)", {
       "",
       "(www.google.com/search?q=Markup+(business))",
       "",
-      "(www.google.com/search?q=Markup+(business)"),
+      "(www.google.com/search?q=Markup+(business)"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-624"
+    url = "https://github.github.com/gfm/#example-624"
   )
 })
 
 test_that("gfm - Ex 625 (L9267-9269) - Inlines > Autolinks (extension)", {
   expect_identical_md(
     md = c(
-      "www.google.com/search?q=(business))+ok"),
+      "www.google.com/search?q=(business))+ok"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-625"
+    url = "https://github.github.com/gfm/#example-625"
   )
 })
 
@@ -6012,18 +6785,20 @@ test_that("gfm - Ex 626 (L9278-9283) - Inlines > Autolinks (extension)", {
     md = c(
       "www.google.com/search?q=commonmark&hl=en",
       "",
-      "www.google.com/search?q=commonmark&hl;"),
+      "www.google.com/search?q=commonmark&hl;"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-626"
+    url = "https://github.github.com/gfm/#example-626"
   )
 })
 
 test_that("gfm - Ex 627 (L9289-9291) - Inlines > Autolinks (extension)", {
   expect_identical_md(
     md = c(
-      "www.commonmark.org/he<lp"),
+      "www.commonmark.org/he<lp"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-627"
+    url = "https://github.github.com/gfm/#example-627"
   )
 })
 
@@ -6034,27 +6809,30 @@ test_that("gfm - Ex 628 (L9300-9308) - Inlines > Autolinks (extension)", {
       "",
       "(Visit https://encrypted.google.com/search?q=Markup+(business))",
       "",
-      "Anonymous FTP is available at ftp://foo.bar.baz."),
+      "Anonymous FTP is available at ftp://foo.bar.baz."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-628"
+    url = "https://github.github.com/gfm/#example-628"
   )
 })
 
 test_that("gfm - Ex 629 (L9326-9328) - Inlines > Autolinks (extension)", {
   expect_identical_md(
     md = c(
-      "foo@bar.baz"),
+      "foo@bar.baz"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-629"
+    url = "https://github.github.com/gfm/#example-629"
   )
 })
 
 test_that("gfm - Ex 630 (L9334-9336) - Inlines > Autolinks (extension)", {
   expect_identical_md(
     md = c(
-      "hello@mail+xyz.example isn't valid, but hello+xyz@mail.example is."),
+      "hello@mail+xyz.example isn't valid, but hello+xyz@mail.example is."
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-630"
+    url = "https://github.github.com/gfm/#example-630"
   )
 })
 
@@ -6068,27 +6846,30 @@ test_that("gfm - Ex 631 (L9344-9355) - Inlines > Autolinks (extension)", {
       "",
       "a.b-c_d@a.b-",
       "",
-      "a.b-c_d@a.b_"),
+      "a.b-c_d@a.b_"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-631"
+    url = "https://github.github.com/gfm/#example-631"
   )
 })
 
 test_that("gfm - Ex 632 (L9435-9437) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "<a><bab><c2c>"),
+      "<a><bab><c2c>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-632"
+    url = "https://github.github.com/gfm/#example-632"
   )
 })
 
 test_that("gfm - Ex 633 (L9444-9446) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "<a/><b2/>"),
+      "<a/><b2/>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-633"
+    url = "https://github.github.com/gfm/#example-633"
   )
 })
 
@@ -6096,9 +6877,10 @@ test_that("gfm - Ex 634 (L9453-9457) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
       "<a  /><b2",
-      "data=\"foo\" >"),
+      "data=\"foo\" >"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-634"
+    url = "https://github.github.com/gfm/#example-634"
   )
 })
 
@@ -6106,83 +6888,93 @@ test_that("gfm - Ex 635 (L9464-9468) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
       "<a foo=\"bar\" bam = 'baz <em>\"</em>'",
-      "_boolean zoop:33=zoop:33 />"),
+      "_boolean zoop:33=zoop:33 />"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-635"
+    url = "https://github.github.com/gfm/#example-635"
   )
 })
 
 test_that("gfm - Ex 636 (L9475-9477) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "Foo <responsive-image src=\"foo.jpg\" />"),
+      "Foo <responsive-image src=\"foo.jpg\" />"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-636"
+    url = "https://github.github.com/gfm/#example-636"
   )
 })
 
 test_that("gfm - Ex 637 (L9484-9486) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "<33> <__>"),
+      "<33> <__>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-637"
+    url = "https://github.github.com/gfm/#example-637"
   )
 })
 
 test_that("gfm - Ex 638 (L9493-9495) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "<a h*#ref=\"hi\">"),
+      "<a h*#ref=\"hi\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-638"
+    url = "https://github.github.com/gfm/#example-638"
   )
 })
 
 test_that("gfm - Ex 639 (L9502-9504) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "<a href=\"hi'> <a href=hi'>"),
+      "<a href=\"hi'> <a href=hi'>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-639"
+    url = "https://github.github.com/gfm/#example-639"
   )
 })
 
 test_that("gfm - Ex 640 (L9511-9519) - Inlines > Raw HTML", {
   expect_identical_md(
-    md = c("< a><",
+    md = c(
+      "< a><",
       "foo><bar/ >",
       "<foo bar=baz",
-      "bim!bop />"),
+      "bim!bop />"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-640"
+    url = "https://github.github.com/gfm/#example-640"
   )
 })
 
 test_that("gfm - Ex 641 (L9526-9528) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "<a href='bar'title=title>"),
+      "<a href='bar'title=title>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-641"
+    url = "https://github.github.com/gfm/#example-641"
   )
 })
 
 test_that("gfm - Ex 642 (L9535-9537) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "</a></foo >"),
+      "</a></foo >"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-642"
+    url = "https://github.github.com/gfm/#example-642"
   )
 })
 
 test_that("gfm - Ex 643 (L9544-9546) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "</a href=\"foo\">"),
+      "</a href=\"foo\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-643"
+    url = "https://github.github.com/gfm/#example-643"
   )
 })
 
@@ -6190,9 +6982,10 @@ test_that("gfm - Ex 644 (L9553-9557) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
       "foo <!-- this is a --",
-      "comment - with hyphens -->"),
+      "comment - with hyphens -->"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-644"
+    url = "https://github.github.com/gfm/#example-644"
   )
 })
 
@@ -6201,63 +6994,70 @@ test_that("gfm - Ex 645 (L9561-9566) - Inlines > Raw HTML", {
     md = c(
       "foo <!--> foo -->",
       "",
-      "foo <!---> foo -->"),
+      "foo <!---> foo -->"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-645"
+    url = "https://github.github.com/gfm/#example-645"
   )
 })
 
 test_that("gfm - Ex 646 (L9573-9575) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "foo <?php echo $a; ?>"),
+      "foo <?php echo $a; ?>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-646"
+    url = "https://github.github.com/gfm/#example-646"
   )
 })
 
 test_that("gfm - Ex 647 (L9582-9584) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "foo <!ELEMENT br EMPTY>"),
+      "foo <!ELEMENT br EMPTY>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-647"
+    url = "https://github.github.com/gfm/#example-647"
   )
 })
 
 test_that("gfm - Ex 648 (L9591-9593) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "foo <![CDATA[>&<]]>"),
+      "foo <![CDATA[>&<]]>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-648"
+    url = "https://github.github.com/gfm/#example-648"
   )
 })
 
 test_that("gfm - Ex 649 (L9601-9603) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "foo <a href=\"&ouml;\">"),
+      "foo <a href=\"&ouml;\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-649"
+    url = "https://github.github.com/gfm/#example-649"
   )
 })
 
 test_that("gfm - Ex 650 (L9610-9612) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "foo <a href=\"\\*\">"),
+      "foo <a href=\"\\*\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-650"
+    url = "https://github.github.com/gfm/#example-650"
   )
 })
 
 test_that("gfm - Ex 651 (L9617-9619) - Inlines > Raw HTML", {
   expect_identical_md(
     md = c(
-      "<a href=\"\\\"\">"),
+      "<a href=\"\\\"\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-651"
+    url = "https://github.github.com/gfm/#example-651"
   )
 })
 
@@ -6268,25 +7068,30 @@ test_that("gfm - Ex 652 (L9648-9657) - Inlines > Disallowed Raw HTML (extension)
       "",
       "<blockquote>",
       "  <xmp> is disallowed.  <XMP> is also disallowed.",
-      "</blockquote>"),
+      "</blockquote>"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-652"
+    url = "https://github.github.com/gfm/#example-652"
   )
 })
 
 test_that("gfm - Ex 653 (L9670-9674) - Inlines > Hard line breaks", {
   expect_identical_md(
-    md = c("foo  ",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-653"
+    md = c(
+      "foo  ",
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-653"
   )
 })
 
 test_that("gfm - Ex 654 (L9682-9686) - Inlines > Hard line breaks", {
   expect_identical_md(
-    md = c("foo\\",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-654"
+    md = c(
+      "foo\\",
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-654"
   )
 })
 
@@ -6294,60 +7099,73 @@ test_that("gfm - Ex 655 (L9693-9697) - Inlines > Hard line breaks", {
   expect_identical_md(
     md = c(
       "foo       ",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-655"
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-655"
   )
 })
 
 test_that("gfm - Ex 656 (L9704-9708) - Inlines > Hard line breaks", {
   expect_identical_md(
-    md = c("foo  ",
-      "     bar"),
+    md = c(
+      "foo  ",
+      "     bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-656"
+    url = "https://github.github.com/gfm/#example-656"
   )
 })
 
 test_that("gfm - Ex 657 (L9713-9717) - Inlines > Hard line breaks", {
   expect_identical_md(
-    md = c("foo\\",
-      "     bar"),
+    md = c(
+      "foo\\",
+      "     bar"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-657"
+    url = "https://github.github.com/gfm/#example-657"
   )
 })
 
 test_that("gfm - Ex 658 (L9725-9729) - Inlines > Hard line breaks", {
   expect_identical_md(
-    md = c("*foo  ",
-      "bar*"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-658"
+    md = c(
+      "*foo  ",
+      "bar*"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-658"
   )
 })
 
 test_that("gfm - Ex 659 (L9734-9738) - Inlines > Hard line breaks", {
   expect_identical_md(
-    md = c("*foo\\",
-      "bar*"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-659"
+    md = c(
+      "*foo\\",
+      "bar*"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-659"
   )
 })
 
 test_that("gfm - Ex 660 (L9745-9748) - Inlines > Hard line breaks", {
   expect_identical_md(
-    md = c("`code  ",
-      "span`"),
+    md = c(
+      "`code  ",
+      "span`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-660"
+    url = "https://github.github.com/gfm/#example-660"
   )
 })
 
 test_that("gfm - Ex 661 (L9753-9756) - Inlines > Hard line breaks", {
   expect_identical_md(
-    md = c("`code\\",
-      "span`"),
+    md = c(
+      "`code\\",
+      "span`"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-661"
+    url = "https://github.github.com/gfm/#example-661"
   )
 })
 
@@ -6355,9 +7173,10 @@ test_that("gfm - Ex 662 (L9763-9767) - Inlines > Hard line breaks", {
   expect_identical_md(
     md = c(
       "<a href=\"foo  ",
-      "bar\">"),
+      "bar\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-662"
+    url = "https://github.github.com/gfm/#example-662"
   )
 })
 
@@ -6365,9 +7184,10 @@ test_that("gfm - Ex 663 (L9772-9776) - Inlines > Hard line breaks", {
   expect_identical_md(
     md = c(
       "<a href=\"foo\\",
-      "bar\">"),
+      "bar\">"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-663"
+    url = "https://github.github.com/gfm/#example-663"
   )
 })
 
@@ -6375,7 +7195,7 @@ test_that("gfm - Ex 664 (L9785-9787) - Inlines > Hard line breaks", {
   expect_identical_md(
     md = c("foo\\"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-664"
+    url = "https://github.github.com/gfm/#example-664"
   )
 })
 
@@ -6383,50 +7203,57 @@ test_that("gfm - Ex 665 (L9792-9794) - Inlines > Hard line breaks", {
   expect_identical_md(
     md = c("foo  "),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-665"
+    url = "https://github.github.com/gfm/#example-665"
   )
 })
 
 test_that("gfm - Ex 666 (L9799-9801) - Inlines > Hard line breaks", {
   expect_identical_md(
     md = c(
-      "### foo\\"),
+      "### foo\\"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-666"
+    url = "https://github.github.com/gfm/#example-666"
   )
 })
 
 test_that("gfm - Ex 667 (L9806-9808) - Inlines > Hard line breaks", {
   expect_identical_md(
     md = c(
-      "### foo  "),
+      "### foo  "
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-667"
+    url = "https://github.github.com/gfm/#example-667"
   )
 })
 
 test_that("gfm - Ex 668 (L9821-9825) - Inlines > Soft line breaks", {
   expect_identical_md(
-    md = c("foo",
-      "baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-668"
+    md = c(
+      "foo",
+      "baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-668"
   )
 })
 
 test_that("gfm - Ex 669 (L9833-9837) - Inlines > Soft line breaks", {
   expect_identical_md(
-    md = c("foo ",
-      " baz"), flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-669"
+    md = c(
+      "foo ",
+      " baz"
+    ), flags = "MD_DIALECT_GITHUB",
+    url = "https://github.github.com/gfm/#example-669"
   )
 })
 
 test_that("gfm - Ex 670 (L9853-9855) - Inlines > Textual content", {
   expect_identical_md(
     md = c(
-      "hello $.;'there"),
+      "hello $.;'there"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-670"
+    url = "https://github.github.com/gfm/#example-670"
   )
 })
 
@@ -6434,15 +7261,16 @@ test_that("gfm - Ex 671 (L9860-9862) - Inlines > Textual content", {
   expect_identical_md(
     md = c("Foo χρῆν"),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-671"
+    url = "https://github.github.com/gfm/#example-671"
   )
 })
 
 test_that("gfm - Ex 672 (L9869-9871) - Inlines > Textual content", {
   expect_identical_md(
     md = c(
-      "Multiple     spaces"),
+      "Multiple     spaces"
+    ),
     flags = "MD_DIALECT_GITHUB",
-    info = "https://github.github.com/gfm/#example-672"
+    url = "https://github.github.com/gfm/#example-672"
   )
 })
