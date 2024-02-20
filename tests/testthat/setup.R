@@ -39,7 +39,7 @@ clean_html = function(x) {
   x = gsub(" />", ">", x) # Some img and a tags differ with usage of this across test cases
 }
 
-expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, ...) {
+expect_identical_html = function(md, flags, expected, url = NULL, ...) {
   local_cli_config(unicode = TRUE, num_colors = 256)
 
   ast = parse_md(md, flags = flags)
@@ -64,7 +64,7 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
       paste(md_html, collapse="\n")
     )
 
-    error = paste0(info, ": generated html does not match expected html.")
+    error = "Generated html does not match expected html."
     if (!is.null(url))
       error = paste(error, url, sep="\n")
 
@@ -96,7 +96,7 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
 
 
 
-expect_identical_md = function(md, flags, info = NULL, ...) {
+expect_identical_md = function(md, flags,  url = NULL, ...) {
 
   orig_md = md
   orig_md_ast = parse_md(orig_md, flags)
@@ -108,6 +108,10 @@ expect_identical_md = function(md, flags, info = NULL, ...) {
 
   local_cli_config(unicode = TRUE, num_colors = 256)
 
+  error = "Generated markdown ast does not match expected ast."
+  if (!is.null(url))
+    error = paste(error, url, sep="\n")
+
   if (comp) {
     type = "success"
     msg = ""
@@ -115,9 +119,7 @@ expect_identical_md = function(md, flags, info = NULL, ...) {
     type = "failure"
 
     msg = paste(
-      info,
-      "",
-      "Generated markdown ast does not match expected ast.",
+      error,
       "",
       cli::style_bold("markdown:"),
       cli::col_grey( paste(
