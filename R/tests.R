@@ -8,6 +8,22 @@ indent = function(x) {
   paste0("  ", x)
 }
 
+flag_lookup = c(
+  "--fcollapse-whitespace"         = "MD_FLAG_COLLAPSEWHITESPACE",
+  "--ftables"                      = "MD_FLAG_TABLES",
+  "--fpermissive-url-autolinks"    = "MD_FLAG_PERMISSIVEURLAUTOLINKS",
+  "--fstrikethrough"               = "MD_FLAG_STRIKETHROUGH",
+  "--ftables"                      = "MD_FLAG_TABLES",
+  "--fwiki-links"                  = "MD_FLAG_WIKILINKS",
+  "--fhard-soft-breaks"            = "MD_FLAG_HARD_SOFT_BREAKS",
+  "--flatex-math"                  = "MD_FLAG_LATEXMATHSPANS",
+  "--fpermissive-email-autolinks"  = "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
+  "--fpermissive-www-autolinks"    = "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
+  "--ftasklists"                   = "MD_FLAG_TASKLISTS",
+  "--funderline"                   = "MD_FLAG_UNDERLINE",
+  "--fwiki-links"                  = "MD_FLAG_WIKILINKS"
+)
+
 
 # md4c - read tests -------------------------------------------------------
 
@@ -111,6 +127,10 @@ md4c_tests_to_md = function() {
 
 
   skip_tests = list(
+    "coverage" = tibble::tribble(
+      ~ex, ~msg,
+      19, "Equivalent ASTs with different structure"
+    ),
     "regressions" = tibble::tribble(
       ~ex, ~msg,
        51, "Ambiguous punct escaping #51"
@@ -129,34 +149,51 @@ md4c_tests_to_md = function() {
   )
 
   run_tests = function(file, name, flags, examples) {
-    purrr::iwalk(
+    purrr::imap(
       examples,
       function(test, i) {
         label = glue::glue("md4c tests - {name} - Ex {i} (L{test$line_start}-{test$line_end}) - {test$sec}")
 
-        test_that(label, {
+        other_flags = flag_lookup[test$other]
+        stopifnot(all(!is.na(other_flags)))
 
-          # Check skips
-          sub = (i == skip_tests[[name]][["ex"]])
-          if (any(sub)) {
-            testthat::skip( paste0(
-              name, " #",
-              skip_tests[[name]][["ex"]][sub], " - ",
-              skip_tests[[name]][["msg"]][sub]
+        # Check skips
+        sub = (i == skip_tests[[name]][["ex"]])
+
+        c(
+          paste0("test_that(", rlang::expr_deparse(unclass(label)), ", {"),
+          indent(c(
+            if (!!any(sub)) {
+              rlang::expr_deparse(rlang::expr(
+                testthat::skip( !!paste0(
+                  name, " #",
+                  skip_tests[[name]][["ex"]][sub], " - ",
+                  skip_tests[[name]][["msg"]][sub]
+                ) )
+              ) )
+            },
+            rlang::expr_deparse(width = 30, rlang::expr(
+              expect_identical_md(
+                md = c(!!!test$md),
+                flags = c(!!!other_flags, !!!flags)
+              )
             ) )
-          }
-
-          expect_identical_md(
-            md = test$md, flags = flags, info = NULL
-          )
-        })
+          )),
+          "})"
+        )
       }
     )
   }
 
-  purrr::walk(
+  purrr::map(
     tests,
-    do.call, what = run_tests
+    function(test) {
+      paste( purrr::reduce(
+        do.call(run_tests, test),
+        ~ c(.x, "", .y),
+        .init = glue::glue("# {test$name} -------------------------------\n")
+      ), collapse="\n")
+    }
   )
 }
 
@@ -164,22 +201,6 @@ md4c_tests_to_md = function() {
 
 
 # md4c - to_html() --------------------------------------------------------
-
-flag_lookup = c(
-  "--fcollapse-whitespace"         = "MD_FLAG_COLLAPSEWHITESPACE",
-  "--ftables"                      = "MD_FLAG_TABLES",
-  "--fpermissive-url-autolinks"    = "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-  "--fstrikethrough"               = "MD_FLAG_STRIKETHROUGH",
-  "--ftables"                      = "MD_FLAG_TABLES",
-  "--fwiki-links"                  = "MD_FLAG_WIKILINKS",
-  "--fhard-soft-breaks"            = "MD_FLAG_HARD_SOFT_BREAKS",
-  "--flatex-math"                  = "MD_FLAG_LATEXMATHSPANS",
-  "--fpermissive-email-autolinks"  = "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-  "--fpermissive-www-autolinks"    = "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-  "--ftasklists"                   = "MD_FLAG_TASKLISTS",
-  "--funderline"                   = "MD_FLAG_UNDERLINE",
-  "--fwiki-links"                  = "MD_FLAG_WIKILINKS"
-)
 
 md4c_tests_to_html = function() {
 
@@ -211,42 +232,54 @@ md4c_tests_to_html = function() {
   )
 
   run_tests = function(file, name, flags, examples) {
-    purrr::iwalk(
+    purrr::imap(
       examples,
       function(test, i) {
         label = glue::glue("{name} - Ex {i} (L{test$line_start}-{test$line_end}) - {test$sec}")
 
-        test_that(label, {
+        sub = (i == skip_tests[[name]][["ex"]])
 
-          sub = (i == skip_tests[[name]][["ex"]])
-          if (any(sub)) {
-            testthat::skip( paste0(
-              name, " #",
-              skip_tests[[name]][["ex"]][sub], " - ",
-              skip_tests[[name]][["msg"]][sub]
+        if (length(test$md) == 1)
+          test$md = paste0(test$md, "\n")
+
+        other_flags = setNames(flag_lookup[test$other], NULL)
+        stopifnot(all(!is.na(other_flags)))
+
+        c(
+          paste0("test_that(", rlang::expr_deparse(unclass(label)), ", {"),
+          indent(c(
+            if (!!any(sub)) {
+              rlang::expr_deparse(rlang::expr(
+                testthat::skip( !!paste0(
+                  name, " #",
+                  skip_tests[[name]][["ex"]][sub], " - ",
+                  skip_tests[[name]][["msg"]][sub]
+                ) )
+              ) )
+            },
+            rlang::expr_deparse(width = 30, rlang::expr(
+              expect_identical_html(
+                md = c(!!!test$md),
+                flags = c(!!!other_flags, !!!flags),
+                expected = c(!!!test$html)
+              )
             ) )
-          }
-
-
-          if (length(test$md) == 1)
-            test$md = paste0(test$md, "\n")
-
-          other_flags = flag_lookup[test$other]
-          stopifnot(all(!is.na(other_flags)))
-
-          expect_identical_html(
-            test$md, c(other_flags, flags),
-            test$html,
-            info = label
-          )
-        })
+          )),
+          "})"
+        )
       }
     )
   }
 
-  purrr::walk(
+  purrr::map(
     tests,
-    do.call, what = run_tests
+    function(test) {
+      paste( purrr::reduce(
+        do.call(run_tests, test),
+        ~ c(.x, "", .y),
+        .init = glue::glue("# {test$name} -------------------------------\n")
+      ), collapse="\n")
+    }
   )
 }
 
@@ -367,7 +400,7 @@ gfm_tests_to_md = function() {
             expect_identical_md(
               md = c(!!!test$md),
               flags = "MD_DIALECT_GITHUB",
-              info = !!unclass(url)
+              url = !!unclass(url)
             )
           ) )
         ) ),
@@ -434,10 +467,9 @@ gfm_tests_to_html = function() {
           )),
           rlang::expr_deparse(width = 20, rlang::expr(
             expect_identical_html(
-              c(!!!test$md),
-              "MD_DIALECT_GITHUB",
-              c(!!!test$html),
-              info = !!unclass(label),
+              md = c(!!!test$md),
+              flags = "MD_DIALECT_GITHUB",
+              expected = c(!!!test$html),
               url = !!unclass(url)
             )))
         )),
