@@ -20,8 +20,6 @@ local_cli_config = function(
   )
 }
 
-
-
 ######
 
 block_tags = c(
@@ -41,7 +39,7 @@ clean_html = function(x) {
   x = gsub(" />", ">", x) # Some img and a tags differ with usage of this across test cases
 }
 
-expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, ...) {
+expect_identical_html = function(md, flags, expected, url = NULL, ...) {
   local_cli_config(unicode = TRUE, num_colors = 256)
 
   ast = parse_md(md, flags = flags)
@@ -66,7 +64,7 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
       paste(md_html, collapse="\n")
     )
 
-    error = paste0(info, ": generated html does not match expected html.")
+    error = "Generated html does not match expected html."
     if (!is.null(url))
       error = paste(error, url, sep="\n")
 
@@ -98,7 +96,7 @@ expect_identical_html = function(md, flags, expected, info = NULL, url = NULL, .
 
 
 
-expect_identical_md = function(md, flags, info = NULL, ...) {
+expect_identical_md = function(md, flags,  url = NULL, ...) {
 
   orig_md = md
   orig_md_ast = parse_md(orig_md, flags)
@@ -110,6 +108,10 @@ expect_identical_md = function(md, flags, info = NULL, ...) {
 
   local_cli_config(unicode = TRUE, num_colors = 256)
 
+  error = "Generated markdown ast does not match expected ast."
+  if (!is.null(url))
+    error = paste(error, url, sep="\n")
+
   if (comp) {
     type = "success"
     msg = ""
@@ -117,9 +119,7 @@ expect_identical_md = function(md, flags, info = NULL, ...) {
     type = "failure"
 
     msg = paste(
-      info,
-      "",
-      "Generated markdown ast does not match expected ast.",
+      error,
       "",
       cli::style_bold("markdown:"),
       cli::col_grey( paste(
@@ -156,193 +156,4 @@ expect_identical_md = function(md, flags, info = NULL, ...) {
   )
 
   invisible()
-}
-
-
-
-
-
-##################
-###            ###
-### md4c tests ###
-###            ###
-##################
-
-read_md4c_tests = function(file) {
-  section = character()
-  flags = "MD_DIALECT_COMMONMARK"
-  examples = list()
-
-  in_example = FALSE
-  ex_sec = 0
-
-  md = character()
-  html = character()
-  other = character()
-
-  flag_pat = "(MD_FLAG_|MD_DIALECT_)[A-Z_]+"
-  chunk_start_pat = "^```````````````````````````````` example"
-  chunk_end_pat   = "^````````````````````````````````$"
-
-  l = readLines(file)
-  for(i in seq_along(l)) {
-    line = l[i]
-
-    if (!in_example && grepl("^#{1,6}", line)) {
-      section = sub("^#{1,6}\\s+","", line)
-    }
-    else if (grepl(flag_pat, line)) {
-      m = regexpr(flag_pat, line)
-      flags = c(flags, regmatches(line,m))
-    }
-    else if (grepl(chunk_start_pat, line)) {
-      in_example = TRUE
-      line_start = i+1
-    }
-    else if (grepl(chunk_end_pat, line)) {
-      in_example = FALSE
-      ex_sec = 0
-
-      examples[[length(examples)+1]] = list(
-        md = md,
-        html = html,
-        other = unique(unlist(strsplit(other, " "))),
-        sec = section,
-        line_start = line_start,
-        line_end = i-1
-      )
-
-      md = character()
-      html = character()
-      other = character()
-    }
-    else if (grepl("^\\.$", line)) {
-      ex_sec = ex_sec + 1
-    } else {
-      if (in_example & ex_sec == 0) {
-        md = c(md, line)
-      } else if (in_example & ex_sec == 1) {
-        html = c(html, line)
-      } else if (in_example & ex_sec == 2) {
-        other = c(other, line)
-      }
-    }
-  }
-
-  if (grepl("wiki-links", file)) {
-    # Required flag not listed in the file for some reason
-    flags = c(flags, "MD_FLAG_TABLES")
-  }
-
-  # Replace → with \t for inputs and outputs
-  examples = lapply(
-    examples,
-    function(x) {
-      x$md = gsub("→", "\t", x$md)
-      x$html = gsub("→", "\t", x$html)
-      x
-    }
-  )
-
-  list(
-    file = file,
-    name = gsub("^.*/|\\.txt$","", file),
-    flags = flags,
-    examples = examples
-  )
-}
-
-
-########################
-###                  ###
-### CommonMark Tests ###
-###                  ###
-########################
-
-#read_commonmark_spec = function(file) {
-#  tests = jsonlite::read_json(file)
-#
-#  purrr::map(
-#    tests,
-#    function(test) {
-#      test$label = glue::glue_data("Ex {example} - {section} (L{start_line}-{end_line})", .x = test)
-#      test[c("label", "markdown", "html", "example")]
-#    }
-#  )
-#}
-
-#################
-###           ###
-### gfm Tests ###
-###           ###
-#################
-
-read_gfm_tests = function(file) {
-  section = c("", "")
-  examples = list()
-
-  line_start = NA
-  in_example = FALSE
-  end_md = FALSE
-  disabled = FALSE
-  md = character()
-  html = character()
-
-  chunk_start_pat = "^```````````````````````````````` example"
-  chunk_end_pat   = "^````````````````````````````````$"
-
-  l = readLines(file)
-  for(i in seq_along(l)) {
-    line = l[i]
-
-    if (!in_example & grepl("^#\\s+", line)) {
-      section[1] = sub("^#\\s+","", line)
-    }
-    else if (!in_example & grepl("^##\\s+", line)) {
-      section[2] = sub("^##\\s+","", line)
-    }
-    else if (grepl(chunk_start_pat, line)) {
-
-      disabled = grepl("disabled", line) # track disabled tests
-      in_example = TRUE
-      line_start = i+1
-    }
-    else if (grepl(chunk_end_pat, line)) {
-      examples[[length(examples)+1]] = list(
-        md = md,
-        html = html,
-        sec = section,
-        line_start = line_start,
-        line_end = i-1,
-        disabled = disabled
-      )
-
-      disabled = FALSE
-      in_example = FALSE
-      end_md = FALSE
-      line_start = NA
-
-      md = character()
-      html = character()
-    }
-    else if (in_example & grepl("^\\.$", line)) {
-      end_md = TRUE
-    }
-    else if (in_example) {
-      if (!end_md)
-        md = c(md, line)
-      else if (end_md)
-        html = c(html, line)
-    }
-  }
-
-  # Replace → with \t for inputs and outputs
-  lapply(
-    examples,
-    function(x) {
-      x$md = gsub("→", "\t", x$md)
-      x$html = gsub("→", "\t", x$html)
-      x
-    }
-  )
 }

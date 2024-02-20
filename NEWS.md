@@ -2,6 +2,8 @@
 
 * Minor tweaks to markdown generation
 
+* Switched spec based tests to use code generation (thanks to @krlmlr for the idea and initial implementation)
+
 # Changes in md4r 0.5.2.0
 
 * Initial CRAN submission.
