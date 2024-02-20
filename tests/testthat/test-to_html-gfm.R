@@ -8476,7 +8476,9 @@ test_that("gfm - Ex 624 (L9248-9259) - Inlines > Autolinks (extension)", {
 })
 
 test_that("gfm - Ex 625 (L9267-9269) - Inlines > Autolinks (extension)", {
-  testthat::skip("gfm #625 - Seems like a md4c bug - doesn't treat the trailing '+ok' as part of the url")
+  testthat::skip(
+    "gfm #625 - Seems like a md4c bug - doesn't treat the trailing '+ok' as part of the url"
+  )
   expect_identical_html(
     c(
       "www.google.com/search?q=(business))+ok"),
