@@ -1,9 +1,15 @@
+
+
+is_mergeable = function(x) {
+  mergeable_text = c("md_text_normal", "md_text_html",
+                     "md_text_entity", "md_span")
+
+  inherits(x, mergeable_text)
+}
+
 process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
   if (is.null(collapse))
     return( unlist(lapply(md, to_md, ...)) )
-
-  mergeable_text = c("md_text_normal", "md_text_html",
-                     "md_text_entity", "md_span")
 
   if (length(md) == 0)
     return(character())
@@ -41,10 +47,7 @@ process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
         end = length(content)
         content[end] = paste0(content[end], new_content)
       }
-    } else if (
-        inherits(md[[i]], mergeable_text) &&
-        inherits(md[[i-1]], mergeable_text)
-    ) {
+    } else if ( is_mergeable(md[[i]]) && is_mergeable(md[[i-1]]) ) {
       end = length(content)
       content = c(
         content[-end],
@@ -52,8 +55,7 @@ process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
         new_content[-1]
       )
     } else if ( # Handles case with a md_text_break by adding trailing ws
-        inherits(md[[i]], "md_text_break") &&
-        inherits(md[[i-1]], mergeable_text)
+      is_mergeable(md[[i-1]]) && inherits(md[[i]], "md_text_break")
     ) {
       end = length(content)
       content = c(
@@ -308,6 +310,31 @@ to_md.md_block_li = function(md, ...) {
   }
 
   # TODO - bring this inline with th process_child_nodes w/ merging text etc
+
+  i = 2
+  while (i <= length(md)) {
+    if ( is_mergeable(md[[i-1]]) && is_mergeable(md[[i]]) ) {
+      new_md = structure(
+        paste0(to_md(md[[i-1]], ...), to_md(md[[i]], ...)),
+        class = "md_text_normal"
+      )
+
+      md[[i-1]] = new_md
+      md = md[-i]
+    } else if ( # Handles case with a md_text_break by adding trailing ws
+      is_mergeable(md[[i-1]]) && inherits(md[[i]], "md_text_break")
+    ) {
+      new_md = structure(
+        paste0(to_md(md[[i-1]], ...), "    "),
+        class = "md_text_normal"
+      )
+
+      md[[i-1]] = new_md
+      md = md[-i]
+    } else {
+      i = i + 1
+    }
+  }
 
   content = purrr::imap(
     md,
