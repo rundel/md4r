@@ -1,8 +1,13 @@
 
+needs_escape = function(md_prev, md) {
+  (is.null(md_prev) || inherits(md_prev, "md_text")) &&
+  inherits(md, "md_text_normal") &&
+  grepl("^([\\`*$%_{}<>()#+.!\"\'&/:;<>=?@^~|-]|\\[|\\])$", unlist(md))
+}
 
 is_mergeable = function(x) {
   mergeable_text = c("md_text_normal", "md_text_html",
-                     "md_text_entity", "md_span")
+                     "md_text_entity", "md_span", "md_text_merged")
 
   inherits(x, mergeable_text)
 }
@@ -14,14 +19,23 @@ process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
   if (length(md) == 0)
     return(character())
 
-  content = to_md(md[[1]], ...)
+  content = if (needs_escape(NULL, md[[1]])) {
+    to_md(md[[1]], ..., escape = TRUE)
+  } else {
+    to_md(md[[1]], ...)
+  }
+
   if (length(content) == 1 && content == "\n")
     content = ""
 
   origin = rep(class(md[[1]])[1], length(content))
 
   for(i in seq_along(md)[-1]) {
-    new_content = to_md(md[[i]], ...)
+    new_content = if (needs_escape(md[[i-1]], md[[i]])) {
+      to_md(md[[i]], ..., escape = TRUE)
+    } else {
+      to_md(md[[i]], ...)
+    }
 
     if (inherits(md[[i]], "md_span_code") & n_match(content, "`") %% 2 == 1) {
       # Handle CommonMark Spec 0.29 - Ex 349 edge case - if there is an unmatched ` in preceding
@@ -312,13 +326,22 @@ to_md.md_block_li = function(md, ...) {
   # TODO - bring this inline with th process_child_nodes w/ merging text etc
 
   i = 2
+  prev_md = md[[1]] # Needed since we overwrite md[[i-1]] if mergeable
   while (i <= length(md)) {
     if ( is_mergeable(md[[i-1]]) && is_mergeable(md[[i]]) ) {
+      prev_content = to_md(md[[i-1]], ...)
+      new_content = if (needs_escape(prev_md, md[[i]])) {
+        to_md(md[[i]], ..., escape = TRUE)
+      } else {
+        to_md(md[[i]], ...)
+      }
+
       new_md = structure(
-        paste0(to_md(md[[i-1]], ...), to_md(md[[i]], ...)),
-        class = "md_text_normal"
+        paste0(prev_content, new_content),
+        class = c("md_text_merged", "md_text")
       )
 
+      prev_md = md[[i]]
       md[[i-1]] = new_md
       md = md[-i]
     } else if ( # Handles case with a md_text_break by adding trailing ws
@@ -326,9 +349,10 @@ to_md.md_block_li = function(md, ...) {
     ) {
       new_md = structure(
         paste0(to_md(md[[i-1]], ...), "    "),
-        class = "md_text_normal"
+        class = c("md_text_merged", "md_text")
       )
 
+      prev_md = md[[i]]
       md[[i-1]] = new_md
       md = md[-i]
     } else {
@@ -342,7 +366,12 @@ to_md.md_block_li = function(md, ...) {
       if (inherits(child, "md_text_softbreak"))
         return(character())
 
-      content = to_md(child, ...)
+      prev_md = if (i==1) NULL else md[[i-1]]
+      content = if (needs_escape(prev_md, md[[i]])) {
+        to_md(md[[i]], ..., escape = TRUE)
+      } else {
+        to_md(md[[i]], ...)
+      }
 
       if (inherits(child, "md_block_h")) {
         # If a header, remove the spacing line
@@ -736,11 +765,12 @@ to_md.md_text_latexmath = function(md, ...) {
 }
 
 #' @exportS3Method
-to_md.md_text_normal = function(md, ...) {
+to_md.md_text_normal = function(md, ..., escape = FALSE) {
   content = unlist(md)
 
   # Punctuation chars need to be escaped
-  if (grepl("^([\\`*$%_{}<>()#+.!\"\'&/:;<>=?@^~|-]|\\[|\\])$", content))
+  #if (grepl("^([\\`*$%_{}<>()#+.!\"\'&/:;<>=?@^~|-]|\\[|\\])$", content))
+  if (escape)
     paste0("\\", content)
   else
     content
