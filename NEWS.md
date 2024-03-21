@@ -4,6 +4,8 @@
 
 * Switched spec based tests to use code generation (thanks to @krlmlr for the idea and initial implementation)
 
+* Added `md_text_*`, `md_span_*`, and `md_block_*` functions to create markdown elements
+
 # Changes in md4r 0.5.2.0
 
 * Initial CRAN submission.
