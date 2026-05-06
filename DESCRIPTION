@@ -1,6 +1,6 @@
 Package: md4r
 Title: Markdown Parser Implemented using the 'MD4C' Library
-Version: 0.5.2.1
+Version: 0.5.3.0
 Authors@R: c(
     person("Colin", "Rundel", , "rundel@gmail.com", role = c("aut", "cre")),
     person("Martin", "Mitáš", role = "cph",
@@ -31,6 +31,7 @@ Imports:
     tibble
 Suggests:
     diffmatchpatch,
+    rlang,
     styler,
     testthat (>= 3.0.0),
     withr
@@ -41,4 +42,4 @@ Copyright: John MacFarlane, RStudio, PBC; Martin Mitáš, Colin Rundel
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+Config/roxygen2/version: 8.0.0
