@@ -48,7 +48,7 @@ flags_describe = function() {
     "MD_FLAG_PERMISSIVEWWWAUTOLINKS",   "Enable WWW autolinks (even without any scheme prefix, if they begin with 'www.')",
     "MD_FLAG_TASKLISTS",                "Enable task list extension.",
     "MD_FLAG_LATEXMATHSPANS",           "Enable $ and $$ containing LaTeX equations.",
-    "MD_FLAG_WIKILINKS",                "Enable wiki links extensn.",
+    "MD_FLAG_WIKILINKS",                "Enable wiki links extension.",
     "MD_FLAG_UNDERLINE",                "Enable underline extension (and disables '_' for normal emphasis).",
     "MD_FLAG_HARD_SOFT_BREAKS",         "Force all soft breaks to act as hard breaks.",
     "MD_FLAG_PERMISSIVEAUTOLINKS",      "Combines flags (MD_FLAG_PERMISSIVEEMAILAUTOLINKS | MD_FLAG_PERMISSIVEURLAUTOLINKS | MD_FLAG_PERMISSIVEWWWAUTOLINKS)",

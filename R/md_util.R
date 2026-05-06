@@ -15,7 +15,7 @@ md_text_summary = function(x, max_width = 60, type = "md_text_normal", replace_n
   txt = md_text(x, type)
   txt = paste(txt, collapse="\n")
   txt = gsub("\\n", replace_newline, txt)
-  txt = substr(txt, 0, max_width)
+  txt = substr(txt, 1, max_width)
 
   if (nchar(txt) == max_width)
     txt = paste0(txt, ellipsis_chars())
