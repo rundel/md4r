@@ -726,3 +726,118 @@ https://example.com/dir/
 .
 --fpermissive-url-autolinks
 ````````````````````````````````
+
+
+## [Issue 242](https://github.com/mity/md4c/issues/242)
+
+```````````````````````````````` example
+copy ~user1/file to ~user2/file
+
+copy "~user1/file" to "~user2/file"
+.
+<p>copy ~user1/file to ~user2/file</p>
+<p>copy &quot;~user1/file&quot; to &quot;~user2/file&quot;</p>
+.
+--fstrikethrough
+````````````````````````````````
+
+
+## [Issue 248](https://github.com/mity/md4c/issues/248)
+
+(These are in spec.txt, but we need the [no-normalize] flag in order to
+catch the whitespace issues.)
+
+```````````````````````````````` example [no-normalize]
+#→Foo
+.
+<h1>Foo</h1>
+````````````````````````````````
+
+```````````````````````````````` example [no-normalize]
+  Foo *bar
+baz*→
+====
+.
+<h1>Foo <em>bar
+baz</em></h1>
+````````````````````````````````
+
+
+## [Issue 250](https://github.com/mity/md4c/issues/250)
+
+Handling trailing tabulator character versus hard break.
+
+Space + space + tab + newline is not hard break:
+```````````````````````````````` example [no-normalize]
+foo  →
+bar
+.
+<p>foo
+bar</p>
+````````````````````````````````
+
+Tab + space + space + newline is hard break:
+```````````````````````````````` example [no-normalize]
+foo→  
+bar
+.
+<p>foo<br>
+bar</p>
+````````````````````````````````
+
+
+## [Issue 251](https://github.com/mity/md4c/issues/251)
+
+```````````````````````````````` example
+https://codereview.qt-project.org/c/qt/qtwayland/+/545836
+.
+<p><a href="https://codereview.qt-project.org/c/qt/qtwayland/+/545836">https://codereview.qt-project.org/c/qt/qtwayland/+/545836</a></p>
+.
+--fpermissive-autolinks
+````````````````````````````````
+
+
+## [Issue 271](https://github.com/mity/md4c/issues/271)
+
+```````````````````````````````` example
+* `
+  foo
+  ` bar
+.
+<ul>
+<li><code>foo</code>
+bar</li>
+</ul>
+````````````````````````````````
+
+
+## [Issue 292](https://github.com/mity/md4c/issues/292)
+
+```````````````````````````````` example
+```
+foo
+```→
+bar
+.
+<pre><code>foo
+</code></pre>
+<p>bar</p>
+````````````````````````````````
+
+
+## [Issue 295](https://github.com/mity/md4c/issues/295)
+
+```````````````````````````````` example
+```language-r
+x <- 1
+```
+
+```r
+x <- 1
+```
+.
+<pre><code class="language-r">x &lt;- 1
+</code></pre>
+<pre><code class="language-r">x &lt;- 1
+</code></pre>
+````````````````````````````````

@@ -143,7 +143,8 @@ to_html.md_block_code = function(md, ...) {
   lang = html_escape(lang)
 
   if (lang != "") {
-    tag = glue::glue("<pre><code class=\"language-{lang}\">")
+    prefix = if (startsWith(lang, "language-")) "" else "language-"
+    tag = glue::glue("<pre><code class=\"{prefix}{lang}\">")
   } else {
     tag = "<pre><code>"
   }
@@ -337,7 +338,7 @@ to_html.md_text_break = function(md, ...) {
 }
 
 #' @exportS3Method
-to_html.md_text_softbr = function(md, ...) {
+to_html.md_text_softbreak = function(md, ...) {
   ""
 }
 

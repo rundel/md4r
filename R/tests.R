@@ -12,16 +12,15 @@ flag_lookup = c(
   "--fcollapse-whitespace"         = "MD_FLAG_COLLAPSEWHITESPACE",
   "--ftables"                      = "MD_FLAG_TABLES",
   "--fpermissive-url-autolinks"    = "MD_FLAG_PERMISSIVEURLAUTOLINKS",
+  "--fpermissive-autolinks"        = "MD_FLAG_PERMISSIVEAUTOLINKS",
   "--fstrikethrough"               = "MD_FLAG_STRIKETHROUGH",
-  "--ftables"                      = "MD_FLAG_TABLES",
   "--fwiki-links"                  = "MD_FLAG_WIKILINKS",
   "--fhard-soft-breaks"            = "MD_FLAG_HARD_SOFT_BREAKS",
   "--flatex-math"                  = "MD_FLAG_LATEXMATHSPANS",
   "--fpermissive-email-autolinks"  = "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
   "--fpermissive-www-autolinks"    = "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
   "--ftasklists"                   = "MD_FLAG_TASKLISTS",
-  "--funderline"                   = "MD_FLAG_UNDERLINE",
-  "--fwiki-links"                  = "MD_FLAG_WIKILINKS"
+  "--funderline"                   = "MD_FLAG_UNDERLINE"
 )
 
 

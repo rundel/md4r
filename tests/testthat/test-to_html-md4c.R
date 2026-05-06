@@ -1132,6 +1132,143 @@ test_that("regressions - Ex 56 (L721-727) - [Issue 226](https://github.com/mity/
   )
 })
 
+test_that("regressions - Ex 57 (L734-741) - [Issue 242](https://github.com/mity/md4c/issues/242)", {
+  expect_identical_html(
+    md = c(
+      "copy ~user1/file to ~user2/file",
+      "",
+      "copy \"~user1/file\" to \"~user2/file\""
+    ),
+    flags = c(
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>copy ~user1/file to ~user2/file</p>",
+      "<p>copy &quot;~user1/file&quot; to &quot;~user2/file&quot;</p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 58 (L751-753) - [Issue 248](https://github.com/mity/md4c/issues/248)", {
+  expect_identical_html(
+    md = c(
+      "#\tFoo\n"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<h1>Foo</h1>")
+  )
+})
+
+test_that("regressions - Ex 59 (L757-762) - [Issue 248](https://github.com/mity/md4c/issues/248)", {
+  expect_identical_html(
+    md = c(
+      "  Foo *bar", "baz*\t",
+      "===="
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<h1>Foo <em>bar",
+      "baz</em></h1>"
+    )
+  )
+})
+
+test_that("regressions - Ex 60 (L772-776) - [Issue 250](https://github.com/mity/md4c/issues/250)", {
+  expect_identical_html(
+    md = c(
+      "foo  \t", "bar"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>foo",
+      "bar</p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 61 (L781-785) - [Issue 250](https://github.com/mity/md4c/issues/250)", {
+  expect_identical_html(
+    md = c(
+      "foo\t  ", "bar"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>foo<br>",
+      "bar</p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 62 (L792-796) - [Issue 251](https://github.com/mity/md4c/issues/251)", {
+  expect_identical_html(
+    md = c(
+      "https://codereview.qt-project.org/c/qt/qtwayland/+/545836\n"
+    ),
+    flags = c(
+      "MD_FLAG_PERMISSIVEAUTOLINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"https://codereview.qt-project.org/c/qt/qtwayland/+/545836\">https://codereview.qt-project.org/c/qt/qtwayland/+/545836</a></p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 63 (L803-810) - [Issue 271](https://github.com/mity/md4c/issues/271)", {
+  expect_identical_html(
+    md = c(
+      "* `", "  foo", "  ` bar"
+    ),
+    flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<ul>",
+      "<li><code>foo</code>",
+      "bar</li>", "</ul>"
+    )
+  )
+})
+
+test_that("regressions - Ex 64 (L817-824) - [Issue 292](https://github.com/mity/md4c/issues/292)", {
+  expect_identical_html(
+    md = c(
+      "```", "foo", "```\t",
+      "bar"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code>foo",
+      "</code></pre>",
+      "<p>bar</p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 65 (L831-842) - [Issue 295](https://github.com/mity/md4c/issues/295)", {
+  expect_identical_html(
+    md = c(
+      "```language-r", "x <- 1",
+      "```", "", "```r", "x <- 1",
+      "```"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code class=\"language-r\">x &lt;- 1",
+      "</code></pre>",
+      "<pre><code class=\"language-r\">x &lt;- 1",
+      "</code></pre>"
+    )
+  )
+})
+
 # spec-hard-soft-breaks -------------------------------
 
 test_that("spec-hard-soft-breaks - Ex 1 (L8-14) - Hard Soft Breaks", {
@@ -1272,7 +1409,7 @@ test_that("spec-latex-math - Ex 6 (L61-68) - LaTeX Math", {
 test_that("spec-permissive-autolinks - Ex 1 (L8-12) - Permissive Autolinks", {
   expect_identical_html(
     md = c(
-      "<mailto:john.doe@gmail.com>",
+      "<mailto:john.doe@example.com>",
       "<https://example.com>"
     ),
     flags = c(
@@ -1284,7 +1421,7 @@ test_that("spec-permissive-autolinks - Ex 1 (L8-12) - Permissive Autolinks", {
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
     ),
     expected = c(
-      "<p><a href=\"mailto:john.doe@gmail.com\">mailto:john.doe@gmail.com</a>",
+      "<p><a href=\"mailto:john.doe@example.com\">mailto:john.doe@example.com</a>",
       "<a href=\"https://example.com\">https://example.com</a></p>"
     )
   )
@@ -1293,7 +1430,7 @@ test_that("spec-permissive-autolinks - Ex 1 (L8-12) - Permissive Autolinks", {
 test_that("spec-permissive-autolinks - Ex 2 (L22-32) - Permissive Autolinks", {
   expect_identical_html(
     md = c(
-      "john.doe@gmail.com",
+      "john.doe@example.com",
       "https://www.example.com",
       "www.example.com"
     ), flags = c(
@@ -1308,7 +1445,7 @@ test_that("spec-permissive-autolinks - Ex 2 (L22-32) - Permissive Autolinks", {
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
     ),
     expected = c(
-      "<p><a href=\"mailto:john.doe@gmail.com\">john.doe@gmail.com</a>",
+      "<p><a href=\"mailto:john.doe@example.com\">john.doe@example.com</a>",
       "<a href=\"https://www.example.com\">https://www.example.com</a>",
       "<a href=\"http://www.example.com\">www.example.com</a></p>"
     )
@@ -1318,7 +1455,7 @@ test_that("spec-permissive-autolinks - Ex 2 (L22-32) - Permissive Autolinks", {
 test_that("spec-permissive-autolinks - Ex 3 (L47-57) - Permissive Autolinks", {
   expect_identical_html(
     md = c(
-      ":john.doe@gmail.com",
+      ":john.doe@example.com",
       ":https://www.example.com",
       ":www.example.com"
     ), flags = c(
@@ -1333,7 +1470,7 @@ test_that("spec-permissive-autolinks - Ex 3 (L47-57) - Permissive Autolinks", {
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
     ),
     expected = c(
-      "<p>:john.doe@gmail.com",
+      "<p>:john.doe@example.com",
       ":https://www.example.com",
       ":www.example.com</p>"
     )
@@ -1343,7 +1480,7 @@ test_that("spec-permissive-autolinks - Ex 3 (L47-57) - Permissive Autolinks", {
 test_that("spec-permissive-autolinks - Ex 4 (L64-74) - Permissive Autolinks", {
   expect_identical_html(
     md = c(
-      "[john.doe@gmail.com",
+      "[john.doe@example.com",
       "(https://www.example.com",
       "{www.example.com"
     ), flags = c(
@@ -1358,7 +1495,7 @@ test_that("spec-permissive-autolinks - Ex 4 (L64-74) - Permissive Autolinks", {
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
     ),
     expected = c(
-      "<p>[<a href=\"mailto:john.doe@gmail.com\">john.doe@gmail.com</a>",
+      "<p>[<a href=\"mailto:john.doe@example.com\">john.doe@example.com</a>",
       "(<a href=\"https://www.example.com\">https://www.example.com</a>",
       "{<a href=\"http://www.example.com\">www.example.com</a></p>"
     )
@@ -1368,7 +1505,7 @@ test_that("spec-permissive-autolinks - Ex 4 (L64-74) - Permissive Autolinks", {
 test_that("spec-permissive-autolinks - Ex 5 (L80-90) - Permissive Autolinks", {
   expect_identical_html(
     md = c(
-      "john.doe@gmail.com]",
+      "john.doe@example.com]",
       "https://www.example.com)",
       "www.example.com}"
     ), flags = c(
@@ -1383,7 +1520,7 @@ test_that("spec-permissive-autolinks - Ex 5 (L80-90) - Permissive Autolinks", {
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
     ),
     expected = c(
-      "<p><a href=\"mailto:john.doe@gmail.com\">john.doe@gmail.com</a>]",
+      "<p><a href=\"mailto:john.doe@example.com\">john.doe@example.com</a>]",
       "<a href=\"https://www.example.com\">https://www.example.com</a>)",
       "<a href=\"http://www.example.com\">www.example.com</a>}</p>"
     )

@@ -740,6 +740,95 @@ test_that("md4c tests - regressions - Ex 56 (L721-727) - [Issue 226](https://git
   )
 })
 
+test_that("md4c tests - regressions - Ex 57 (L734-741) - [Issue 242](https://github.com/mity/md4c/issues/242)", {
+  expect_identical_md(
+    md = c(
+      "copy ~user1/file to ~user2/file",
+      "",
+      "copy \"~user1/file\" to \"~user2/file\""
+    ),
+    flags = c(
+      `--fstrikethrough` = "MD_FLAG_STRIKETHROUGH",
+      "MD_DIALECT_COMMONMARK"
+    )
+  )
+})
+
+test_that("md4c tests - regressions - Ex 58 (L751-753) - [Issue 248](https://github.com/mity/md4c/issues/248)", {
+  expect_identical_md(md = c(
+    "#\tFoo"
+  ), flags = c(
+    "MD_DIALECT_COMMONMARK"
+  ))
+})
+
+test_that("md4c tests - regressions - Ex 59 (L757-762) - [Issue 248](https://github.com/mity/md4c/issues/248)", {
+  expect_identical_md(md = c(
+    "  Foo *bar", "baz*\t",
+    "===="
+  ), flags = c(
+    "MD_DIALECT_COMMONMARK"
+  ))
+})
+
+test_that("md4c tests - regressions - Ex 60 (L772-776) - [Issue 250](https://github.com/mity/md4c/issues/250)", {
+  expect_identical_md(md = c(
+    "foo  \t", "bar"
+  ), flags = c(
+    "MD_DIALECT_COMMONMARK"
+  ))
+})
+
+test_that("md4c tests - regressions - Ex 61 (L781-785) - [Issue 250](https://github.com/mity/md4c/issues/250)", {
+  expect_identical_md(md = c(
+    "foo\t  ", "bar"
+  ), flags = c(
+    "MD_DIALECT_COMMONMARK"
+  ))
+})
+
+test_that("md4c tests - regressions - Ex 62 (L792-796) - [Issue 251](https://github.com/mity/md4c/issues/251)", {
+  expect_identical_md(
+    md = c(
+      "https://codereview.qt-project.org/c/qt/qtwayland/+/545836"
+    ),
+    flags = c(
+      `--fpermissive-autolinks` = "MD_FLAG_PERMISSIVEAUTOLINKS",
+      "MD_DIALECT_COMMONMARK"
+    )
+  )
+})
+
+test_that("md4c tests - regressions - Ex 63 (L803-810) - [Issue 271](https://github.com/mity/md4c/issues/271)", {
+  expect_identical_md(
+    md = c(
+      "* `", "  foo", "  ` bar"
+    ),
+    flags = c(
+      "MD_DIALECT_COMMONMARK"
+    )
+  )
+})
+
+test_that("md4c tests - regressions - Ex 64 (L817-824) - [Issue 292](https://github.com/mity/md4c/issues/292)", {
+  expect_identical_md(md = c(
+    "```", "foo", "```\t",
+    "bar"
+  ), flags = c(
+    "MD_DIALECT_COMMONMARK"
+  ))
+})
+
+test_that("md4c tests - regressions - Ex 65 (L831-842) - [Issue 295](https://github.com/mity/md4c/issues/295)", {
+  expect_identical_md(md = c(
+    "```language-r", "x <- 1",
+    "```", "", "```r", "x <- 1",
+    "```"
+  ), flags = c(
+    "MD_DIALECT_COMMONMARK"
+  ))
+})
+
 # spec-hard-soft-breaks -------------------------------
 
 test_that("md4c tests - spec-hard-soft-breaks - Ex 1 (L8-14) - Hard Soft Breaks", {
@@ -845,7 +934,7 @@ test_that("md4c tests - spec-latex-math - Ex 6 (L61-68) - LaTeX Math", {
 test_that("md4c tests - spec-permissive-autolinks - Ex 1 (L8-12) - Permissive Autolinks", {
   expect_identical_md(
     md = c(
-      "<mailto:john.doe@gmail.com>",
+      "<mailto:john.doe@example.com>",
       "<https://example.com>"
     ),
     flags = c(
@@ -861,7 +950,7 @@ test_that("md4c tests - spec-permissive-autolinks - Ex 1 (L8-12) - Permissive Au
 
 test_that("md4c tests - spec-permissive-autolinks - Ex 2 (L22-32) - Permissive Autolinks", {
   expect_identical_md(md = c(
-    "john.doe@gmail.com",
+    "john.doe@example.com",
     "https://www.example.com",
     "www.example.com"
   ), flags = c(
@@ -879,7 +968,7 @@ test_that("md4c tests - spec-permissive-autolinks - Ex 2 (L22-32) - Permissive A
 
 test_that("md4c tests - spec-permissive-autolinks - Ex 3 (L47-57) - Permissive Autolinks", {
   expect_identical_md(md = c(
-    ":john.doe@gmail.com",
+    ":john.doe@example.com",
     ":https://www.example.com",
     ":www.example.com"
   ), flags = c(
@@ -897,7 +986,7 @@ test_that("md4c tests - spec-permissive-autolinks - Ex 3 (L47-57) - Permissive A
 
 test_that("md4c tests - spec-permissive-autolinks - Ex 4 (L64-74) - Permissive Autolinks", {
   expect_identical_md(md = c(
-    "[john.doe@gmail.com",
+    "[john.doe@example.com",
     "(https://www.example.com",
     "{www.example.com"
   ), flags = c(
@@ -916,7 +1005,7 @@ test_that("md4c tests - spec-permissive-autolinks - Ex 4 (L64-74) - Permissive A
 test_that("md4c tests - spec-permissive-autolinks - Ex 5 (L80-90) - Permissive Autolinks", {
   testthat::skip("spec-permissive-autolinks #5 - Ambiguous punct escaping #5")
   expect_identical_md(md = c(
-    "john.doe@gmail.com]",
+    "john.doe@example.com]",
     "https://www.example.com)",
     "www.example.com}"
   ), flags = c(
