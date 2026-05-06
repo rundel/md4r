@@ -6,6 +6,9 @@
   whose info string already starts with `language-`, matching the upstream
   md4c-html behavior.
 
+* Added `$` and `$<-` methods for `md_node` objects to read and modify node
+  content and attributes by name.
+
 # Changes in md4r 0.5.2.1
 
 * Renamed `md_text_br()` and `md_text_softbr()` to `md_text_break()` and
