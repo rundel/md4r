@@ -37,7 +37,7 @@ process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
       to_md(md[[i]], ...)
     }
 
-    if (inherits(md[[i]], "md_span_code") & n_match(content, "`") %% 2 == 1) {
+    if (inherits(md[[i]], "md_span_code") && n_match(content, "`") %% 2 == 1) {
       # Handle CommonMark Spec 0.29 - Ex 349 edge case - if there is an unmatched ` in preceding
       # content then we need to double backquote the code span
       new_content = paste0("`", new_content, "`")
@@ -244,7 +244,8 @@ to_md.md_block_html = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_block_p = function(md, ...) {
-  stopifnot(length(md) != 0)
+  if (length(md) == 0)
+    cli::cli_abort("{.cls md_block_p} node has no children.")
   process_child_nodes(md, ..., collapse = TRUE)
 }
 
@@ -286,7 +287,7 @@ to_md.md_block_ol = function(md, ...) {
   tight = attr(md, "tight")
 
   if (!delim %in% c(".",")")) {
-    cli::cli_warn("Unexpected mark delimeter value {.val {delim}} replacing with {.val '.'}.")
+    cli::cli_warn("Unexpected mark delimiter value {.val {delim}} replacing with {.val '.'}.")
     delim = "."
   }
 
@@ -308,8 +309,12 @@ to_md.md_block_li = function(md, ...) {
   task_mark = attr(md, "task_mark")
 
   args = list(...)
-  prefix = args$prefix %||% cli::cli_abort("Required arg {.arg prefix} not provided.")
-  tight  = args$tight  %||% cli::cli_abort("Required arg {.arg tight} not provided.")
+  if (is.null(args$prefix))
+    cli::cli_abort("Required arg {.arg prefix} not provided.")
+  if (is.null(args$tight))
+    cli::cli_abort("Required arg {.arg tight} not provided.")
+  prefix = args$prefix
+  tight  = args$tight
 
   indent = rep_char(" ", nchar(prefix))
 
@@ -666,7 +671,6 @@ to_md.md_span_latexmath = function(md, ...) {
 to_md.md_span_latexmath_display = function(md, ...) {
   content = process_child_nodes(md, ...)
 
-  sep = ""
   if (length(content) == 1) {
     wrap_content(content, "$$")
   } else {
