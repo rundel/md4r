@@ -3173,7 +3173,6 @@ test_that("gfm - Ex 278 (L4880-4892) - Container blocks > List items", {
 })
 
 test_that("gfm - Ex 279 (L5109-5115) - Container blocks > Task list items (extension)", {
-  testthat::skip("Disabled test(s)")
   expect_identical_md(
     md = c(
       "- [ ] foo",
@@ -3185,7 +3184,6 @@ test_that("gfm - Ex 279 (L5109-5115) - Container blocks > Task list items (exten
 })
 
 test_that("gfm - Ex 280 (L5121-5134) - Container blocks > Task list items (extension)", {
-  testthat::skip("Disabled test(s)")
   expect_identical_md(
     md = c(
       "- [x] foo",
@@ -5673,7 +5671,6 @@ test_that("gfm - Ex 527 (L8143-8145) - Inlines > Links", {
 })
 
 test_that("gfm - Ex 528 (L8150-8152) - Inlines > Links", {
-  testthat::skip("gfm #528 - Ambiguous normal text escaping #528")
   expect_identical_md(
     md = c(
       "![[[foo](uri1)](uri2)](uri3)"
@@ -6741,7 +6738,6 @@ test_that("gfm - Ex 622 (L9222-9224) - Inlines > Autolinks (extension)", {
 })
 
 test_that("gfm - Ex 623 (L9234-9239) - Inlines > Autolinks (extension)", {
-  testthat::skip("gfm #623 - Ambiguous normal text escaping #623")
   expect_identical_md(
     md = c(
       "Visit www.commonmark.org.",
@@ -6754,7 +6750,6 @@ test_that("gfm - Ex 623 (L9234-9239) - Inlines > Autolinks (extension)", {
 })
 
 test_that("gfm - Ex 624 (L9248-9259) - Inlines > Autolinks (extension)", {
-  testthat::skip("gfm #624 - Ambiguous normal text escaping #624")
   expect_identical_md(
     md = c(
       "www.google.com/search?q=Markup+(business)",
@@ -6837,7 +6832,6 @@ test_that("gfm - Ex 630 (L9334-9336) - Inlines > Autolinks (extension)", {
 })
 
 test_that("gfm - Ex 631 (L9344-9355) - Inlines > Autolinks (extension)", {
-  testthat::skip("gfm #631 - Ambiguous normal text escaping #631")
   expect_identical_md(
     md = c(
       "a.b-c_d@a.b",

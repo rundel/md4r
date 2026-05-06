@@ -134,15 +134,10 @@ md4c_tests_to_md = function() {
       ~ex, ~msg,
        51, "Ambiguous punct escaping #51"
     ),
-    "spec-permissive-autolinks" = tibble::tribble(
-      ~ex, ~msg,
-        5, "Ambiguous punct escaping #5"
-    ),
     spec = tibble::tribble(
       ~ex, ~msg,
       257, "Ambiguous list to code block case #257",
-      313, "Ambiguous list to code block case #313",
-      520, "Ambiguous punct escaping #520"
+      313, "Ambiguous list to code block case #313"
     )
 
   )
@@ -366,11 +361,7 @@ gfm_tests_to_md = function() {
   skip_tests = tibble::tribble(
     ~ex, ~msg,
     235, "Ambiguous list to code block case #235",
-    293, "Ambiguous list to code block case #293",
-    528, "Ambiguous normal text escaping #528",
-    623, "Ambiguous normal text escaping #623",
-    624, "Ambiguous normal text escaping #624",
-    631, "Ambiguous normal text escaping #631"
+    293, "Ambiguous list to code block case #293"
   )
 
   purrr::imap(
@@ -384,9 +375,6 @@ gfm_tests_to_md = function() {
       c(
         paste0("test_that(", rlang::expr_deparse(unclass(label)), ", {"),
         indent( c(
-          if (test$disabled) {
-            rlang::expr_deparse(rlang::expr(testthat::skip("Disabled test(s)")))
-          },
           if (!!any(sub)) {
             rlang::expr_deparse(rlang::expr(
               testthat::skip( !!paste0(

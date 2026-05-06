@@ -1003,7 +1003,6 @@ test_that("md4c tests - spec-permissive-autolinks - Ex 4 (L64-74) - Permissive A
 })
 
 test_that("md4c tests - spec-permissive-autolinks - Ex 5 (L80-90) - Permissive Autolinks", {
-  testthat::skip("spec-permissive-autolinks #5 - Ambiguous punct escaping #5")
   expect_identical_md(md = c(
     "john.doe@example.com]",
     "https://www.example.com)",
@@ -6854,7 +6853,6 @@ test_that("md4c tests - spec - Ex 519 (L7894-7896) - Links", {
 })
 
 test_that("md4c tests - spec - Ex 520 (L7901-7903) - Links", {
-  testthat::skip("spec #520 - Ambiguous punct escaping #520")
   expect_identical_md(
     md = c(
       "![[[foo](uri1)](uri2)](uri3)"
