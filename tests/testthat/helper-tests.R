@@ -20,7 +20,12 @@ update_tests = function(target, deps, gen_func) {
   }
 }
 
-if (Sys.getenv("CI") == "" && file.exists("../../R/tests.R")) {
+if (
+  Sys.getenv("CI") == "" &&
+  file.exists("../../R/tests.R") &&
+  requireNamespace("rlang", quietly = TRUE) &&
+  requireNamespace("styler", quietly = TRUE)
+) {
   # Only run if tests.R is younger than the output
 
   gfm_deps = c("helper-tests.R", "../../R/tests.R", "../../inst/specs/gfm/spec.txt")
@@ -28,6 +33,6 @@ if (Sys.getenv("CI") == "" && file.exists("../../R/tests.R")) {
   update_tests("test-to_md-gfm.R", gfm_deps, gfm_tests_to_md)
 
   md4c_deps = c("helper-tests.R", "../../R/tests.R", dir("../../inst/specs/md4c/", pattern = "*.txt", full.names = TRUE))
-  update_tests("test-to_html-md4c.R", gfm_deps, md4c_tests_to_html)
-  update_tests("test-to_md-md4c.R", gfm_deps, md4c_tests_to_md)
+  update_tests("test-to_html-md4c.R", md4c_deps, md4c_tests_to_html)
+  update_tests("test-to_md-md4c.R", md4c_deps, md4c_tests_to_md)
 }
