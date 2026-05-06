@@ -29,14 +29,14 @@ md_text_nullchar = function() {
 
 #' @rdname md_text
 #' @export
-md_text_br = function() {
-  structure(character(), class=c("md_text_br","md_text","md_node"))
+md_text_break = function() {
+  structure(character(), class=c("md_text_break","md_text","md_node"))
 }
 
 #' @rdname md_text
 #' @export
-md_text_softbr = function() {
-  structure(character(), class=c("md_text_softbr","md_text","md_node"))
+md_text_softbreak = function() {
+  structure(character(), class=c("md_text_softbreak","md_text","md_node"))
 }
 
 #' @rdname md_text

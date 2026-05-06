@@ -4,8 +4,8 @@
 \alias{md_text}
 \alias{md_text_normal}
 \alias{md_text_nullchar}
-\alias{md_text_br}
-\alias{md_text_softbr}
+\alias{md_text_break}
+\alias{md_text_softbreak}
 \alias{md_text_entity}
 \alias{md_text_code}
 \alias{md_text_html}
@@ -16,9 +16,9 @@ md_text_normal(x)
 
 md_text_nullchar()
 
-md_text_br()
+md_text_break()
 
-md_text_softbr()
+md_text_softbreak()
 
 md_text_entity(x)
 
