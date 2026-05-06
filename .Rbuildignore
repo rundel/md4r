@@ -8,3 +8,7 @@
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
 ^R/tests\.R$
+^\.Rhistory$
+^\.DS_Store$
+^\.claude$
+^CLAUDE\.md$
