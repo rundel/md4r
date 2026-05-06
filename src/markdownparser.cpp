@@ -45,7 +45,7 @@ public:
   int parse(std::string const& doc);
   md_node get_ast();
 
-  void add_node(md_node &node);
+  void add_node(md_node node);
   void end_node();
 
 private:
@@ -98,16 +98,15 @@ std::string md_attr_str(MD_ATTRIBUTE const& md_attr) {
 
 
 
-void MarkdownParser::add_node(md_node& node) {
+void MarkdownParser::add_node(md_node node) {
   node.parent = cur_node;
-  cur_node->children.push_back(node);
-  md_node* ptr = &(*std::prev(cur_node->children.end()));
-  cur_node = ptr;
+  cur_node->children.push_back(std::move(node));
+  cur_node = &cur_node->children.back();
 }
 
 void MarkdownParser::end_node() {
   if (cur_node->parent == nullptr)
-    Rcpp::stop("Error");
+    Rcpp::stop("md4r internal error: end_node() called at root; parser callbacks unbalanced");
 
   cur_node = cur_node->parent;
 }
@@ -253,6 +252,8 @@ int MarkdownParser::onEnterSpan(MD_SPANTYPE type, void* detail, void* userdata) 
 
   } else if (type == MD_SPAN_U) {
     span_class.push_back("md_span_u");
+  } else {
+    span_class.push_back("md_span_other");
   }
 
   span_class.push_back("md_span");
