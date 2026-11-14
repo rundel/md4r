@@ -37,6 +37,12 @@ clean_html = function(x) {
   x = paste(x, collapse="")
   x = gsub("\n", "", x)
   x = gsub(" />", ">", x) # Some img and a tags differ with usage of this across test cases
+
+  # The upstream test runners treat all whitespace as equivalent and
+  # ignore it at the start and end of a paragraph
+  x = gsub("(*UCP)\\s", " ", x, perl = TRUE)
+  x = gsub("<p> +", "<p>", x)
+  gsub(" +</p>", "</p>", x)
 }
 
 expect_identical_html = function(md, flags, expected, url = NULL, ...) {

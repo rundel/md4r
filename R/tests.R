@@ -129,23 +129,7 @@ md4c_tests_to_md = function() {
   )
 
 
-  skip_tests = list(
-    "coverage" = tibble::tribble(
-      ~ex, ~msg,
-      19, "Equivalent ASTs with different structure"
-    ),
-    "regressions" = tibble::tribble(
-      ~ex, ~msg,
-        3, "Escaped ] in wikilink content breaks the wikilink #3",
-       54, "Ambiguous punct escaping #54"
-    ),
-    spec = tibble::tribble(
-      ~ex, ~msg,
-      257, "Ambiguous list to code block case #257",
-      313, "Ambiguous list to code block case #313"
-    )
-
-  )
+  skip_tests = list()
 
   run_tests = function(file, name, flags, examples) {
     purrr::imap(
@@ -213,20 +197,11 @@ md4c_tests_to_html = function() {
 
   skip_tests = list(
     "coverage" = tibble::tribble(
-      ~ex, ~msg,
-      8, "Weird utf issue with spaces",
-      9, "Weird utf issue with spaces",
-      10, "Weird utf issue with spaces"
+      ~ex, ~msg
     ),
     "regressions" = tibble::tribble(
       ~ex, ~msg,
-      8, "New line vs space issue"
-    ),
-    "spec" = tibble::tribble(
-      ~ex, ~msg,
-      335, "Slight spacing discrepancy in the span output",
-      337, "Slight spacing discrepancy in the span output",
-      640, "Slight spacing discrepancy in the span output",
+      8, "Expected html relies on a newline and a space being equivalent, clean_html() drops newlines"
     )
   )
 
@@ -362,11 +337,8 @@ gfm_tests_to_md = function() {
   file = system.file("specs/gfm/spec.txt", package="md4r")
   tests = read_gfm_tests(file)
 
-  # Seem to be essentially the same issues as for CommonMark
   skip_tests = tibble::tribble(
-    ~ex, ~msg,
-    235, "Ambiguous list to code block case #235",
-    293, "Ambiguous list to code block case #293"
+    ~ex, ~msg
   )
 
   purrr::imap(
@@ -412,23 +384,16 @@ gfm_tests_to_html = function() {
     ~ex, ~msg,
     203, "md4c bug - should not be a table",
 
-    345, "Minor spacing difference with code span",
-    347, "Minor spacing difference with code span",
+    398, "GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31",
+    426, "GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31",
+    434, "GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31",
+    435, "GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31",
+    436, "GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31",
 
-    398, "Nested strong tags not being simplified",
-    426, "Preference given to md4c test",
-    434, "Nested strong tags not being simplified",
-    435, "Nested strong tags not being simplified",
-    436, "Nested strong tags not being simplified",
-
-    473, "Preference given to md4c test",
-    474, "Preference given to md4c test",
-    475, "Preference given to md4c test",
-    477, "Preference given to md4c test",
-
-    616, "Seems like a md4c bug - should not be an autolink",
-    619, "Seems like a md4c bug - should not be an autolink",
-    620, "Seems like a md4c bug - should not be an autolink",
+    473, "GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31",
+    474, "GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31",
+    475, "GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31",
+    477, "GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31",
 
     623, "md4c 0.6.0 bug - trailing '.' included in www autolink with a dotted path",
 
@@ -436,10 +401,12 @@ gfm_tests_to_html = function() {
     626, "Seems like a md4c bug - doesn't find the 2nd url",
     627, "Seems like a md4c bug - doesn't find the url",
 
-    652, "Not sure what to do about tag filtering atm - FIXME",
-
-    660, "Minor spacing difference with code span"
+    652, "Not sure what to do about tag filtering atm - FIXME"
   )
+
+  # Core spec examples of text that is not an autolink, these only hold
+  # when the autolink extension is not enabled
+  no_autolink_ext = c(616, 619, 620)
 
   purrr::imap(
     tests,
@@ -448,6 +415,15 @@ gfm_tests_to_html = function() {
       label = glue::glue("gfm - Ex {i} (L{test$line_start}-{test$line_end}) - {section}")
       url = glue::glue("https://github.github.com/gfm/#example-{i}")
       sub = (i == skip_tests[["ex"]])
+
+      flags = if (i %in% no_autolink_ext) {
+        quote(c(
+          "MD_FLAG_TABLES", "MD_FLAG_STRIKETHROUGH", "MD_FLAG_TASKLISTS",
+          "MD_FLAG_ADMONITIONS", "MD_FLAG_FOOTNOTES"
+        ))
+      } else {
+        "MD_DIALECT_GITHUB"
+      }
 
       c(
         paste0("test_that(", rlang::expr_deparse(unclass(label)), ", {"),
@@ -462,7 +438,7 @@ gfm_tests_to_html = function() {
           rlang::expr_deparse(width = 20, rlang::expr(
             expect_identical_html(
               md = c(!!!test$md),
-              flags = "MD_DIALECT_GITHUB",
+              flags = !!flags,
               expected = c(!!!test$html),
               url = !!unclass(url)
             )))

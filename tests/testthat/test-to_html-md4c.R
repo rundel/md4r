@@ -97,7 +97,6 @@ test_that("coverage - Ex 7 (L72-74) - Alphanumerical Character (i.e. not whitesp
 })
 
 test_that("coverage - Ex 8 (L83-85) - Whitespace character", {
-  testthat::skip("coverage #8 - Weird utf issue with spaces")
   expect_identical_html(
     md = c(
       "x\t__foo__\t\n"
@@ -111,7 +110,6 @@ test_that("coverage - Ex 8 (L83-85) - Whitespace character", {
 })
 
 test_that("coverage - Ex 9 (L91-93) - Whitespace character", {
-  testthat::skip("coverage #9 - Weird utf issue with spaces")
   expect_identical_html(
     md = c(
       " __foo__\n"
@@ -125,7 +123,6 @@ test_that("coverage - Ex 9 (L91-93) - Whitespace character", {
 })
 
 test_that("coverage - Ex 10 (L98-100) - Whitespace character", {
-  testthat::skip("coverage #10 - Weird utf issue with spaces")
   expect_identical_html(
     md = c(
       " __foo__\n"
@@ -531,7 +528,9 @@ test_that("regressions - Ex 7 (L82-84) - [Issue 4](https://github.com/mity/md4c/
 })
 
 test_that("regressions - Ex 8 (L91-99) - [Issue 9](https://github.com/mity/md4c/issues/9)", {
-  testthat::skip("regressions #8 - New line vs space issue")
+  testthat::skip(
+    "regressions #8 - Expected html relies on a newline and a space being equivalent, clean_html() drops newlines"
+  )
   expect_identical_html(
     md = c(
       "> [foo", "> bar]: /url",
@@ -10773,7 +10772,6 @@ test_that("spec - Ex 334 (L5942-5946) - Code spans", {
 })
 
 test_that("spec - Ex 335 (L5953-5959) - Code spans", {
-  testthat::skip("spec #335 - Slight spacing discrepancy in the span output")
   expect_identical_html(
     md = c(
       "``", "foo", "bar  ", "baz",
@@ -10801,7 +10799,6 @@ test_that("spec - Ex 336 (L5963-5967) - Code spans", {
 })
 
 test_that("spec - Ex 337 (L5974-5977) - Code spans", {
-  testthat::skip("spec #337 - Slight spacing discrepancy in the span output")
   expect_identical_html(
     md = c(
       "`foo   bar ", "baz`"
@@ -14983,7 +14980,6 @@ test_that("spec - Ex 639 (L9277-9281) - Hard line breaks", {
 })
 
 test_that("spec - Ex 640 (L9288-9291) - Hard line breaks", {
-  testthat::skip("spec #640 - Slight spacing discrepancy in the span output")
   expect_identical_html(
     md = c(
       "`code  ", "span`"
