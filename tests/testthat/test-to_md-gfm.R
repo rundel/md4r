@@ -2657,7 +2657,6 @@ test_that("gfm - Ex 234 (L4068-4077) - Container blocks > List items", {
 })
 
 test_that("gfm - Ex 235 (L4082-4090) - Container blocks > List items", {
-  testthat::skip("gfm #235 - Ambiguous list to code block case #235")
   expect_identical_md(
     md = c(
       " -    one", "",
@@ -3347,7 +3346,6 @@ test_that("gfm - Ex 292 (L5456-5468) - Container blocks > Lists", {
 })
 
 test_that("gfm - Ex 293 (L5476-5491) - Container blocks > Lists", {
-  testthat::skip("gfm #293 - Ambiguous list to code block case #293")
   expect_identical_md(
     md = c(
       "1. a", "",

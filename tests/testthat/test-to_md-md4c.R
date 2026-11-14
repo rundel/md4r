@@ -166,7 +166,6 @@ test_that("md4c tests - coverage - Ex 18 (L181-199) - `md_build_ref_def_hashtabl
 })
 
 test_that("md4c tests - coverage - Ex 19 (L292-296) - Flag `MD_FLAG_COLLAPSEWHITESPACE`", {
-  testthat::skip("coverage #19 - Equivalent ASTs with different structure")
   expect_identical_md(md = c(
     "foo  bar \t baz"
   ), flags = c(
@@ -296,9 +295,6 @@ test_that("md4c tests - regressions - Ex 2 (L22-26) - Footnote definition with b
 })
 
 test_that("md4c tests - regressions - Ex 3 (L33-39) - Footnote reference inside wiki-link destination", {
-  testthat::skip(
-    "regressions #3 - Escaped ] in wikilink content breaks the wikilink #3"
-  )
   expect_identical_md(
     md = c(
       "[[[^|]]]", "[^|]:"
@@ -816,7 +812,6 @@ test_that("md4c tests - regressions - Ex 53 (L683-685) - [Issue 216](https://git
 })
 
 test_that("md4c tests - regressions - Ex 54 (L692-715) - [Issue 217](https://github.com/mity/md4c/issues/217)", {
-  testthat::skip("regressions #54 - Ambiguous punct escaping #54")
   expect_identical_md(md = c(
     "__!_!__", "", "__!x!__",
     "", "**!*!**", "", "---",
@@ -6209,7 +6204,6 @@ test_that("md4c tests - spec - Ex 256 (L4203-4212) - List items", {
 })
 
 test_that("md4c tests - spec - Ex 257 (L4217-4225) - List items", {
-  testthat::skip("spec #257 - Ambiguous list to code block case #257")
   expect_identical_md(
     md = c(
       " -    one", "", "     two"
@@ -6805,7 +6799,6 @@ test_that("md4c tests - spec - Ex 312 (L5533-5545) - Lists", {
 })
 
 test_that("md4c tests - spec - Ex 313 (L5553-5568) - Lists", {
-  testthat::skip("spec #313 - Ambiguous list to code block case #313")
   expect_identical_md(md = c(
     "1. a", "", "  2. b", "",
     "    3. c"

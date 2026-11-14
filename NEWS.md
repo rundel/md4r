@@ -2,22 +2,13 @@
 
 * Updated md4c to version 0.6.0.
 
-* Added support for the new md4c extensions, each with a parser flag, node class, constructor, and `to_md()` / `to_html()` methods:
-  * Footnotes (`MD_FLAG_FOOTNOTES`): `md_span_footnote_ref`, `md_block_footnote_def_section`, and `md_block_footnote_def`.
-  * Admonitions (`MD_FLAG_ADMONITIONS`): `md_block_admonition`.
-  * Preserved blank lines (`MD_FLAG_PRESERVEBLANKLINES`): `md_block_blank`.
-  * Highlight (`MD_FLAG_HIGHLIGHT`): `md_span_mark`.
-  * Insert (`MD_FLAG_INSERT`): `md_span_ins`.
-  * Spoilers (`MD_FLAG_SPOILERS`): `md_span_spoiler`.
-  * Superscripts (`MD_FLAG_SUPERSCRIPTS`) and subscripts (`MD_FLAG_SUBSCRIPTS`): `md_span_sup` and `md_span_sub`.
+* Added support for the new md4c extensions (footnotes, admonitions, preserved blank lines, highlight, insert, spoilers, superscripts, and subscripts), each with a parser flag, node class, constructor, and `to_md()` / `to_html()` methods.
 
 * `MD_DIALECT_GITHUB` (and so `parse_gfm()`) now also enables footnotes and admonitions, following upstream.
 
-* `to_md()` now writes strikethrough as `~~text~~` so it is not read as a subscript when `MD_FLAG_SUBSCRIPTS` is set.
-
 * `to_html()` now renders surrogate and out of range numeric character references as U+FFFD instead of erroring.
 
-* `to_md()` no longer adds a spurious space when a code span starts with a line ending.
+* `to_md()` round trip fixes: strikethrough is written as `~~text~~`, indented code following a list stays out of the list, `[` and `]` are escaped in wiki link targets, and emphasis starting with `*` uses `_`.
 
 # Changes in md4r 0.5.3.0
 

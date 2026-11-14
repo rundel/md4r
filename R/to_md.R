@@ -12,6 +12,53 @@ is_mergeable = function(x) {
   inherits(x, mergeable_text)
 }
 
+# An indented code block that follows a list is only parsed as code if it is
+# indented less than the content of the last list item, this finds the content
+# offset the list needs for that to be the case.
+list_min_offset = function(md, i) {
+  if (i >= length(md) || !inherits(md[[i]], c("md_block_ul", "md_block_ol")))
+    return(NULL)
+
+  code = md[[i+1]]
+  if (!inherits(code, "md_block_code") || attr(code, "fence_char") != "" || length(code) == 0)
+    return(NULL)
+
+  first = strsplit(paste(unlist(code), collapse = ""), "\n")[[1]][1]
+  if (!grepl("^ *[^ \t]", first))
+    return(NULL)
+
+  4L + attr(regexpr("^ *", first), "match.length") + 1L
+}
+
+child_to_md = function(md, i, ..., escape = FALSE) {
+  args = list(...)
+  args$min_offset = list_min_offset(md, i)
+  if (escape)
+    args$escape = TRUE
+
+  do.call(to_md, c(list(md[[i]]), args))
+}
+
+pad_list_prefixes = function(md, prefixes, min_offset) {
+  n = length(md)
+  if (is.null(min_offset) || n == 0)
+    return(prefixes)
+
+  last = md[[n]]
+  can_pad = length(last) > 0 &&
+    !inherits(last[[1]], c("md_block_ul", "md_block_ol", "md_block_code", "md_block_blank"))
+
+  need = min_offset - nchar(prefixes[n])
+  pad = min(need, 3L)
+  shift = need - pad
+
+  if (!can_pad || need <= 0 || shift > 3)
+    return(prefixes)
+
+  prefixes[n] = paste0(prefixes[n], rep_char(" ", pad))
+  paste0(rep_char(" ", shift), prefixes)
+}
+
 process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
   if (is.null(collapse))
     return( unlist(lapply(md, to_md, ...)) )
@@ -19,11 +66,7 @@ process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
   if (length(md) == 0)
     return(character())
 
-  content = if (needs_escape(NULL, md[[1]])) {
-    to_md(md[[1]], ..., escape = TRUE)
-  } else {
-    to_md(md[[1]], ...)
-  }
+  content = child_to_md(md, 1, ..., escape = needs_escape(NULL, md[[1]]))
 
   if (length(content) == 1 && content == "\n")
     content = ""
@@ -31,11 +74,7 @@ process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
   origin = rep(class(md[[1]])[1], length(content))
 
   for(i in seq_along(md)[-1]) {
-    new_content = if (needs_escape(md[[i-1]], md[[i]])) {
-      to_md(md[[i]], ..., escape = TRUE)
-    } else {
-      to_md(md[[i]], ...)
-    }
+    new_content = child_to_md(md, i, ..., escape = needs_escape(md[[i-1]], md[[i]]))
 
     if (inherits(md[[i]], "md_span_code") && n_match(content, "`") %% 2 == 1) {
       # Handle CommonMark Spec 0.29 - Ex 349 edge case - if there is an unmatched ` in preceding
@@ -311,7 +350,7 @@ to_md.md_block_hr = function(md, ...) {
 #############
 
 #' @exportS3Method
-to_md.md_block_ul = function(md, ...) {
+to_md.md_block_ul = function(md, ..., min_offset = NULL) {
   mark = attr(md, "mark")
   tight = attr(md, "tight")
 
@@ -320,9 +359,12 @@ to_md.md_block_ul = function(md, ...) {
     mark = "-"
   }
 
-  prefix = paste0(mark, " ")
+  prefixes = pad_list_prefixes(md, rep(paste0(mark, " "), length(md)), min_offset)
 
-  res = process_child_nodes(md, prefix = prefix, tight = tight, ...)
+  res = unlist( purrr::map2(
+    md, prefixes,
+    ~ to_md(.x, prefix = .y, tight = tight, ...)
+  ) )
   if (res[length(res)] == "")
     res[-length(res)]
   else
@@ -331,7 +373,7 @@ to_md.md_block_ul = function(md, ...) {
 
 
 #' @exportS3Method
-to_md.md_block_ol = function(md, ...) {
+to_md.md_block_ol = function(md, ..., min_offset = NULL) {
   start = attr(md, "start")
   delim = attr(md, "mark_delimiter")
   tight = attr(md, "tight")
@@ -345,7 +387,7 @@ to_md.md_block_ol = function(md, ...) {
   n = start+length(md)-1
 
   mark_vals = start:n
-  marks = paste0(mark_vals, delim, " ")
+  marks = pad_list_prefixes(md, paste0(mark_vals, delim, " "), min_offset)
 
   unlist( purrr::map2(
     md, marks,
@@ -425,11 +467,7 @@ to_md.md_block_li = function(md, ...) {
         return(to_md(child, ...))
 
       prev_md = if (i==1) NULL else md[[i-1]]
-      content = if (needs_escape(prev_md, md[[i]])) {
-        to_md(md[[i]], ..., escape = TRUE)
-      } else {
-        to_md(md[[i]], ...)
-      }
+      content = child_to_md(md, i, ..., escape = needs_escape(prev_md, md[[i]]))
 
       if (inherits(child, "md_block_h")) {
         # If a header, remove the spacing line
@@ -651,7 +689,7 @@ to_md.md_span_em = function(md, ...) {
   fence_char = "*"
 
   end = length(content)
-  if (grepl("^\\*[^*]", content[1]) && grepl("[^*]\\*$", content[end]))
+  if (grepl("^\\*[^*]", content[1]))
     fence_char = "_"
 
   wrap_content(content, fence_char)
@@ -831,7 +869,7 @@ to_md.md_span_wikilink = function(md, ...) {
   content = process_child_nodes(md, ..., collapse="")
   content
 
-  target = gsub("\\|", "\\\\|", target)
+  target = gsub("([]|[])", "\\\\\\1", target)
 
   if (target != paste(content, collapse="")) {
     content[1] = paste0(target, "|", content[1])
@@ -872,6 +910,11 @@ to_md.md_text_latexmath = function(md, ...) {
 #' @exportS3Method
 to_md.md_text_normal = function(md, ..., escape = FALSE) {
   content = unlist(md)
+
+  # With collapsed whitespace a lone space is what is left of a longer run
+  flags = list(...)[["flags"]] %||% character()
+  if (content == " " && length(flags) > 0 && flag_is_set(flags, "MD_FLAG_COLLAPSEWHITESPACE"))
+    content = "  "
 
   # Punctuation chars need to be escaped
   #if (grepl("^([\\`*$%_{}<>()#+.!\"\'&/:;<>=?@^~|-]|\\[|\\])$", content))

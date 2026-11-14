@@ -5837,7 +5837,6 @@ test_that("gfm - Ex 344 (L6204-6208) - Inlines > Code spans", {
 })
 
 test_that("gfm - Ex 345 (L6215-6221) - Inlines > Code spans", {
-  testthat::skip("gfm #345 - Minor spacing difference with code span")
   expect_identical_html(
     md = c(
       "``",
@@ -5867,7 +5866,6 @@ test_that("gfm - Ex 346 (L6225-6229) - Inlines > Code spans", {
 })
 
 test_that("gfm - Ex 347 (L6236-6239) - Inlines > Code spans", {
-  testthat::skip("gfm #347 - Minor spacing difference with code span")
   expect_identical_html(
     md = c(
       "`foo   bar ",
@@ -6503,7 +6501,9 @@ test_that("gfm - Ex 397 (L6920-6922) - Inlines > Emphasis and strong emphasis", 
 })
 
 test_that("gfm - Ex 398 (L6927-6929) - Inlines > Emphasis and strong emphasis", {
-  testthat::skip("gfm #398 - Nested strong tags not being simplified")
+  testthat::skip(
+    "gfm #398 - GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31"
+  )
   expect_identical_html(
     md = c(
       "__foo, __bar__, baz__"
@@ -6871,7 +6871,9 @@ test_that("gfm - Ex 425 (L7192-7194) - Inlines > Emphasis and strong emphasis", 
 })
 
 test_that("gfm - Ex 426 (L7198-7200) - Inlines > Emphasis and strong emphasis", {
-  testthat::skip("gfm #426 - Preference given to md4c test")
+  testthat::skip(
+    "gfm #426 - GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31"
+  )
   expect_identical_html(
     md = c(
       "foo******bar*********baz"
@@ -6978,7 +6980,9 @@ test_that("gfm - Ex 433 (L7262-7264) - Inlines > Emphasis and strong emphasis", 
 })
 
 test_that("gfm - Ex 434 (L7269-7271) - Inlines > Emphasis and strong emphasis", {
-  testthat::skip("gfm #434 - Nested strong tags not being simplified")
+  testthat::skip(
+    "gfm #434 - GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31"
+  )
   expect_identical_html(
     md = c(
       "__foo __bar__ baz__"
@@ -6992,7 +6996,9 @@ test_that("gfm - Ex 434 (L7269-7271) - Inlines > Emphasis and strong emphasis", 
 })
 
 test_that("gfm - Ex 435 (L7276-7278) - Inlines > Emphasis and strong emphasis", {
-  testthat::skip("gfm #435 - Nested strong tags not being simplified")
+  testthat::skip(
+    "gfm #435 - GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31"
+  )
   expect_identical_html(
     md = c(
       "____foo__ bar__"
@@ -7006,7 +7012,9 @@ test_that("gfm - Ex 435 (L7276-7278) - Inlines > Emphasis and strong emphasis", 
 })
 
 test_that("gfm - Ex 436 (L7283-7285) - Inlines > Emphasis and strong emphasis", {
-  testthat::skip("gfm #436 - Nested strong tags not being simplified")
+  testthat::skip(
+    "gfm #436 - GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31"
+  )
   expect_identical_html(
     md = c(
       "**foo **bar****"
@@ -7450,7 +7458,9 @@ test_that("gfm - Ex 472 (L7558-7560) - Inlines > Emphasis and strong emphasis", 
 })
 
 test_that("gfm - Ex 473 (L7568-7570) - Inlines > Emphasis and strong emphasis", {
-  testthat::skip("gfm #473 - Preference given to md4c test")
+  testthat::skip(
+    "gfm #473 - GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31"
+  )
   expect_identical_html(
     md = c(
       "****foo****"
@@ -7464,7 +7474,9 @@ test_that("gfm - Ex 473 (L7568-7570) - Inlines > Emphasis and strong emphasis", 
 })
 
 test_that("gfm - Ex 474 (L7575-7577) - Inlines > Emphasis and strong emphasis", {
-  testthat::skip("gfm #474 - Preference given to md4c test")
+  testthat::skip(
+    "gfm #474 - GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31"
+  )
   expect_identical_html(
     md = c(
       "____foo____"
@@ -7478,7 +7490,9 @@ test_that("gfm - Ex 474 (L7575-7577) - Inlines > Emphasis and strong emphasis", 
 })
 
 test_that("gfm - Ex 475 (L7586-7588) - Inlines > Emphasis and strong emphasis", {
-  testthat::skip("gfm #475 - Preference given to md4c test")
+  testthat::skip(
+    "gfm #475 - GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31"
+  )
   expect_identical_html(
     md = c(
       "******foo******"
@@ -7505,7 +7519,9 @@ test_that("gfm - Ex 476 (L7595-7597) - Inlines > Emphasis and strong emphasis", 
 })
 
 test_that("gfm - Ex 477 (L7602-7604) - Inlines > Emphasis and strong emphasis", {
-  testthat::skip("gfm #477 - Preference given to md4c test")
+  testthat::skip(
+    "gfm #477 - GFM spec (0.29) collapses nested strong tags, md4c follows CommonMark 0.31"
+  )
   expect_identical_html(
     md = c(
       "_____foo_____"
@@ -9455,12 +9471,17 @@ test_that("gfm - Ex 615 (L9150-9152) - Inlines > Autolinks", {
 })
 
 test_that("gfm - Ex 616 (L9157-9159) - Inlines > Autolinks", {
-  testthat::skip("gfm #616 - Seems like a md4c bug - should not be an autolink")
   expect_identical_html(
     md = c(
       "< http://foo.bar >"
     ),
-    flags = "MD_DIALECT_GITHUB",
+    flags = c(
+      "MD_FLAG_TABLES",
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_FLAG_TASKLISTS",
+      "MD_FLAG_ADMONITIONS",
+      "MD_FLAG_FOOTNOTES"
+    ),
     expected = c(
       "<p>&lt; http://foo.bar &gt;</p>"
     ),
@@ -9493,12 +9514,17 @@ test_that("gfm - Ex 618 (L9171-9173) - Inlines > Autolinks", {
 })
 
 test_that("gfm - Ex 619 (L9178-9180) - Inlines > Autolinks", {
-  testthat::skip("gfm #619 - Seems like a md4c bug - should not be an autolink")
   expect_identical_html(
     md = c(
       "http://example.com"
     ),
-    flags = "MD_DIALECT_GITHUB",
+    flags = c(
+      "MD_FLAG_TABLES",
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_FLAG_TASKLISTS",
+      "MD_FLAG_ADMONITIONS",
+      "MD_FLAG_FOOTNOTES"
+    ),
     expected = c(
       "<p>http://example.com</p>"
     ),
@@ -9507,12 +9533,17 @@ test_that("gfm - Ex 619 (L9178-9180) - Inlines > Autolinks", {
 })
 
 test_that("gfm - Ex 620 (L9185-9187) - Inlines > Autolinks", {
-  testthat::skip("gfm #620 - Seems like a md4c bug - should not be an autolink")
   expect_identical_html(
     md = c(
       "foo@bar.example.com"
     ),
-    flags = "MD_DIALECT_GITHUB",
+    flags = c(
+      "MD_FLAG_TABLES",
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_FLAG_TASKLISTS",
+      "MD_FLAG_ADMONITIONS",
+      "MD_FLAG_FOOTNOTES"
+    ),
     expected = c(
       "<p>foo@bar.example.com</p>"
     ),
@@ -10098,7 +10129,6 @@ test_that("gfm - Ex 659 (L9734-9738) - Inlines > Hard line breaks", {
 })
 
 test_that("gfm - Ex 660 (L9745-9748) - Inlines > Hard line breaks", {
-  testthat::skip("gfm #660 - Minor spacing difference with code span")
   expect_identical_html(
     md = c(
       "`code  ",
