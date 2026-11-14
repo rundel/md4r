@@ -228,6 +228,65 @@ sublist
 </ol>
 </blockquote>
 </div>
+<div class="section level2">
+<h2 id="markdown-extensions">Markdown extensions<a class="anchor" aria-label="anchor" href="#markdown-extensions"></a>
+</h2>
+<p>By default <code><a href="reference/parse_md.html">parse_md()</a></code> uses the CommonMark dialect, other syntax is enabled with parser flags. <code><a href="reference/parse_md.html">parse_gfm()</a></code> is a shortcut for the GitHub flavored markdown dialect, which adds tables, task lists, strikethrough, autolinks, footnotes, and admonitions.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/parse_md.html">parse_gfm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"&gt; [!NOTE]"</span>,</span>
+<span>  <span class="st">"&gt; Task lists work too"</span>,</span>
+<span>  <span class="st">""</span>,</span>
+<span>  <span class="st">"- [x] done"</span>,</span>
+<span>  <span class="st">"- [ ] ~~not~~ done"</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; md_block_doc [flags: "MD_DIALECT_GITHUB"]</span></span>
+<span><span class="co">#&gt; ├── md_block_admonition [type: "note"]</span></span>
+<span><span class="co">#&gt; │   └── md_block_p</span></span>
+<span><span class="co">#&gt; │       └── md_text_normal - "Task lists work too"</span></span>
+<span><span class="co">#&gt; └── md_block_ul [tight: 1, mark: "-"]</span></span>
+<span><span class="co">#&gt;     ├── md_block_li [is_task: 1, task_mark: "x"]</span></span>
+<span><span class="co">#&gt;     │   └── md_text_normal - "done"</span></span>
+<span><span class="co">#&gt;     └── md_block_li [is_task: 1, task_mark: " "]</span></span>
+<span><span class="co">#&gt;         ├── md_span_del</span></span>
+<span><span class="co">#&gt;         │   └── md_text_normal - "not"</span></span>
+<span><span class="co">#&gt;         └── md_text_normal - " done"</span></span></code></pre></div>
+<p>Individual extensions can be turned on by passing their flags to <code><a href="reference/parse_md.html">parse_md()</a></code></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/parse_md.html">parse_md</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"H~2~O is ==wet==[^1]"</span>, <span class="st">""</span>, <span class="st">"[^1]: Citation needed."</span><span class="op">)</span>,</span>
+<span>  flags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MD_FLAG_SUBSCRIPTS"</span>, <span class="st">"MD_FLAG_HIGHLIGHT"</span>, <span class="st">"MD_FLAG_FOOTNOTES"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; md_block_doc [flags: "MD_FLAG_SUBSCRIPTS", "MD_FLAG_HIGHLIGHT", and "MD_FLAG_FOOTNOTES"]</span></span>
+<span><span class="co">#&gt; ├── md_block_p</span></span>
+<span><span class="co">#&gt; │   ├── md_text_normal - "H"</span></span>
+<span><span class="co">#&gt; │   ├── md_span_sub</span></span>
+<span><span class="co">#&gt; │   │   └── md_text_normal - "2"</span></span>
+<span><span class="co">#&gt; │   ├── md_text_normal - "O is "</span></span>
+<span><span class="co">#&gt; │   ├── md_span_mark</span></span>
+<span><span class="co">#&gt; │   │   └── md_text_normal - "wet"</span></span>
+<span><span class="co">#&gt; │   └── md_span_footnote_ref [id: 1, ref_id: 1, label: "1"]</span></span>
+<span><span class="co">#&gt; └── md_block_footnote_def_section</span></span>
+<span><span class="co">#&gt;     └── md_block_footnote_def [id: 1, ref_count: 1, label: "1"]</span></span>
+<span><span class="co">#&gt;         └── md_text_normal - "Citation needed."</span></span></code></pre></div>
+<p>and <code><a href="reference/flags.html">flags_describe()</a></code> lists all of the available flags.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/flags.html">flags_describe</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 27 × 2</span></span>
+<span><span class="co">#&gt;    flag                             description                                 </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                            &lt;chr&gt;                                       </span></span>
+<span><span class="co">#&gt;  1 MD_FLAG_COLLAPSEWHITESPACE       In MD_TEXT_NORMAL, collapse non-trivial whi…</span></span>
+<span><span class="co">#&gt;  2 MD_FLAG_PERMISSIVEATXHEADERS     Do not require space in ATX headers ( ###he…</span></span>
+<span><span class="co">#&gt;  3 MD_FLAG_PERMISSIVEURLAUTOLINKS   Recognize URLs as autolinks even without '&lt;…</span></span>
+<span><span class="co">#&gt;  4 MD_FLAG_PERMISSIVEEMAILAUTOLINKS Recognize e-mails as autolinks even without…</span></span>
+<span><span class="co">#&gt;  5 MD_FLAG_NOINDENTEDCODEBLOCKS     Disable indented code blocks. (Only fenced …</span></span>
+<span><span class="co">#&gt;  6 MD_FLAG_NOHTMLBLOCKS             Disable raw HTML blocks.                    </span></span>
+<span><span class="co">#&gt;  7 MD_FLAG_NOHTMLSPANS              Disable raw HTML (inline).                  </span></span>
+<span><span class="co">#&gt;  8 MD_FLAG_TABLES                   Enable tables extension.                    </span></span>
+<span><span class="co">#&gt;  9 MD_FLAG_STRIKETHROUGH            Enable strikethrough extension.             </span></span>
+<span><span class="co">#&gt; 10 MD_FLAG_PERMISSIVEWWWAUTOLINKS   Enable WWW autolinks (even without any sche…</span></span>
+<span><span class="co">#&gt; # ℹ 17 more rows</span></span></code></pre></div>
+</div>
 </div>
   </div>
 
