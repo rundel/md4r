@@ -126,3 +126,31 @@ to_html(md) |> cat(sep='\n')
 
 
 
+## Markdown extensions
+
+By default `parse_md()` uses the CommonMark dialect, other syntax is enabled with parser flags. `parse_gfm()` is a shortcut for the GitHub flavored markdown dialect, which adds tables, task lists, strikethrough, autolinks, footnotes, and admonitions.
+
+```{r}
+parse_gfm(c(
+  "> [!NOTE]",
+  "> Task lists work too",
+  "",
+  "- [x] done",
+  "- [ ] ~~not~~ done"
+))
+```
+
+Individual extensions can be turned on by passing their flags to `parse_md()`
+
+```{r}
+parse_md(
+  c("H~2~O is ==wet==[^1]", "", "[^1]: Citation needed."),
+  flags = c("MD_FLAG_SUBSCRIPTS", "MD_FLAG_HIGHLIGHT", "MD_FLAG_FOOTNOTES")
+)
+```
+
+and `flags_describe()` lists all of the available flags.
+
+```{r}
+flags_describe()
+```

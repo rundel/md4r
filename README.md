@@ -224,3 +224,73 @@ sublist
 </ol>
 
 </blockquote>
+
+## Markdown extensions
+
+By default `parse_md()` uses the CommonMark dialect, other syntax is
+enabled with parser flags. `parse_gfm()` is a shortcut for the GitHub
+flavored markdown dialect, which adds tables, task lists, strikethrough,
+autolinks, footnotes, and admonitions.
+
+``` r
+parse_gfm(c(
+  "> [!NOTE]",
+  "> Task lists work too",
+  "",
+  "- [x] done",
+  "- [ ] ~~not~~ done"
+))
+#> md_block_doc [flags: "MD_DIALECT_GITHUB"]
+#> ├── md_block_admonition [type: "note"]
+#> │   └── md_block_p
+#> │       └── md_text_normal - "Task lists work too"
+#> └── md_block_ul [tight: 1, mark: "-"]
+#>     ├── md_block_li [is_task: 1, task_mark: "x"]
+#>     │   └── md_text_normal - "done"
+#>     └── md_block_li [is_task: 1, task_mark: " "]
+#>         ├── md_span_del
+#>         │   └── md_text_normal - "not"
+#>         └── md_text_normal - " done"
+```
+
+Individual extensions can be turned on by passing their flags to
+`parse_md()`
+
+``` r
+parse_md(
+  c("H~2~O is ==wet==[^1]", "", "[^1]: Citation needed."),
+  flags = c("MD_FLAG_SUBSCRIPTS", "MD_FLAG_HIGHLIGHT", "MD_FLAG_FOOTNOTES")
+)
+#> md_block_doc [flags: "MD_FLAG_SUBSCRIPTS", "MD_FLAG_HIGHLIGHT", and "MD_FLAG_FOOTNOTES"]
+#> ├── md_block_p
+#> │   ├── md_text_normal - "H"
+#> │   ├── md_span_sub
+#> │   │   └── md_text_normal - "2"
+#> │   ├── md_text_normal - "O is "
+#> │   ├── md_span_mark
+#> │   │   └── md_text_normal - "wet"
+#> │   └── md_span_footnote_ref [id: 1, ref_id: 1, label: "1"]
+#> └── md_block_footnote_def_section
+#>     └── md_block_footnote_def [id: 1, ref_count: 1, label: "1"]
+#>         └── md_text_normal - "Citation needed."
+```
+
+and `flags_describe()` lists all of the available flags.
+
+``` r
+flags_describe()
+#> # A tibble: 27 × 2
+#>    flag                             description                                 
+#>    <chr>                            <chr>                                       
+#>  1 MD_FLAG_COLLAPSEWHITESPACE       In MD_TEXT_NORMAL, collapse non-trivial whi…
+#>  2 MD_FLAG_PERMISSIVEATXHEADERS     Do not require space in ATX headers ( ###he…
+#>  3 MD_FLAG_PERMISSIVEURLAUTOLINKS   Recognize URLs as autolinks even without '<…
+#>  4 MD_FLAG_PERMISSIVEEMAILAUTOLINKS Recognize e-mails as autolinks even without…
+#>  5 MD_FLAG_NOINDENTEDCODEBLOCKS     Disable indented code blocks. (Only fenced …
+#>  6 MD_FLAG_NOHTMLBLOCKS             Disable raw HTML blocks.                    
+#>  7 MD_FLAG_NOHTMLSPANS              Disable raw HTML (inline).                  
+#>  8 MD_FLAG_TABLES                   Enable tables extension.                    
+#>  9 MD_FLAG_STRIKETHROUGH            Enable strikethrough extension.             
+#> 10 MD_FLAG_PERMISSIVEWWWAUTOLINKS   Enable WWW autolinks (even without any sche…
+#> # ℹ 17 more rows
+```
