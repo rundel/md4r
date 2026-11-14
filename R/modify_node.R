@@ -58,7 +58,13 @@ md_node_attr_validators = list(
   href           = function(v) checkmate::assert_character(v, len = 1, any.missing = FALSE),
   title          = function(v) checkmate::assert_character(v, len = 1, any.missing = FALSE),
   src            = function(v) checkmate::assert_character(v, len = 1, any.missing = FALSE),
-  target         = function(v) checkmate::assert_character(v, len = 1, any.missing = FALSE)
+  target         = function(v) checkmate::assert_character(v, len = 1, any.missing = FALSE),
+  type           = function(v) checkmate::assert_choice(v, c("note", "tip", "important", "warning", "caution")),
+  line_count     = function(v) checkmate::assert_integerish(v, len = 1, lower = 1),
+  label          = function(v) checkmate::assert_character(v, len = 1, any.missing = FALSE),
+  id             = function(v) checkmate::assert_integerish(v, len = 1, lower = 1),
+  ref_id         = function(v) checkmate::assert_integerish(v, len = 1, lower = 1),
+  ref_count      = function(v) checkmate::assert_integerish(v, len = 1, lower = 1)
 )
 
 

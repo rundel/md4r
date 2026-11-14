@@ -15,6 +15,48 @@ Raw HTML block:
 <gi att1=tok1 att2=tok2>
 ````````````````````````````````
 
+
+## Footnote definition with bracketed link text
+
+```````````````````````````````` example
+[^x]:
+[**x*]()
+.
+.
+--ffootnotes
+````````````````````````````````
+
+
+## Footnote reference inside wiki-link destination
+
+```````````````````````````````` example
+[[[^|]]]
+[^|]:
+.
+<p><x-wikilink data-target="[^">]</x-wikilink>
+[^|]:</p>
+.
+--ffootnotes --fwiki-links
+````````````````````````````````
+
+
+```````````````````````````````` example
+x[^1] [[foo|bar]]
+
+[^1]: Note.
+.
+<p>x<sup><a href="#fn-1" id="fnref-1-1">1</a></sup> <x-wikilink data-target="foo">bar</x-wikilink></p>
+<section class="footnotes">
+<ol>
+<li id="fn-1">
+Note.<a href="#fnref-1-1" class="footnote-backref">&#8617;</a>
+</li>
+</ol>
+</section>
+.
+--ffootnotes --fwiki-links
+````````````````````````````````
+
 Inline:
 
 ```````````````````````````````` example
@@ -796,6 +838,14 @@ https://codereview.qt-project.org/c/qt/qtwayland/+/545836
 --fpermissive-autolinks
 ````````````````````````````````
 
+```````````````````````````````` example
+https://www.youtube.com/watch?v=_tEL8bJ7yqU
+.
+<p><a href="https://www.youtube.com/watch?v=_tEL8bJ7yqU">https://www.youtube.com/watch?v=_tEL8bJ7yqU</a></p>
+.
+--fpermissive-autolinks
+````````````````````````````````
+
 
 ## [Issue 271](https://github.com/mity/md4c/issues/271)
 
@@ -840,4 +890,213 @@ x <- 1
 </code></pre>
 <pre><code class="language-r">x &lt;- 1
 </code></pre>
+````````````````````````````````
+
+
+## [Issue 320](https://github.com/mity/md4c/issues/320)
+
+```````````````````````````````` example
+    codeblock
+> [!note]
+> foo
+.
+<pre><code>codeblock
+</code></pre>
+<div class="admonition-note"><p class="admonition-title">note</p><p>foo</p>
+</div>
+.
+--fadmonitions
+````````````````````````````````
+
+```````````````````````````````` example
+> [!noteX]
+> foo
+.
+<blockquote>
+<p>[!noteX]
+foo</p>
+</blockquote>
+.
+--fadmonitions
+````````````````````````````````
+
+
+## [PR 325](https://github.com/mity/md4c/pull/325) (surrogate codepoints)
+
+Surrogate code points (U+D800..U+DFFF) are not valid Unicode scalar values
+and must be replaced with U+FFFD, like U+0000.
+
+```````````````````````````````` example
+&#xD800; &#xDFFF; &#55296; &#57343;
+.
+<p>� � � �</p>
+````````````````````````````````
+
+
+## [PR 325](https://github.com/mity/md4c/pull/325) (hard line breaks)
+
+Per CommonMark, a backslash before a line ending is a recognized escape that
+produces a hard line break. This must work inside link titles too -- the
+HTML renderer doesn't distinguish hard breaks from regular newlines, but a
+custom renderer could, so the parser must treat `\\` + newline as an escape
+rather than a literal backslash followed by content.
+
+```````````````````````````````` example
+[foo]: /url "ti\
+tle"
+
+[foo]
+.
+<p><a href="/url" title="ti
+tle">foo</a></p>
+````````````````````````````````
+
+
+## [Issue 331](https://github.com/mity/md4c/issues/331)
+
+```````````````````````````````` example
+https://example.com/~username
+.
+<p><a href="https://example.com/~username">https://example.com/~username</a></p>
+.
+--fpermissive-autolinks
+````````````````````````````````
+
+
+## [Issue 331](https://github.com/mity/md4c/issues/331)
+
+```````````````````````````````` example
+https://example.com/~username
+.
+<p><a href="https://example.com/~username">https://example.com/~username</a></p>
+.
+--fpermissive-autolinks
+````````````````````````````````
+
+
+## [Issue 334](https://github.com/mity/md4c/issues/334)
+
+
+```````````````````````````````` example
+foo
+>[!tip]
+>-
+.
+<p>foo</p>
+<div class="admonition-tip"><p class="admonition-title">tip</p>
+<ul>
+<li></li>
+</ul>
+</div>
+.
+--fadmonitions
+````````````````````````````````
+
+
+## [Issue 336](https://github.com/mity/md4c/issues/336)
+
+```````````````````````````````` example
+>     [!tip]
+> foo
+.
+<blockquote>
+<pre><code>[!tip]
+</code></pre>
+<p>foo</p>
+</blockquote>
+.
+--fadmonitions
+````````````````````````````````
+
+
+## [Issue 352](https://github.com/mity/md4c/issues/352)
+
+```````````````````````````````` example
+![]([^)*]()
+.
+<p><img src="%5B%5E" alt="">*]()</p>
+.
+--ffootnotes
+````````````````````````````````
+
+
+```````````````````````````````` example
+<
+http://example.com>
+.
+<p>&lt;
+http://example.com&gt;</p>
+.
+--fpermissive-autolinks
+````````````````````````````````
+
+
+## [Issue 372](https://github.com/mity/md4c/issues/372)
+
+```````````````````````````````` example
+mailto:foo@bar.baz
+.
+<p><a href="mailto:foo@bar.baz">mailto:foo@bar.baz</a></p>
+.
+--fpermissive-autolinks
+````````````````````````````````
+
+```````````````````````````````` example
+xmpp:foo@bar.baz
+.
+<p><a href="xmpp:foo@bar.baz">xmpp:foo@bar.baz</a></p>
+.
+--fpermissive-autolinks
+````````````````````````````````
+
+
+## [PR 376](https://github.com/mity/md4c/pull/376)
+
+The image label is rendered into the `alt="..."` attribute, so any raw
+HTML span in it has to be escaped like normal text instead of being
+emitted verbatim.
+
+```````````````````````````````` example
+![<x title=" y" onerror="alert(1)">](/url)
+.
+<p><img src="/url" alt="&lt;x title=&quot; y&quot; onerror=&quot;alert(1)&quot;&gt;"></p>
+````````````````````````````````
+
+
+## [Issue 413](https://github.com/mity/md4c/issues/413)
+
+```````````````````````````````` example
+-
+  ---
+
+  foo bar
+.
+<ul>
+<li>
+<hr>
+<p>foo bar</p>
+</li>
+</ul>
+````````````````````````````````
+
+
+## [Issue 414](https://github.com/mity/md4c/issues/414)
+
+Stripping link ref. definitions from a block beginning can result in a need to
+turn the first line after the definitions into a thematic break.
+
+```````````````````````````````` example
+[foo]:bar
+---
+.
+<hr>
+````````````````````````````````
+
+```````````````````````````````` example
+[foo]:bar
+---
+baz
+.
+<hr>
+<p>baz</p>
 ````````````````````````````````

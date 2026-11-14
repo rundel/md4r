@@ -76,9 +76,16 @@ process_child_nodes = function(md, ..., collapse = NULL, track_origin = FALSE) {
         content[-end],
         paste0(content[end], "    ")
       )
+    } else if (inherits(md[[i]], "md_block_blank")) {
+      # Explicit blank lines replace any separator lines added by the previous block
+      while (length(content) > 0 && content[length(content)] == "")
+        content = content[-length(content)]
+      content = c(content, new_content)
+    } else if (inherits(md[[i-1]], "md_block_blank")) {
+      content = c(content, new_content)
     } else if (
          inherits(md[[i-1]], c("md_block_p", "md_block_table", "md_block_ul", "md_block_ol",
-                               "md_block_quote", "md_block_html"))
+                               "md_block_quote", "md_block_html", "md_block_admonition"))
       && inherits(md[[i]],   c("md_block")) )
     {
         # Separate p blocks with an empty line (not always needed but necessary in some cases)
@@ -156,7 +163,15 @@ to_md.md_block = function(md, ...) {
 
 #' @exportS3Method
 to_md.md_block_doc = function(md, ...) {
-  process_child_nodes(md, flags = attr(md, "flags"), ..., collapse="")
+  content = process_child_nodes(md, flags = attr(md, "flags"), ..., collapse="")
+
+  # parse_md() treats a final "" as the line terminator, so trailing
+  # blank lines need one more
+  n = length(md)
+  if (n > 0 && inherits(md[[n]], "md_block_blank"))
+    content = c(content, "")
+
+  content
 }
 
 
@@ -178,6 +193,41 @@ to_md.md_block_quote = function(md, ...) {
   )
 
   paste0("> ", content)
+}
+
+#' @exportS3Method
+to_md.md_block_admonition = function(md, ...) {
+  c(
+    paste0("> [!", toupper(attr(md, "type")), "]"),
+    to_md.md_block_quote(md, ...)
+  )
+}
+
+#' @exportS3Method
+to_md.md_block_blank = function(md, ...) {
+  rep("", attr(md, "line_count"))
+}
+
+#' @exportS3Method
+to_md.md_block_footnote_def_section = function(md, ...) {
+  content = purrr::map(md, to_md, ...)
+  if (length(content) == 0)
+    return(character())
+  purrr::reduce(content, ~ c(.x, "", .y))
+}
+
+#' @exportS3Method
+to_md.md_block_footnote_def = function(md, ...) {
+  label = attr(md, "label")
+  content = process_child_nodes(md, ..., collapse = TRUE)
+
+  if (length(content) == 0)
+    return(paste0("[^", label, "]:"))
+
+  c(
+    paste0("[^", label, "]: ", content[1]),
+    if (length(content) > 1) paste0("    ", content[-1])
+  )
 }
 
 #' @exportS3Method
@@ -371,6 +421,9 @@ to_md.md_block_li = function(md, ...) {
       if (inherits(child, "md_text_softbreak"))
         return(character())
 
+      if (inherits(child, "md_block_blank"))
+        return(to_md(child, ...))
+
       prev_md = if (i==1) NULL else md[[i-1]]
       content = if (needs_escape(prev_md, md[[i]])) {
         to_md(md[[i]], ..., escape = TRUE)
@@ -399,7 +452,9 @@ to_md.md_block_li = function(md, ...) {
           )
         }
       } else {
-        if (inherits(child, "md_block_p") | inherits(md[[i-1]], "md_block_p")) {
+        if (inherits(md[[i-1]], "md_block_blank")) {
+          paste0(indent, content)
+        } else if (inherits(child, "md_block_p") | inherits(md[[i-1]], "md_block_p")) {
           # If either block_p add a spacing line
           c("", paste0(indent, content))
         } else if (inherits(child, "md_block") || inherits(md[[i-1]], "md_block")) {
@@ -419,7 +474,7 @@ to_md.md_block_li = function(md, ...) {
 
   res = unlist(content)
 
-  if (!tight)
+  if (!tight && !inherits(md[[length(md)]], "md_block_blank"))
     c(res, "")
   else
     res
@@ -489,7 +544,7 @@ to_md.md_block_th = function(md, ...) {
   if (length(content) == 0)
     content = ""
 
-  content = table_entry_escape(content) # escape | chars
+  content = table_entry_escape(content, keep_spoiler_pipes(...)) # escape | chars
   attr(content, "align") = attr(md, "align")
 
   content
@@ -501,7 +556,12 @@ to_md.md_block_td = function(md, ...) {
   if (length(content) == 0)
     content = ""
 
-  table_entry_escape(content) # escape | chars
+  table_entry_escape(content, keep_spoiler_pipes(...)) # escape | chars
+}
+
+keep_spoiler_pipes = function(...) {
+  flags = list(...)[["flags"]] %||% character()
+  length(flags) > 0 && flag_is_set(flags, "MD_FLAG_SPOILERS")
 }
 
 
@@ -636,6 +696,11 @@ to_md.md_span_code = function(md, ...) {
           paste0(content[end], new_content)
         )
       } else if (new_content != " " || i == length(md) )  {# Trailing ws should be added
+        end = length(content)
+        if (content[end] == " ") {
+          # A lone space is a line ending which the new line now represents
+          content[end] = ""
+        }
         content = c(content, new_content)
       } else{
         #stop("Should not happen!")
@@ -658,7 +723,43 @@ to_md.md_span_code = function(md, ...) {
 #' @exportS3Method
 to_md.md_span_del = function(md, ...) {
   content = process_child_nodes(md, ..., collapse = TRUE)
+  # A single ~ is a subscript when MD_FLAG_SUBSCRIPTS is set
+  wrap_content(content, "~~")
+}
+
+#' @exportS3Method
+to_md.md_span_ins = function(md, ...) {
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "++")
+}
+
+#' @exportS3Method
+to_md.md_span_spoiler = function(md, ...) {
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "||")
+}
+
+#' @exportS3Method
+to_md.md_span_sup = function(md, ...) {
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "^")
+}
+
+#' @exportS3Method
+to_md.md_span_sub = function(md, ...) {
+  content = process_child_nodes(md, ..., collapse = TRUE)
   wrap_content(content, "~")
+}
+
+#' @exportS3Method
+to_md.md_span_mark = function(md, ...) {
+  content = process_child_nodes(md, ..., collapse = TRUE)
+  wrap_content(content, "==")
+}
+
+#' @exportS3Method
+to_md.md_span_footnote_ref = function(md, ...) {
+  paste0("[^", attr(md, "label"), "]")
 }
 
 #' @exportS3Method

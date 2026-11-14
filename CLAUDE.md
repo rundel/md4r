@@ -34,8 +34,8 @@ The C++ sources (`src/markdownparser.cpp`, `src/util.cpp`, `src/httpuv_url_tools
 
 Every node inherits `md_node`. Three branches:
 
-- `md_block_*` (`md_block`): doc, h, p, ul, ol, li, code, html, quote, hr, table, thead, tbody, tr, th, td, latexmath, latexmath_display.
-- `md_span_*` (`md_span`): a, img, code, em, strong, del, u, latexmath, latexmath_display, wikilink.
+- `md_block_*` (`md_block`): doc, h, p, ul, ol, li, code, html, quote, hr, table, thead, tbody, tr, th, td, latexmath, latexmath_display, admonition, blank, footnote_def_section, footnote_def.
+- `md_span_*` (`md_span`): a, img, code, em, strong, del, u, latexmath, latexmath_display, wikilink, ins, spoiler, sup, sub, mark, footnote_ref.
 - `md_text_*` (`md_text`): normal, code, html, entity, br, softbreak, latexmath, nullchar. These are typically character vectors (length 1) with class attached, not lists.
 
 Node-specific attributes (e.g. `level` on `md_block_h`, `href`/`title` on `md_span_a`, `is_task`/`task_mark` on `md_block_li`, `align` on table cells) are R attributes set by the C++ layer; constructors in `R/create_block.R`, `R/create_span.R`, `R/create_text.R` mirror them and validate via `checkmate`.
@@ -56,6 +56,7 @@ Tests for `to_md` and `to_html` are auto-generated from external spec files, not
 - `R/tests.R` parses the spec format (markdown blocks delimited by ```` ```` ```` example) and emits testthat code.
 - `tests/testthat/helper-tests.R` regenerates `test-to_html-gfm.R`, `test-to_md-gfm.R`, `test-to_html-md4c.R`, `test-to_md-md4c.R` whenever `R/tests.R` or the spec files are newer than the generated files. Regeneration is skipped on CI (`Sys.getenv("CI") != ""`) and runs on `devtools::test()` locally. `R/tests.R` is excluded from the build via `.Rbuildignore`.
 - Hand-written tests live in `test-flags.R` and `test-table.R`.
+- Spec examples get their flags only from the per-example option lines (`--fxxx`, mapped via `flag_lookup` in `R/tests.R`); prose mentions of `MD_FLAG_*` are ignored. Skips are keyed by example index, so re-check them when upstream inserts examples.
 
 When changing `to_md.R` or `to_html.R` semantics, expect generated test files to update on next local test run; review the diff before committing.
 

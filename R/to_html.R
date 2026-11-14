@@ -7,6 +7,17 @@ html_escape = function(x) {
   x
 }
 
+# Surrogates and values above U+10FFFF are not valid Unicode scalar values
+# (and textutils::HTMLdecode() errors on them), md4c-html renders U+FFFD.
+is_invalid_codepoint_entity = function(x) {
+  m = regmatches(x, regexec("^&#([xX]?)([0-9a-fA-F]+);$", x))[[1]]
+  if (length(m) == 0)
+    return(FALSE)
+
+  val = if (m[2] == "") as.numeric(m[3]) else as.numeric(paste0("0x", m[3]))
+  is.na(val) || val > 0x10FFFF || (val >= 0xD800 && val <= 0xDFFF)
+}
+
 tag_filter = function(x) {
   gsub(
     "<(title>|textarea>|style>|xmp>|iframe>|noembed>|noframes>|script>|plaintext>)",
@@ -217,6 +228,55 @@ to_html.md_block_td = function(md, ...) {
   td_block("td", md, ...)
 }
 
+#' @exportS3Method
+to_html.md_block_admonition = function(md, ...) {
+  type = html_escape(attr(md, "type"))
+  c(
+    glue::glue("<div class=\"admonition-{type}\"><p class=\"admonition-title\">{type}</p>"),
+    unlist(lapply(md, to_html, ...)),
+    "</div>"
+  )
+}
+
+#' @exportS3Method
+to_html.md_block_blank = function(md, ...) {
+  rep("<br />", max(attr(md, "line_count") - 1, 0))
+}
+
+#' @exportS3Method
+to_html.md_block_footnote_def_section = function(md, ...) {
+  c(
+    "<section class=\"footnotes\">",
+    "<ol>",
+    unlist(lapply(md, to_html, ...)),
+    "</ol>",
+    "</section>"
+  )
+}
+
+#' @exportS3Method
+to_html.md_block_footnote_def = function(md, ...) {
+  id = attr(md, "id")
+  backrefs = glue::glue(
+    "<a href=\"#fnref-{id}-{seq_len(attr(md, 'ref_count'))}\" class=\"footnote-backref\">&#8617;</a>"
+  )
+
+  content = unlist(lapply(md, to_html, ...))
+  n = length(content)
+  backrefs = paste(backrefs, collapse = " ")
+  if (n == 0) {
+    content = backrefs
+  } else {
+    content[n] = paste0(content[n], backrefs)
+  }
+
+  c(
+    glue::glue("<li id=\"fn-{id}\">"),
+    content,
+    "</li>"
+  )
+}
+
 #############
 #
 # md_span_*
@@ -321,7 +381,37 @@ to_html.md_span_wikilink = function(md, ...) {
   tag_span(tag, md, ...)
 }
 
+#' @exportS3Method
+to_html.md_span_ins = function(md, ...) {
+  tag_span("ins", md, ...)
+}
 
+#' @exportS3Method
+to_html.md_span_spoiler = function(md, ...) {
+  tag_span("x-spoiler", md, ...)
+}
+
+#' @exportS3Method
+to_html.md_span_sup = function(md, ...) {
+  tag_span("sup", md, ...)
+}
+
+#' @exportS3Method
+to_html.md_span_sub = function(md, ...) {
+  tag_span("sub", md, ...)
+}
+
+#' @exportS3Method
+to_html.md_span_mark = function(md, ...) {
+  tag_span("mark", md, ...)
+}
+
+#' @exportS3Method
+to_html.md_span_footnote_ref = function(md, ...) {
+  id = attr(md, "id")
+  ref_id = attr(md, "ref_id")
+  glue::glue("<sup><a href=\"#fn-{id}\" id=\"fnref-{id}-{ref_id}\">{id}</a></sup>")
+}
 
 
 
@@ -350,7 +440,7 @@ to_html.md_text_code = function(md, ...) {
 
 #' @exportS3Method
 to_html.md_text_entity = function(md, ...) {
-  char = textutils::HTMLdecode(md)
+  char = if (is_invalid_codepoint_entity(md)) "" else textutils::HTMLdecode(md)
   if (char == "")
     char = "\uFFFD"
 

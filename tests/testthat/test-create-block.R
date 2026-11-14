@@ -76,3 +76,43 @@ test_that("md_block_th and md_block_td accept align values", {
   }
   expect_error(md_block_th(align = "justify"))
 })
+
+test_that("md_block_admonition stores and validates type", {
+  n = md_block_admonition(md_block_p(md_text_normal("x")), type = "warning")
+  expect_s3_class(n, c("md_block_admonition", "md_block", "md_node"))
+  expect_identical(attr(n, "type"), "warning")
+  expect_identical(as.character(to_md(n)), c("> [!WARNING]", "> x"))
+  expect_error(md_block_admonition(type = "danger"))
+})
+
+test_that("md_block_blank stores and validates line_count", {
+  n = md_block_blank(line_count = 2)
+  expect_s3_class(n, c("md_block_blank", "md_block", "md_node"))
+  expect_length(n, 0)
+  expect_identical(as.character(to_md(n)), c("", ""))
+  expect_error(md_block_blank(line_count = 0))
+})
+
+test_that("footnote blocks round trip through to_md", {
+  doc = md_block_doc(
+    md_block_p(md_text_normal("Text"), md_span_footnote_ref(label = "a")),
+    md_block_footnote_def_section(
+      md_block_footnote_def(md_text_normal("Note."), label = "a")
+    ),
+    flags = "MD_FLAG_FOOTNOTES"
+  )
+
+  expect_identical(as.character(to_md(doc)), c("Text[^a]", "", "[^a]: Note."))
+
+  ast = parse_md(to_md(doc), flags = "MD_FLAG_FOOTNOTES")
+  def = ast[[2]][[1]]
+  expect_s3_class(def, "md_block_footnote_def")
+  expect_identical(attr(def, "label"), "a")
+  expect_error(md_block_footnote_def(md_text_normal("x")))
+})
+
+test_that("parse_gfm() recognizes footnotes and admonitions", {
+  ast = parse_gfm(c("> [!NOTE]", "> Hi[^1]", "", "[^1]: There"))
+  expect_s3_class(ast[[1]], "md_block_admonition")
+  expect_s3_class(ast[[2]], "md_block_footnote_def_section")
+})

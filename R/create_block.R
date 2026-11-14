@@ -24,6 +24,11 @@
 #' @param body_row_count Used by `md_block_table` nodes to specify the number of body rows.
 #' @param head_row_count Used by `md_block_table` nodes to specify the number of header rows. Should only be `1`.
 #' @param align Used by `md_block_td` or `md_block_th` nodes to specify the alignment of the table contents.
+#' @param type Used by `md_block_admonition` nodes to specify the admonition type.
+#' @param line_count Used by `md_block_blank` nodes to specify the number of blank lines.
+#' @param label Used by `md_block_footnote_def` nodes to specify the footnote label.
+#' @param id Used by `md_block_footnote_def` nodes to specify the 1-based footnote number.
+#' @param ref_count Used by `md_block_footnote_def` nodes to specify the number of references to the footnote.
 #'
 #' @returns Returns a list with a class of specified type along with `md_span` and `md_node`.
 #'
@@ -185,5 +190,45 @@ md_block_td = function(..., align = c("default", "left", "center", "right")) {
   structure(
     md_block(..., class = "md_block_td"),
     align = align
+  )
+}
+
+#' @rdname md_block
+#' @export
+md_block_admonition = function(..., type = c("note", "tip", "important", "warning", "caution")) {
+  type = match.arg(type)
+  structure(
+    md_block(..., class = "md_block_admonition"),
+    type = type
+  )
+}
+
+#' @rdname md_block
+#' @export
+md_block_blank = function(line_count = 1) {
+  checkmate::assert_integerish(line_count, len = 1, lower = 1, any.missing = FALSE)
+  structure(
+    md_block(class = "md_block_blank"),
+    line_count = line_count
+  )
+}
+
+#' @rdname md_block
+#' @export
+md_block_footnote_def_section = function(...) {
+  md_block(..., class = "md_block_footnote_def_section")
+}
+
+#' @rdname md_block
+#' @export
+md_block_footnote_def = function(..., label, id = 1, ref_count = 1) {
+  checkmate::assert_character(label, len = 1, any.missing = FALSE)
+  checkmate::assert_integerish(id, len = 1, lower = 1, any.missing = FALSE)
+  checkmate::assert_integerish(ref_count, len = 1, lower = 1, any.missing = FALSE)
+  structure(
+    md_block(..., class = "md_block_footnote_def"),
+    id = id,
+    ref_count = ref_count,
+    label = label
   )
 }
