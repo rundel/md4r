@@ -30,7 +30,7 @@ tag_filter = function(x) {
 
 #' @title Convert to html
 #'
-#' @description Coverts a markdown object (full ast or node) to HTML.
+#' @description Converts a markdown object (full ast or node) to HTML.
 #'
 #' @param md Markdown object
 #' @param ... Unused, for extensibility.

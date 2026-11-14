@@ -160,7 +160,7 @@ rep_char = function(c, n) {
 
 #' @title Convert to markdown
 #'
-#' @description Coverts a markdown object (full ast or node) to markdown text.
+#' @description Converts a markdown object (full ast or node) to markdown text.
 #'
 #' @param md Markdown object
 #' @param ... Unused, for extensibility.

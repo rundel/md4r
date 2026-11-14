@@ -15,7 +15,7 @@ to_html(md, ...)
 Returns a character vector of HTML lines representing the markdown object.
 }
 \description{
-Coverts a markdown object (full ast or node) to HTML.
+Converts a markdown object (full ast or node) to HTML.
 }
 \examples{
 md_file = system.file("examples/commonmark.md", package = "md4r")

@@ -15,7 +15,7 @@ to_md(md, ...)
 Returns a character vector of markdown lines representing the markdown object.
 }
 \description{
-Coverts a markdown object (full ast or node) to markdown text.
+Converts a markdown object (full ast or node) to markdown text.
 }
 \examples{
 md_file = system.file("examples/commonmark.md", package = "md4r")
