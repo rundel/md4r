@@ -20,6 +20,8 @@ Description: Provides an R wrapper for the 'MD4C' (Markdown for 'C')
 License: MIT + file LICENSE
 URL: https://rundel.github.io/md4r/, https://github.com/rundel/md4r
 BugReports: https://github.com/rundel/md4r/issues
+Depends:
+    R (>= 4.1.0)
 Imports:
     checkmate,
     cli,
