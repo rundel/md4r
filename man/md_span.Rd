@@ -12,6 +12,12 @@
 \alias{md_span_latexmath_display}
 \alias{md_span_wikilink}
 \alias{md_span_u}
+\alias{md_span_ins}
+\alias{md_span_spoiler}
+\alias{md_span_sup}
+\alias{md_span_sub}
+\alias{md_span_mark}
+\alias{md_span_footnote_ref}
 \title{Tools for creating span nodes}
 \usage{
 md_span_em(...)
@@ -33,6 +39,18 @@ md_span_latexmath_display(...)
 md_span_wikilink(..., target)
 
 md_span_u(...)
+
+md_span_ins(...)
+
+md_span_spoiler(...)
+
+md_span_sup(...)
+
+md_span_sub(...)
+
+md_span_mark(...)
+
+md_span_footnote_ref(label, id = 1, ref_id = 1)
 }
 \arguments{
 \item{...}{Child nodes that will be contained within the span - all must inherit from \code{md_node}.}
@@ -44,6 +62,13 @@ md_span_u(...)
 \item{src}{Used by \code{md_span_img} nodes to provide the \code{src} attribute.}
 
 \item{target}{Used by \code{md_span_wikilink} nodes to provide the \code{target} attribute.}
+
+\item{label}{Used by \code{md_span_footnote_ref} nodes to provide the footnote label (e.g. \code{"1"} for \verb{[^1]}).}
+
+\item{id}{Used by \code{md_span_footnote_ref} nodes to provide the 1-based number of the referenced footnote.}
+
+\item{ref_id}{Used by \code{md_span_footnote_ref} nodes to provide the 1-based index of this reference
+among all references to the same footnote.}
 }
 \value{
 Returns a list with a class of specified type along with \code{md_span} and \code{md_node}.

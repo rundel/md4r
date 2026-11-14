@@ -29,7 +29,7 @@ flag_is_set <- function(flags, check) {
     .Call(`_md4r_flag_is_set`, flags, check)
 }
 
-table_entry_escape <- function(x) {
-    .Call(`_md4r_table_entry_escape`, x)
+table_entry_escape <- function(x, keep_double_pipe = FALSE) {
+    .Call(`_md4r_table_entry_escape`, x, keep_double_pipe)
 }
 

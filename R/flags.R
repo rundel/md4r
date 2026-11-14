@@ -51,10 +51,18 @@ flags_describe = function() {
     "MD_FLAG_WIKILINKS",                "Enable wiki links extension.",
     "MD_FLAG_UNDERLINE",                "Enable underline extension (and disables '_' for normal emphasis).",
     "MD_FLAG_HARD_SOFT_BREAKS",         "Force all soft breaks to act as hard breaks.",
+    "MD_FLAG_SPOILERS",                 "Enable ||hidden text|| spoiler spans.",
+    "MD_FLAG_SUPERSCRIPTS",             "Enable ^superscript^ spans.",
+    "MD_FLAG_SUBSCRIPTS",               "Enable ~subscript~ spans (strikethrough then requires ~~).",
+    "MD_FLAG_ADMONITIONS",              "Enable admonitions extension (e.g. > [!NOTE]).",
+    "MD_FLAG_FOOTNOTES",                "Enable [^label] footnote references and definitions.",
+    "MD_FLAG_HIGHLIGHT",                "Enable ==highlight== spans.",
+    "MD_FLAG_PRESERVEBLANKLINES",       "Report blank line runs as md_block_blank nodes.",
+    "MD_FLAG_INSERT",                   "Enable ++insert++ spans.",
     "MD_FLAG_PERMISSIVEAUTOLINKS",      "Combines flags (MD_FLAG_PERMISSIVEEMAILAUTOLINKS | MD_FLAG_PERMISSIVEURLAUTOLINKS | MD_FLAG_PERMISSIVEWWWAUTOLINKS)",
     "MD_FLAG_NOHTML",                   "Combines flags (MD_FLAG_NOHTMLBLOCKS | MD_FLAG_NOHTMLSPANS)",
     "MD_DIALECT_COMMONMARK",            "All flags off",
-    "MD_DIALECT_GITHUB",                "Combines flags (MD_FLAG_PERMISSIVEAUTOLINKS | MD_FLAG_TABLES | MD_FLAG_STRIKETHROUGH | MD_FLAG_TASKLISTS)"
+    "MD_DIALECT_GITHUB",                "Combines flags (MD_FLAG_PERMISSIVEAUTOLINKS | MD_FLAG_TABLES | MD_FLAG_STRIKETHROUGH | MD_FLAG_TASKLISTS | MD_FLAG_ADMONITIONS | MD_FLAG_FOOTNOTES)"
   )
 }
 

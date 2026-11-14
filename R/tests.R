@@ -20,7 +20,15 @@ flag_lookup = c(
   "--fpermissive-email-autolinks"  = "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
   "--fpermissive-www-autolinks"    = "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
   "--ftasklists"                   = "MD_FLAG_TASKLISTS",
-  "--funderline"                   = "MD_FLAG_UNDERLINE"
+  "--funderline"                   = "MD_FLAG_UNDERLINE",
+  "--fspoilers"                    = "MD_FLAG_SPOILERS",
+  "--fsuperscripts"                = "MD_FLAG_SUPERSCRIPTS",
+  "--fsubscripts"                  = "MD_FLAG_SUBSCRIPTS",
+  "--fadmonitions"                 = "MD_FLAG_ADMONITIONS",
+  "--ffootnotes"                   = "MD_FLAG_FOOTNOTES",
+  "--fhighlight"                   = "MD_FLAG_HIGHLIGHT",
+  "--fpreserve-blank-lines"        = "MD_FLAG_PRESERVEBLANKLINES",
+  "--finsert"                      = "MD_FLAG_INSERT"
 )
 
 
@@ -38,7 +46,6 @@ read_md4c_tests = function(file) {
   html = character()
   other = character()
 
-  flag_pat = "(MD_FLAG_|MD_DIALECT_)[A-Z_]+"
   chunk_start_pat = "^```````````````````````````````` example"
   chunk_end_pat   = "^````````````````````````````````$"
 
@@ -48,10 +55,6 @@ read_md4c_tests = function(file) {
 
     if (!in_example && grepl("^#{1,6}", line)) {
       section = sub("^#{1,6}\\s+","", line)
-    }
-    else if (grepl(flag_pat, line)) {
-      m = regexpr(flag_pat, line)
-      flags = c(flags, regmatches(line,m))
     }
     else if (grepl(chunk_start_pat, line)) {
       in_example = TRUE
@@ -87,17 +90,18 @@ read_md4c_tests = function(file) {
     }
   }
 
-  if (grepl("wiki-links", file)) {
-    # Required flag not listed in the file for some reason
-    flags = c(flags, "MD_FLAG_TABLES")
-  }
-
   # Replace → with \t for inputs and outputs
   examples = lapply(
     examples,
     function(x) {
       x$md = gsub("→", "\t", x$md)
       x$html = gsub("→", "\t", x$html)
+
+      # parse_md() treats a final "" as the line terminator, keep trailing blank lines
+      n = length(x$md)
+      if (n > 1 && x$md[n] == "")
+        x$md = c(x$md, "")
+
       x
     }
   )
@@ -132,7 +136,8 @@ md4c_tests_to_md = function() {
     ),
     "regressions" = tibble::tribble(
       ~ex, ~msg,
-       51, "Ambiguous punct escaping #51"
+        3, "Escaped ] in wikilink content breaks the wikilink #3",
+       54, "Ambiguous punct escaping #54"
     ),
     spec = tibble::tribble(
       ~ex, ~msg,
@@ -215,7 +220,7 @@ md4c_tests_to_html = function() {
     ),
     "regressions" = tibble::tribble(
       ~ex, ~msg,
-      5, "New line vs space issue"
+      8, "New line vs space issue"
     ),
     "spec" = tibble::tribble(
       ~ex, ~msg,
@@ -424,6 +429,8 @@ gfm_tests_to_html = function() {
     616, "Seems like a md4c bug - should not be an autolink",
     619, "Seems like a md4c bug - should not be an autolink",
     620, "Seems like a md4c bug - should not be an autolink",
+
+    623, "md4c 0.6.0 bug - trailing '.' included in www autolink with a dotted path",
 
     625, "Seems like a md4c bug - doesn't treat the trailing '+ok' as part of the url",
     626, "Seems like a md4c bug - doesn't find the 2nd url",

@@ -276,6 +276,150 @@ test_that("coverage - Ex 19 (L292-296) - Flag `MD_FLAG_COLLAPSEWHITESPACE`", {
   )
 })
 
+test_that("coverage - Ex 20 (L306-315) - Flag `MD_FLAG_PRESERVEBLANKLINES`", {
+  expect_identical_html(
+    md = c(
+      "```", "foo", "```", "bar"
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code>foo",
+      "</code></pre>",
+      "<p>bar</p>"
+    )
+  )
+})
+
+test_that("coverage - Ex 21 (L321-332) - Flag `MD_FLAG_PRESERVEBLANKLINES`", {
+  expect_identical_html(
+    md = c(
+      "<div>", "x", "", "",
+      "after"
+    ), flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<div>", "x",
+      "<br>", "<p>after</p>"
+    )
+  )
+})
+
+test_that("coverage - Ex 22 (L340-353) - Flag `MD_FLAG_PRESERVEBLANKLINES`", {
+  expect_identical_html(
+    md = c(
+      "* a", "", "", "* b"
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<ul>",
+      "<li><p>a</p>", "<br>",
+      "</li>", "<li><p>b</p>",
+      "</li>", "</ul>"
+    )
+  )
+})
+
+test_that("coverage - Ex 23 (L360-373) - Flag `MD_FLAG_PRESERVEBLANKLINES`", {
+  expect_identical_html(
+    md = c(
+      "* a", "* b", "", "",
+      "para"
+    ), flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<ul>",
+      "<li>a</li>", "<li>b<br>",
+      "</li>", "</ul>",
+      "<p>para</p>"
+    )
+  )
+})
+
+test_that("coverage - Ex 24 (L380-395) - Flag `MD_FLAG_PRESERVEBLANKLINES`", {
+  expect_identical_html(
+    md = c(
+      "> * a", ">", ">", "> * b"
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<blockquote>",
+      "<ul>", "<li><p>a</p>",
+      "<br>", "</li>",
+      "<li><p>b</p>", "</li>",
+      "</ul>", "</blockquote>"
+    )
+  )
+})
+
+test_that("coverage - Ex 25 (L404-418) - Flag `MD_FLAG_PRESERVEBLANKLINES`", {
+  expect_identical_html(
+    md = c(
+      "> quote with trailing blank lines inside of it.",
+      ">", ">", "", "",
+      "after the block quote."
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<blockquote>",
+      "<p>quote with trailing blank lines inside of it.</p>",
+      "<br>", "</blockquote>",
+      "<br>",
+      "<p>after the block quote.</p>"
+    )
+  )
+})
+
+test_that("coverage - Ex 26 (L425-434) - Flag `MD_FLAG_PRESERVEBLANKLINES`", {
+  expect_identical_html(
+    md = c(
+      "foo", "   ", "   ", "bar"
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>foo</p>",
+      "<br>", "<p>bar</p>"
+    )
+  )
+})
+
+test_that("coverage - Ex 27 (L440-459) - Flag `MD_FLAG_PRESERVEBLANKLINES`", {
+  expect_identical_html(
+    md = c(
+      "para", "", "", "# H", "",
+      "", "---", "", "", "end"
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>para</p>",
+      "<br>", "<h1>H</h1>",
+      "<br>", "<hr>", "<br>",
+      "<p>end</p>"
+    )
+  )
+})
+
 # regressions -------------------------------
 
 test_that("regressions - Ex 1 (L13-15) - [Issue 2](https://github.com/mity/md4c/issues/2)", {
@@ -292,7 +436,58 @@ test_that("regressions - Ex 1 (L13-15) - [Issue 2](https://github.com/mity/md4c/
   )
 })
 
-test_that("regressions - Ex 2 (L21-23) - [Issue 2](https://github.com/mity/md4c/issues/2)", {
+test_that("regressions - Ex 2 (L22-26) - Footnote definition with bracketed link text", {
+  expect_identical_html(
+    md = c(
+      "[^x]:", "[**x*]()"
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c()
+  )
+})
+
+test_that("regressions - Ex 3 (L33-39) - Footnote reference inside wiki-link destination", {
+  expect_identical_html(
+    md = c(
+      "[[[^|]]]", "[^|]:"
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_FLAG_WIKILINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-wikilink data-target=\"[^\">]</x-wikilink>",
+      "[^|]:</p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 4 (L44-57) - Footnote reference inside wiki-link destination", {
+  expect_identical_html(
+    md = c(
+      "x[^1] [[foo|bar]]", "",
+      "[^1]: Note."
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_FLAG_WIKILINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>x<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup> <x-wikilink data-target=\"foo\">bar</x-wikilink></p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "Note.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("regressions - Ex 5 (L63-65) - Footnote reference inside wiki-link destination", {
   expect_identical_html(
     md = c(
       "foo <gi att1=tok1 att2=tok2> bar\n"
@@ -306,7 +501,7 @@ test_that("regressions - Ex 2 (L21-23) - [Issue 2](https://github.com/mity/md4c/
   )
 })
 
-test_that("regressions - Ex 3 (L29-33) - [Issue 2](https://github.com/mity/md4c/issues/2)", {
+test_that("regressions - Ex 6 (L71-75) - Footnote reference inside wiki-link destination", {
   expect_identical_html(
     md = c(
       "foo <gi att1=tok1",
@@ -321,7 +516,7 @@ test_that("regressions - Ex 3 (L29-33) - [Issue 2](https://github.com/mity/md4c/
   )
 })
 
-test_that("regressions - Ex 4 (L40-42) - [Issue 4](https://github.com/mity/md4c/issues/4)", {
+test_that("regressions - Ex 7 (L82-84) - [Issue 4](https://github.com/mity/md4c/issues/4)", {
   expect_identical_html(
     md = c(
       "![alt text with *entity* &copy;](img.png 'title')\n"
@@ -335,8 +530,8 @@ test_that("regressions - Ex 4 (L40-42) - [Issue 4](https://github.com/mity/md4c/
   )
 })
 
-test_that("regressions - Ex 5 (L49-57) - [Issue 9](https://github.com/mity/md4c/issues/9)", {
-  testthat::skip("regressions #5 - New line vs space issue")
+test_that("regressions - Ex 8 (L91-99) - [Issue 9](https://github.com/mity/md4c/issues/9)", {
+  testthat::skip("regressions #8 - New line vs space issue")
   expect_identical_html(
     md = c(
       "> [foo", "> bar]: /url",
@@ -353,7 +548,7 @@ test_that("regressions - Ex 5 (L49-57) - [Issue 9](https://github.com/mity/md4c/
   )
 })
 
-test_that("regressions - Ex 6 (L64-75) - [Issue 10](https://github.com/mity/md4c/issues/10)", {
+test_that("regressions - Ex 9 (L106-117) - [Issue 10](https://github.com/mity/md4c/issues/10)", {
   expect_identical_html(
     md = c(
       "[x]:", "x", "- <?", "",
@@ -368,7 +563,7 @@ test_that("regressions - Ex 6 (L64-75) - [Issue 10](https://github.com/mity/md4c
   )
 })
 
-test_that("regressions - Ex 7 (L82-84) - [Issue 11](https://github.com/mity/md4c/issues/11)", {
+test_that("regressions - Ex 10 (L124-126) - [Issue 11](https://github.com/mity/md4c/issues/11)", {
   expect_identical_html(
     md = c(
       "x [link](/url \"foo &ndash; bar\") x\n"
@@ -382,7 +577,7 @@ test_that("regressions - Ex 7 (L82-84) - [Issue 11](https://github.com/mity/md4c
   )
 })
 
-test_that("regressions - Ex 8 (L91-93) - [Issue 14](https://github.com/mity/md4c/issues/14)", {
+test_that("regressions - Ex 11 (L133-135) - [Issue 14](https://github.com/mity/md4c/issues/14)", {
   expect_identical_html(
     md = c(
       "a***b* c*\n"
@@ -395,7 +590,7 @@ test_that("regressions - Ex 8 (L91-93) - [Issue 14](https://github.com/mity/md4c
   )
 })
 
-test_that("regressions - Ex 9 (L100-102) - [Issue 15](https://github.com/mity/md4c/issues/15)", {
+test_that("regressions - Ex 12 (L142-144) - [Issue 15](https://github.com/mity/md4c/issues/15)", {
   expect_identical_html(
     md = c(
       "***b* c*\n"
@@ -408,7 +603,7 @@ test_that("regressions - Ex 9 (L100-102) - [Issue 15](https://github.com/mity/md
   )
 })
 
-test_that("regressions - Ex 10 (L109-111) - [Issue 21](https://github.com/mity/md4c/issues/21)", {
+test_that("regressions - Ex 13 (L151-153) - [Issue 21](https://github.com/mity/md4c/issues/21)", {
   expect_identical_html(
     md = c(
       "a*b**c*\n"
@@ -421,7 +616,7 @@ test_that("regressions - Ex 10 (L109-111) - [Issue 21](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 11 (L118-120) - [Issue 33](https://github.com/mity/md4c/issues/33)", {
+test_that("regressions - Ex 14 (L160-162) - [Issue 33](https://github.com/mity/md4c/issues/33)", {
   expect_identical_html(
     md = c(
       "```&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\n"
@@ -435,7 +630,7 @@ test_that("regressions - Ex 11 (L118-120) - [Issue 33](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 12 (L127-129) - [Issue 36](https://github.com/mity/md4c/issues/36)", {
+test_that("regressions - Ex 15 (L169-171) - [Issue 36](https://github.com/mity/md4c/issues/36)", {
   expect_identical_html(
     md = c(
       "__x_ _x___\n"
@@ -448,7 +643,7 @@ test_that("regressions - Ex 12 (L127-129) - [Issue 36](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 13 (L136-137) - [Issue 39](https://github.com/mity/md4c/issues/39)", {
+test_that("regressions - Ex 16 (L178-179) - [Issue 39](https://github.com/mity/md4c/issues/39)", {
   expect_identical_html(
     md = c(
       "[\\\\]: x\n"
@@ -459,7 +654,7 @@ test_that("regressions - Ex 13 (L136-137) - [Issue 39](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 14 (L144-148) - [Issue 40](https://github.com/mity/md4c/issues/40)", {
+test_that("regressions - Ex 17 (L186-190) - [Issue 40](https://github.com/mity/md4c/issues/40)", {
   expect_identical_html(
     md = c(
       "[x](url", "'title'", ")x"
@@ -473,7 +668,7 @@ test_that("regressions - Ex 14 (L144-148) - [Issue 40](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 15 (L154-162) - [Issue 41](https://github.com/mity/md4c/issues/41)", {
+test_that("regressions - Ex 18 (L196-204) - [Issue 41](https://github.com/mity/md4c/issues/41)", {
   expect_identical_html(
     md = c(
       "* x|x", "---|---"
@@ -489,7 +684,7 @@ test_that("regressions - Ex 15 (L154-162) - [Issue 41](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 16 (L168-185) - [Issue 41](https://github.com/mity/md4c/issues/41)", {
+test_that("regressions - Ex 19 (L210-227) - [Issue 41](https://github.com/mity/md4c/issues/41)", {
   expect_identical_html(
     md = c(
       "* x|x", "  ---|---", "x|x"
@@ -510,7 +705,7 @@ test_that("regressions - Ex 16 (L168-185) - [Issue 41](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 17 (L194-216) - [Issue 42](https://github.com/mity/md4c/issues/42)", {
+test_that("regressions - Ex 20 (L236-258) - [Issue 42](https://github.com/mity/md4c/issues/42)", {
   expect_identical_html(
     md = c(
       "] http://x.x *x*", "",
@@ -533,7 +728,7 @@ test_that("regressions - Ex 17 (L194-216) - [Issue 42](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 18 (L223-227) - [Issue 53](https://github.com/mity/md4c/issues/53)", {
+test_that("regressions - Ex 21 (L265-269) - [Issue 53](https://github.com/mity/md4c/issues/53)", {
   expect_identical_html(
     md = c(
       "This is [link](http://github.com/).\n"
@@ -548,7 +743,7 @@ test_that("regressions - Ex 18 (L223-227) - [Issue 53](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 19 (L231-235) - [Issue 53](https://github.com/mity/md4c/issues/53)", {
+test_that("regressions - Ex 22 (L273-277) - [Issue 53](https://github.com/mity/md4c/issues/53)", {
   expect_identical_html(
     md = c(
       "This is [link](http://github.com/)X\n"
@@ -563,7 +758,7 @@ test_that("regressions - Ex 19 (L231-235) - [Issue 53](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 20 (L242-244) - [Issue 65](https://github.com/mity/md4c/issues/65)", {
+test_that("regressions - Ex 23 (L284-286) - [Issue 65](https://github.com/mity/md4c/issues/65)", {
   expect_identical_html(
     md = c(
       "`\n"
@@ -574,7 +769,7 @@ test_that("regressions - Ex 20 (L242-244) - [Issue 65](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 21 (L250-254) - [Issue 69](https://github.com/mity/md4c/issues/69)", {
+test_that("regressions - Ex 24 (L292-296) - [Issue 69](https://github.com/mity/md4c/issues/69)", {
   expect_identical_html(
     md = c(
       "~`foo`~\n"
@@ -588,7 +783,7 @@ test_that("regressions - Ex 21 (L250-254) - [Issue 69](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 22 (L258-262) - [Issue 69](https://github.com/mity/md4c/issues/69)", {
+test_that("regressions - Ex 25 (L300-304) - [Issue 69](https://github.com/mity/md4c/issues/69)", {
   expect_identical_html(
     md = c(
       "~*foo*~\n"
@@ -602,7 +797,7 @@ test_that("regressions - Ex 22 (L258-262) - [Issue 69](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 23 (L266-270) - [Issue 69](https://github.com/mity/md4c/issues/69)", {
+test_that("regressions - Ex 26 (L308-312) - [Issue 69](https://github.com/mity/md4c/issues/69)", {
   expect_identical_html(
     md = c(
       "*~foo~*\n"
@@ -616,7 +811,7 @@ test_that("regressions - Ex 23 (L266-270) - [Issue 69](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 24 (L277-286) - [Issue 74](https://github.com/mity/md4c/issues/74)", {
+test_that("regressions - Ex 27 (L319-328) - [Issue 74](https://github.com/mity/md4c/issues/74)", {
   expect_identical_html(
     md = c(
       "[f]:", "-", "    xx", "-"
@@ -632,7 +827,7 @@ test_that("regressions - Ex 24 (L277-286) - [Issue 74](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 25 (L293-297) - [Issue 76](https://github.com/mity/md4c/issues/76)", {
+test_that("regressions - Ex 28 (L335-339) - [Issue 76](https://github.com/mity/md4c/issues/76)", {
   expect_identical_html(
     md = c(
       "*(http://example.com)*\n"
@@ -647,7 +842,7 @@ test_that("regressions - Ex 25 (L293-297) - [Issue 76](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 26 (L304-307) - [Issue 78](https://github.com/mity/md4c/issues/78)", {
+test_that("regressions - Ex 29 (L346-349) - [Issue 78](https://github.com/mity/md4c/issues/78)", {
   expect_identical_html(
     md = c(
       "[SS ẞ]: /url", "[ẞ SS]"
@@ -661,7 +856,7 @@ test_that("regressions - Ex 26 (L304-307) - [Issue 78](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 27 (L314-320) - [Issue 83](https://github.com/mity/md4c/issues/83)", {
+test_that("regressions - Ex 30 (L356-362) - [Issue 83](https://github.com/mity/md4c/issues/83)", {
   expect_identical_html(
     md = c(
       "foo", ">"
@@ -676,7 +871,7 @@ test_that("regressions - Ex 27 (L314-320) - [Issue 83](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 28 (L327-329) - [Issue 95](https://github.com/mity/md4c/issues/95)", {
+test_that("regressions - Ex 31 (L369-371) - [Issue 95](https://github.com/mity/md4c/issues/95)", {
   expect_identical_html(
     md = c(
       ". foo\n"
@@ -687,7 +882,7 @@ test_that("regressions - Ex 28 (L327-329) - [Issue 95](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 29 (L336-339) - [Issue 96](https://github.com/mity/md4c/issues/96)", {
+test_that("regressions - Ex 32 (L378-381) - [Issue 96](https://github.com/mity/md4c/issues/96)", {
   expect_identical_html(
     md = c(
       "[ab]: /foo",
@@ -701,7 +896,7 @@ test_that("regressions - Ex 29 (L336-339) - [Issue 96](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 30 (L343-346) - [Issue 96](https://github.com/mity/md4c/issues/96)", {
+test_that("regressions - Ex 33 (L385-388) - [Issue 96](https://github.com/mity/md4c/issues/96)", {
   expect_identical_html(
     md = c(
       "[a b]: /foo", "[a   b]"
@@ -715,7 +910,7 @@ test_that("regressions - Ex 30 (L343-346) - [Issue 96](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 31 (L353-356) - [Issue 97](https://github.com/mity/md4c/issues/97)", {
+test_that("regressions - Ex 34 (L395-398) - [Issue 97](https://github.com/mity/md4c/issues/97)", {
   expect_identical_html(
     md = c(
       "*a **b c* d**\n"
@@ -729,7 +924,7 @@ test_that("regressions - Ex 31 (L353-356) - [Issue 97](https://github.com/mity/m
   )
 })
 
-test_that("regressions - Ex 32 (L363-365) - [Issue 100](https://github.com/mity/md4c/issues/100)", {
+test_that("regressions - Ex 35 (L405-407) - [Issue 100](https://github.com/mity/md4c/issues/100)", {
   expect_identical_html(
     md = c(
       "<foo@123456789012345678901234567890123456789012345678901234567890123.123456789012345678901234567890123456789012345678901234567890123>\n"
@@ -743,7 +938,7 @@ test_that("regressions - Ex 32 (L363-365) - [Issue 100](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 33 (L369-371) - [Issue 100](https://github.com/mity/md4c/issues/100)", {
+test_that("regressions - Ex 36 (L411-413) - [Issue 100](https://github.com/mity/md4c/issues/100)", {
   expect_identical_html(
     md = c(
       "<foo@123456789012345678901234567890123456789012345678901234567890123x.123456789012345678901234567890123456789012345678901234567890123>\n"
@@ -757,7 +952,7 @@ test_that("regressions - Ex 33 (L369-371) - [Issue 100](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 34 (L379-398) - [Issue 104](https://github.com/mity/md4c/issues/104)", {
+test_that("regressions - Ex 37 (L421-440) - [Issue 104](https://github.com/mity/md4c/issues/104)", {
   expect_identical_html(
     md = c(
       "A | B", "--- | ---",
@@ -779,7 +974,7 @@ test_that("regressions - Ex 34 (L379-398) - [Issue 104](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 35 (L405-408) - [Issue 107](https://github.com/mity/md4c/issues/107)", {
+test_that("regressions - Ex 38 (L447-450) - [Issue 107](https://github.com/mity/md4c/issues/107)", {
   expect_identical_html(
     md = c(
       "***foo *bar baz***\n"
@@ -794,7 +989,7 @@ test_that("regressions - Ex 35 (L405-408) - [Issue 107](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 36 (L415-426) - [Issue 124](https://github.com/mity/md4c/issues/124)", {
+test_that("regressions - Ex 39 (L457-468) - [Issue 124](https://github.com/mity/md4c/issues/124)", {
   expect_identical_html(
     md = c(
       "~~~", "                x",
@@ -813,7 +1008,7 @@ test_that("regressions - Ex 36 (L415-426) - [Issue 124](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 37 (L433-438) - [Issue 131](https://github.com/mity/md4c/issues/131)", {
+test_that("regressions - Ex 40 (L475-480) - [Issue 131](https://github.com/mity/md4c/issues/131)", {
   expect_identical_html(
     md = c(
       "[![alt][img]][link]", "",
@@ -828,7 +1023,7 @@ test_that("regressions - Ex 37 (L433-438) - [Issue 131](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 38 (L445-457) - [Issue 138](https://github.com/mity/md4c/issues/138)", {
+test_that("regressions - Ex 41 (L487-499) - [Issue 138](https://github.com/mity/md4c/issues/138)", {
   expect_identical_html(
     md = c(
       "| abc | def |",
@@ -847,7 +1042,7 @@ test_that("regressions - Ex 38 (L445-457) - [Issue 138](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 39 (L464-467) - [Issue 142](https://github.com/mity/md4c/issues/142)", {
+test_that("regressions - Ex 42 (L506-509) - [Issue 142](https://github.com/mity/md4c/issues/142)", {
   expect_identical_html(
     md = c(
       "[fooﬗ]: /url", "[fooﬕ]"
@@ -859,7 +1054,7 @@ test_that("regressions - Ex 39 (L464-467) - [Issue 142](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 40 (L474-485) - [Issue 149](https://github.com/mity/md4c/issues/149)", {
+test_that("regressions - Ex 43 (L516-527) - [Issue 149](https://github.com/mity/md4c/issues/149)", {
   expect_identical_html(
     md = c(
       "- <script>", "- foo",
@@ -876,7 +1071,7 @@ test_that("regressions - Ex 40 (L474-485) - [Issue 149](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 41 (L492-496) - [Issue 152](https://github.com/mity/md4c/issues/152)", {
+test_that("regressions - Ex 44 (L534-538) - [Issue 152](https://github.com/mity/md4c/issues/152)", {
   expect_identical_html(
     md = c(
       "[http://example.com](http://example.com)\n"
@@ -891,7 +1086,7 @@ test_that("regressions - Ex 41 (L492-496) - [Issue 152](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 42 (L503-511) - [Issue 190](https://github.com/mity/md4c/issues/190)", {
+test_that("regressions - Ex 45 (L545-553) - [Issue 190](https://github.com/mity/md4c/issues/190)", {
   expect_identical_html(
     md = c(
       "-", "", "    foo"
@@ -907,7 +1102,7 @@ test_that("regressions - Ex 42 (L503-511) - [Issue 190](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 43 (L518-527) - [Issue 200](https://github.com/mity/md4c/issues/200)", {
+test_that("regressions - Ex 46 (L560-569) - [Issue 200](https://github.com/mity/md4c/issues/200)", {
   expect_identical_html(
     md = c(
       "<!-- foo -->", "    ```",
@@ -924,7 +1119,7 @@ test_that("regressions - Ex 43 (L518-527) - [Issue 200](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 44 (L534-540) - [Issue 201](https://github.com/mity/md4c/issues/201)", {
+test_that("regressions - Ex 47 (L576-582) - [Issue 201](https://github.com/mity/md4c/issues/201)", {
   expect_identical_html(
     md = c(
       "foo", "    ```", "    bar",
@@ -939,7 +1134,7 @@ test_that("regressions - Ex 44 (L534-540) - [Issue 201](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 45 (L547-564) - [Issue 207](https://github.com/mity/md4c/issues/207)", {
+test_that("regressions - Ex 48 (L589-606) - [Issue 207](https://github.com/mity/md4c/issues/207)", {
   expect_identical_html(
     md = c(
       "<textarea>", "", "*foo*",
@@ -957,7 +1152,7 @@ test_that("regressions - Ex 45 (L547-564) - [Issue 207](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 46 (L571-573) - [Issue 210](https://github.com/mity/md4c/issues/210)", {
+test_that("regressions - Ex 49 (L613-615) - [Issue 210](https://github.com/mity/md4c/issues/210)", {
   expect_identical_html(
     md = c(
       "![outer ![inner](img_inner \"inner title\")](img_outer \"outer title\")\n"
@@ -971,7 +1166,7 @@ test_that("regressions - Ex 46 (L571-573) - [Issue 210](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 47 (L580-597) - [Issue 212](https://github.com/mity/md4c/issues/212)", {
+test_that("regressions - Ex 50 (L622-639) - [Issue 212](https://github.com/mity/md4c/issues/212)", {
   expect_identical_html(
     md = c(
       "x", "|-", "|[*x*]()"
@@ -993,7 +1188,7 @@ test_that("regressions - Ex 47 (L580-597) - [Issue 212](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 48 (L604-624) - [Issue 213](https://github.com/mity/md4c/issues/215)", {
+test_that("regressions - Ex 51 (L646-666) - [Issue 213](https://github.com/mity/md4c/issues/215)", {
   expect_identical_html(
     md = c(
       "x", "|-", "[|", "",
@@ -1016,7 +1211,7 @@ test_that("regressions - Ex 48 (L604-624) - [Issue 213](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 49 (L631-634) - [Issue 215](https://github.com/mity/md4c/issues/215)", {
+test_that("regressions - Ex 52 (L673-676) - [Issue 215](https://github.com/mity/md4c/issues/215)", {
   expect_identical_html(
     md = c(
       "title", "--\t"
@@ -1027,7 +1222,7 @@ test_that("regressions - Ex 49 (L631-634) - [Issue 215](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 50 (L641-643) - [Issue 216](https://github.com/mity/md4c/issues/216)", {
+test_that("regressions - Ex 53 (L683-685) - [Issue 216](https://github.com/mity/md4c/issues/216)", {
   expect_identical_html(
     md = c(
       "x <!A>\n"
@@ -1038,7 +1233,7 @@ test_that("regressions - Ex 50 (L641-643) - [Issue 216](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 51 (L650-673) - [Issue 217](https://github.com/mity/md4c/issues/217)", {
+test_that("regressions - Ex 54 (L692-715) - [Issue 217](https://github.com/mity/md4c/issues/217)", {
   expect_identical_html(
     md = c(
       "__!_!__", "", "__!x!__",
@@ -1062,7 +1257,7 @@ test_that("regressions - Ex 51 (L650-673) - [Issue 217](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 52 (L680-684) - [Issue 222](https://github.com/mity/md4c/issues/222)", {
+test_that("regressions - Ex 55 (L722-726) - [Issue 222](https://github.com/mity/md4c/issues/222)", {
   expect_identical_html(
     md = c(
       "~foo ~bar baz~\n"
@@ -1076,7 +1271,7 @@ test_that("regressions - Ex 52 (L680-684) - [Issue 222](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 53 (L694-697) - [Issue 223](https://github.com/mity/md4c/issues/223)", {
+test_that("regressions - Ex 56 (L736-739) - [Issue 223](https://github.com/mity/md4c/issues/223)", {
   expect_identical_html(
     md = c(
       "`", "foo`"
@@ -1089,7 +1284,7 @@ test_that("regressions - Ex 53 (L694-697) - [Issue 223](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 54 (L701-704) - [Issue 223](https://github.com/mity/md4c/issues/223)", {
+test_that("regressions - Ex 57 (L743-746) - [Issue 223](https://github.com/mity/md4c/issues/223)", {
   expect_identical_html(
     md = c(
       "`foo", "`"
@@ -1102,7 +1297,7 @@ test_that("regressions - Ex 54 (L701-704) - [Issue 223](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 55 (L710-714) - [Issue 223](https://github.com/mity/md4c/issues/223)", {
+test_that("regressions - Ex 58 (L752-756) - [Issue 223](https://github.com/mity/md4c/issues/223)", {
   expect_identical_html(
     md = c(
       "`", "foo", "`"
@@ -1115,7 +1310,7 @@ test_that("regressions - Ex 55 (L710-714) - [Issue 223](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 56 (L721-727) - [Issue 226](https://github.com/mity/md4c/issues/226)", {
+test_that("regressions - Ex 59 (L763-769) - [Issue 226](https://github.com/mity/md4c/issues/226)", {
   expect_identical_html(
     md = c(
       "https://example.com/",
@@ -1132,7 +1327,7 @@ test_that("regressions - Ex 56 (L721-727) - [Issue 226](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 57 (L734-741) - [Issue 242](https://github.com/mity/md4c/issues/242)", {
+test_that("regressions - Ex 60 (L776-783) - [Issue 242](https://github.com/mity/md4c/issues/242)", {
   expect_identical_html(
     md = c(
       "copy ~user1/file to ~user2/file",
@@ -1150,7 +1345,7 @@ test_that("regressions - Ex 57 (L734-741) - [Issue 242](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 58 (L751-753) - [Issue 248](https://github.com/mity/md4c/issues/248)", {
+test_that("regressions - Ex 61 (L793-795) - [Issue 248](https://github.com/mity/md4c/issues/248)", {
   expect_identical_html(
     md = c(
       "#\tFoo\n"
@@ -1161,7 +1356,7 @@ test_that("regressions - Ex 58 (L751-753) - [Issue 248](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 59 (L757-762) - [Issue 248](https://github.com/mity/md4c/issues/248)", {
+test_that("regressions - Ex 62 (L799-804) - [Issue 248](https://github.com/mity/md4c/issues/248)", {
   expect_identical_html(
     md = c(
       "  Foo *bar", "baz*\t",
@@ -1176,7 +1371,7 @@ test_that("regressions - Ex 59 (L757-762) - [Issue 248](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 60 (L772-776) - [Issue 250](https://github.com/mity/md4c/issues/250)", {
+test_that("regressions - Ex 63 (L814-818) - [Issue 250](https://github.com/mity/md4c/issues/250)", {
   expect_identical_html(
     md = c(
       "foo  \t", "bar"
@@ -1190,7 +1385,7 @@ test_that("regressions - Ex 60 (L772-776) - [Issue 250](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 61 (L781-785) - [Issue 250](https://github.com/mity/md4c/issues/250)", {
+test_that("regressions - Ex 64 (L823-827) - [Issue 250](https://github.com/mity/md4c/issues/250)", {
   expect_identical_html(
     md = c(
       "foo\t  ", "bar"
@@ -1204,7 +1399,7 @@ test_that("regressions - Ex 61 (L781-785) - [Issue 250](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 62 (L792-796) - [Issue 251](https://github.com/mity/md4c/issues/251)", {
+test_that("regressions - Ex 65 (L834-838) - [Issue 251](https://github.com/mity/md4c/issues/251)", {
   expect_identical_html(
     md = c(
       "https://codereview.qt-project.org/c/qt/qtwayland/+/545836\n"
@@ -1219,7 +1414,22 @@ test_that("regressions - Ex 62 (L792-796) - [Issue 251](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 63 (L803-810) - [Issue 271](https://github.com/mity/md4c/issues/271)", {
+test_that("regressions - Ex 66 (L842-846) - [Issue 251](https://github.com/mity/md4c/issues/251)", {
+  expect_identical_html(
+    md = c(
+      "https://www.youtube.com/watch?v=_tEL8bJ7yqU\n"
+    ),
+    flags = c(
+      "MD_FLAG_PERMISSIVEAUTOLINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"https://www.youtube.com/watch?v=_tEL8bJ7yqU\">https://www.youtube.com/watch?v=_tEL8bJ7yqU</a></p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 67 (L853-860) - [Issue 271](https://github.com/mity/md4c/issues/271)", {
   expect_identical_html(
     md = c(
       "* `", "  foo", "  ` bar"
@@ -1235,7 +1445,7 @@ test_that("regressions - Ex 63 (L803-810) - [Issue 271](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 64 (L817-824) - [Issue 292](https://github.com/mity/md4c/issues/292)", {
+test_that("regressions - Ex 68 (L867-874) - [Issue 292](https://github.com/mity/md4c/issues/292)", {
   expect_identical_html(
     md = c(
       "```", "foo", "```\t",
@@ -1251,7 +1461,7 @@ test_that("regressions - Ex 64 (L817-824) - [Issue 292](https://github.com/mity/
   )
 })
 
-test_that("regressions - Ex 65 (L831-842) - [Issue 295](https://github.com/mity/md4c/issues/295)", {
+test_that("regressions - Ex 69 (L881-892) - [Issue 295](https://github.com/mity/md4c/issues/295)", {
   expect_identical_html(
     md = c(
       "```language-r", "x <- 1",
@@ -1269,6 +1479,859 @@ test_that("regressions - Ex 65 (L831-842) - [Issue 295](https://github.com/mity/
   )
 })
 
+test_that("regressions - Ex 70 (L899-908) - [Issue 320](https://github.com/mity/md4c/issues/320)", {
+  expect_identical_html(
+    md = c(
+      "    codeblock",
+      "> [!note]", "> foo"
+    ),
+    flags = c(
+      "MD_FLAG_ADMONITIONS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code>codeblock",
+      "</code></pre>",
+      "<div class=\"admonition-note\"><p class=\"admonition-title\">note</p><p>foo</p>",
+      "</div>"
+    )
+  )
+})
+
+test_that("regressions - Ex 71 (L912-920) - [Issue 320](https://github.com/mity/md4c/issues/320)", {
+  expect_identical_html(
+    md = c(
+      "> [!noteX]", "> foo"
+    ),
+    flags = c(
+      "MD_FLAG_ADMONITIONS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<blockquote>",
+      "<p>[!noteX]", "foo</p>",
+      "</blockquote>"
+    )
+  )
+})
+
+test_that("regressions - Ex 72 (L930-932) - [PR 325](https://github.com/mity/md4c/pull/325) (surrogate codepoints)", {
+  expect_identical_html(
+    md = c(
+      "&#xD800; &#xDFFF; &#55296; &#57343;\n"
+    ),
+    flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>� � � �</p>")
+  )
+})
+
+test_that("regressions - Ex 73 (L945-951) - [PR 325](https://github.com/mity/md4c/pull/325) (hard line breaks)", {
+  expect_identical_html(
+    md = c(
+      "[foo]: /url \"ti\\",
+      "tle\"", "", "[foo]"
+    ),
+    flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"/url\" title=\"ti",
+      "tle\">foo</a></p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 74 (L958-962) - [Issue 331](https://github.com/mity/md4c/issues/331)", {
+  expect_identical_html(
+    md = c(
+      "https://example.com/~username\n"
+    ),
+    flags = c(
+      "MD_FLAG_PERMISSIVEAUTOLINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"https://example.com/~username\">https://example.com/~username</a></p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 75 (L969-973) - [Issue 331](https://github.com/mity/md4c/issues/331)", {
+  expect_identical_html(
+    md = c(
+      "https://example.com/~username\n"
+    ),
+    flags = c(
+      "MD_FLAG_PERMISSIVEAUTOLINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"https://example.com/~username\">https://example.com/~username</a></p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 76 (L981-992) - [Issue 334](https://github.com/mity/md4c/issues/334)", {
+  expect_identical_html(
+    md = c(
+      "foo", ">[!tip]", ">-"
+    ),
+    flags = c(
+      "MD_FLAG_ADMONITIONS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>foo</p>",
+      "<div class=\"admonition-tip\"><p class=\"admonition-title\">tip</p>",
+      "<ul>", "<li></li>",
+      "</ul>", "</div>"
+    )
+  )
+})
+
+test_that("regressions - Ex 77 (L999-1008) - [Issue 336](https://github.com/mity/md4c/issues/336)", {
+  expect_identical_html(
+    md = c(
+      ">     [!tip]", "> foo"
+    ),
+    flags = c(
+      "MD_FLAG_ADMONITIONS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<blockquote>",
+      "<pre><code>[!tip]",
+      "</code></pre>",
+      "<p>foo</p>",
+      "</blockquote>"
+    )
+  )
+})
+
+test_that("regressions - Ex 78 (L1015-1019) - [Issue 352](https://github.com/mity/md4c/issues/352)", {
+  expect_identical_html(
+    md = c(
+      "![]([^)*]()\n"
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><img src=\"%5B%5E\" alt=\"\">*]()</p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 79 (L1024-1030) - [Issue 352](https://github.com/mity/md4c/issues/352)", {
+  expect_identical_html(
+    md = c(
+      "<", "http://example.com>"
+    ),
+    flags = c(
+      "MD_FLAG_PERMISSIVEAUTOLINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>&lt;",
+      "http://example.com&gt;</p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 80 (L1037-1041) - [Issue 372](https://github.com/mity/md4c/issues/372)", {
+  expect_identical_html(
+    md = c(
+      "mailto:foo@bar.baz\n"
+    ),
+    flags = c(
+      "MD_FLAG_PERMISSIVEAUTOLINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"mailto:foo@bar.baz\">mailto:foo@bar.baz</a></p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 81 (L1045-1049) - [Issue 372](https://github.com/mity/md4c/issues/372)", {
+  expect_identical_html(
+    md = c(
+      "xmpp:foo@bar.baz\n"
+    ),
+    flags = c(
+      "MD_FLAG_PERMISSIVEAUTOLINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"xmpp:foo@bar.baz\">xmpp:foo@bar.baz</a></p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 82 (L1060-1062) - [PR 376](https://github.com/mity/md4c/pull/376)", {
+  expect_identical_html(
+    md = c(
+      "![<x title=\" y\" onerror=\"alert(1)\">](/url)\n"
+    ),
+    flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><img src=\"/url\" alt=\"&lt;x title=&quot; y&quot; onerror=&quot;alert(1)&quot;&gt;\"></p>"
+    )
+  )
+})
+
+test_that("regressions - Ex 83 (L1069-1079) - [Issue 413](https://github.com/mity/md4c/issues/413)", {
+  expect_identical_html(
+    md = c(
+      "-", "  ---", "",
+      "  foo bar"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<ul>", "<li>",
+      "<hr>", "<p>foo bar</p>",
+      "</li>", "</ul>"
+    )
+  )
+})
+
+test_that("regressions - Ex 84 (L1089-1092) - [Issue 414](https://github.com/mity/md4c/issues/414)", {
+  expect_identical_html(
+    md = c(
+      "[foo]:bar", "---"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<hr>")
+  )
+})
+
+test_that("regressions - Ex 85 (L1096-1101) - [Issue 414](https://github.com/mity/md4c/issues/414)", {
+  expect_identical_html(
+    md = c(
+      "[foo]:bar", "---", "baz"
+    ),
+    flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<hr>",
+      "<p>baz</p>"
+    )
+  )
+})
+
+# spec-admonitions -------------------------------
+
+test_that("spec-admonitions - Ex 1 (L8-14) - Admonitions", {
+  expect_identical_html(
+    md = c(
+      "> [!NOTE]",
+      "> My note text."
+    ), flags = c(
+      "MD_FLAG_ADMONITIONS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<div class=\"admonition-note\"><p class=\"admonition-title\">note</p><p>My note text.</p>",
+      "</div>"
+    )
+  )
+})
+
+test_that("spec-admonitions - Ex 2 (L18-24) - Admonitions", {
+  expect_identical_html(
+    md = c(
+      "> [!TIP]",
+      "> My tip text."
+    ), flags = c(
+      "MD_FLAG_ADMONITIONS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<div class=\"admonition-tip\"><p class=\"admonition-title\">tip</p><p>My tip text.</p>",
+      "</div>"
+    )
+  )
+})
+
+test_that("spec-admonitions - Ex 3 (L28-34) - Admonitions", {
+  expect_identical_html(
+    md = c(
+      "> [!IMPORTANT]",
+      "> My important text."
+    ),
+    flags = c(
+      "MD_FLAG_ADMONITIONS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<div class=\"admonition-important\"><p class=\"admonition-title\">important</p><p>My important text.</p>",
+      "</div>"
+    )
+  )
+})
+
+test_that("spec-admonitions - Ex 4 (L38-44) - Admonitions", {
+  expect_identical_html(
+    md = c(
+      "> [!WARNING]",
+      "> My warning text."
+    ),
+    flags = c(
+      "MD_FLAG_ADMONITIONS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<div class=\"admonition-warning\"><p class=\"admonition-title\">warning</p><p>My warning text.</p>",
+      "</div>"
+    )
+  )
+})
+
+test_that("spec-admonitions - Ex 5 (L48-54) - Admonitions", {
+  expect_identical_html(
+    md = c(
+      "> [!CAUTION]",
+      "> My caution text."
+    ),
+    flags = c(
+      "MD_FLAG_ADMONITIONS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<div class=\"admonition-caution\"><p class=\"admonition-title\">caution</p><p>My caution text.</p>",
+      "</div>"
+    )
+  )
+})
+
+# spec-footnotes -------------------------------
+
+test_that("spec-footnotes - Ex 1 (L18-31) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "Text with a footnote[^1].",
+      "",
+      "[^1]: The footnote content."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Text with a footnote<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "The footnote content.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 2 (L37-50) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "See note[^note].", "",
+      "[^note]: This is the note."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>See note<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "This is the note.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 3 (L56-73) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "First[^a] and second[^b].",
+      "", "[^a]: Note A.",
+      "[^b]: Note B."
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>First<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup> and second<sup><a href=\"#fn-2\" id=\"fnref-2-1\">2</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "Note A.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-2\">",
+      "Note B.<a href=\"#fnref-2-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 4 (L79-96) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "First ref[^b] then[^a].",
+      "", "[^a]: Note A.",
+      "[^b]: Note B."
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>First ref<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup> then<sup><a href=\"#fn-2\" id=\"fnref-2-1\">2</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "Note B.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-2\">",
+      "Note A.<a href=\"#fnref-2-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 5 (L106-112) - Opt-in flag", {
+  expect_identical_html(
+    md = c(
+      "Text with [^1].", "",
+      "[^1]: Not a footnote."
+    ),
+    flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Text with [^1].</p>",
+      "<p>[^1]: Not a footnote.</p>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 6 (L122-128) - Unreferenced definitions", {
+  expect_identical_html(
+    md = c(
+      "No reference here.", "",
+      "[^1]: Unreferenced footnote."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>No reference here.</p>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 7 (L137-143) - Unknown label", {
+  expect_identical_html(
+    md = c(
+      "Text with [^unknown].", "",
+      "[^1]: Only this one is defined."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Text with [^unknown].</p>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 8 (L153-166) - Two references to the same label", {
+  expect_identical_html(
+    md = c(
+      "First[^a] and again[^a].",
+      "", "[^a]: The note."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>First<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup> and again<sup><a href=\"#fn-1\" id=\"fnref-1-2\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "The note.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a> <a href=\"#fnref-1-2\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 9 (L175-188) - Inline markup inside footnote content", {
+  expect_identical_html(
+    md = c(
+      "See note[^1].", "",
+      "[^1]: Footnote with **bold** and *italic*."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>See note<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "Footnote with <strong>bold</strong> and <em>italic</em>.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 10 (L197-212) - Multi-line footnote content", {
+  expect_identical_html(
+    md = c(
+      "Text[^1].", "",
+      "[^1]: First line.",
+      "  Second line continued."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Text<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "First line.",
+      "Second line continued.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 11 (L217-232) - Multi-line footnote content", {
+  expect_identical_html(
+    md = c(
+      "Text[^1].", "",
+      "[^1]: First line.",
+      "Second line continued."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Text<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "First line.",
+      "Second line continued.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 12 (L237-251) - Multi-line footnote content", {
+  expect_identical_html(
+    md = c(
+      "Text[^1].", "", "[^1]:",
+      "Continued after empty first line."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Text<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "Continued after empty first line.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 13 (L260-273) - Interaction with strikethrough", {
+  expect_identical_html(
+    md = c(
+      "~~struck~~ text[^1].", "",
+      "[^1]: A note."
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><del>struck</del> text<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "A note.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 14 (L282-295) - Interaction with spoilers", {
+  expect_identical_html(
+    md = c(
+      "Spoiler ||hidden|| and note[^1].",
+      "", "[^1]: Note."
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Spoiler <x-spoiler>hidden</x-spoiler> and note<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "Note.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 15 (L304-317) - Interaction with superscripts", {
+  expect_identical_html(
+    md = c(
+      "Sup ^text^ and note[^1].",
+      "", "[^1]: A note."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Sup <sup>text</sup> and note<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "A note.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 16 (L327-331) - No definitions at all", {
+  expect_identical_html(
+    md = c(
+      "Just a paragraph.\n"
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Just a paragraph.</p>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 17 (L340-354) - Mixed referenced and unreferenced definitions", {
+  expect_identical_html(
+    md = c(
+      "Only[^1] referenced.", "",
+      "[^1]: Used.",
+      "[^2]: Unused."
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Only<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup> referenced.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "Used.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 18 (L363-367) - Empty label (`[^]:`)", {
+  expect_identical_html(
+    md = c(
+      "[^]:\n"
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>[^]:</p>")
+  )
+})
+
+test_that("spec-footnotes - Ex 19 (L375-379) - Label with no closing bracket", {
+  expect_identical_html(
+    md = c(
+      "[^labelonly\n"
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>[^labelonly</p>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 20 (L385-389) - Closing bracket found but no colon", {
+  expect_identical_html(
+    md = c(
+      "[^1]! word\n"
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>[^1]! word</p>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 21 (L398-413) - Tab-indented continuation", {
+  expect_identical_html(
+    md = c(
+      "Text[^1].", "",
+      "[^1]: First line.",
+      "\tTab-indented continuation."
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Text<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "First line.",
+      "Tab-indented continuation.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 22 (L424-428) - Unclosed bracket — no matching `]`", {
+  expect_identical_html(
+    md = c(
+      "Some [^label and more.\n"
+    ),
+    flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Some [^label and more.</p>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 23 (L436-440) - Empty inline label `[^]`", {
+  expect_identical_html(
+    md = c(
+      "Text [^] here.\n"
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Text [^] here.</p>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 24 (L447-492) - More than eight definitions (triggers realloc growth)", {
+  expect_identical_html(
+    md = c(
+      "[^1][^2][^3][^4][^5][^6][^7][^8][^9].",
+      "", "[^1]: A.", "[^2]: B.",
+      "[^3]: C.", "[^4]: D.",
+      "[^5]: E.", "[^6]: F.",
+      "[^7]: G.", "[^8]: H.",
+      "[^9]: I."
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup><sup><a href=\"#fn-2\" id=\"fnref-2-1\">2</a></sup><sup><a href=\"#fn-3\" id=\"fnref-3-1\">3</a></sup><sup><a href=\"#fn-4\" id=\"fnref-4-1\">4</a></sup><sup><a href=\"#fn-5\" id=\"fnref-5-1\">5</a></sup><sup><a href=\"#fn-6\" id=\"fnref-6-1\">6</a></sup><sup><a href=\"#fn-7\" id=\"fnref-7-1\">7</a></sup><sup><a href=\"#fn-8\" id=\"fnref-8-1\">8</a></sup><sup><a href=\"#fn-9\" id=\"fnref-9-1\">9</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "A.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-2\">",
+      "B.<a href=\"#fnref-2-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-3\">",
+      "C.<a href=\"#fnref-3-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-4\">",
+      "D.<a href=\"#fnref-4-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-5\">",
+      "E.<a href=\"#fnref-5-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-6\">",
+      "F.<a href=\"#fnref-6-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-7\">",
+      "G.<a href=\"#fnref-7-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-8\">",
+      "H.<a href=\"#fnref-8-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "<li id=\"fn-9\">",
+      "I.<a href=\"#fnref-9-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 25 (L504-518) - Fallthrough: invalid footnote definition falls through to link reference", {
+  expect_identical_html(
+    md = c(
+      "See[^1].", "",
+      "[^a b]: not-a-footnote",
+      "[^1]: A note."
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>See<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "A note.<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
+test_that("spec-footnotes - Ex 26 (L530-543) - Label is not confused with regular link reference definition", {
+  expect_identical_html(
+    md = c(
+      "Note[^1].", "",
+      "[^1]: content"
+    ), flags = c(
+      "MD_FLAG_FOOTNOTES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Note<sup><a href=\"#fn-1\" id=\"fnref-1-1\">1</a></sup>.</p>",
+      "<section class=\"footnotes\">",
+      "<ol>", "<li id=\"fn-1\">",
+      "content<a href=\"#fnref-1-1\" class=\"footnote-backref\">&#8617;</a>",
+      "</li>", "</ol>",
+      "</section>"
+    )
+  )
+})
+
 # spec-hard-soft-breaks -------------------------------
 
 test_that("spec-hard-soft-breaks - Ex 1 (L8-14) - Hard Soft Breaks", {
@@ -1277,8 +2340,7 @@ test_that("spec-hard-soft-breaks - Ex 1 (L8-14) - Hard Soft Breaks", {
       "foo", "baz"
     ), flags = c(
       "MD_FLAG_HARD_SOFT_BREAKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_HARD_SOFT_BREAKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>foo<br>",
@@ -1297,13 +2359,667 @@ test_that("spec-hard-soft-breaks - Ex 2 (L18-27) - Hard Soft Breaks", {
     ),
     flags = c(
       "MD_FLAG_HARD_SOFT_BREAKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_HARD_SOFT_BREAKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>A quote from the CommonMark Spec below:</p>",
       "<p>A renderer may also provide an option to<br>",
       "render soft line breaks as hard line breaks.</p>"
+    )
+  )
+})
+
+# spec-highlight -------------------------------
+
+test_that("spec-highlight - Ex 1 (L12-16) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "==Hello, world!==\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><mark>Hello, world!</mark></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 2 (L22-26) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "This is ==very important== text.\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>This is <mark>very important</mark> text.</p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 3 (L32-36) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "==first== and ==second==\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><mark>first</mark> and <mark>second</mark></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 4 (L45-48) - Flag required", {
+  expect_identical_html(
+    md = c(
+      "==highlight==\n"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>==highlight==</p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 5 (L57-61) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "==very *important* text==\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><mark>very <em>important</em> text</mark></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 6 (L67-71) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "==**bold** and _italic_==\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><mark><strong>bold</strong> and <em>italic</em></mark></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 7 (L77-81) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "==highlighted `code`==\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><mark>highlighted <code>code</code></mark></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 8 (L87-91) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "==highlighted [link](http://example.com)==\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><mark>highlighted <a href=\"http://example.com\">link</a></mark></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 9 (L97-101) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "[==highlighted link==](http://example.com)\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"http://example.com\"><mark>highlighted link</mark></a></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 10 (L111-115) - Whitespace rules", {
+  expect_identical_html(
+    md = c(
+      "== highlight==\n"
+    ), flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>== highlight==</p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 11 (L122-126) - Whitespace rules", {
+  expect_identical_html(
+    md = c(
+      "==highlight ==\n"
+    ), flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>==highlight ==</p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 12 (L135-139) - Delimiter length", {
+  expect_identical_html(
+    md = c(
+      "=highlight=\n"
+    ), flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>=highlight=</p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 13 (L145-149) - Delimiter length", {
+  expect_identical_html(
+    md = c(
+      "===highlight===\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>===highlight===</p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 14 (L158-162) - Unmatched delimiters", {
+  expect_identical_html(
+    md = c(
+      "==highlight\n"
+    ), flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>==highlight</p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 15 (L168-172) - Unmatched delimiters", {
+  expect_identical_html(
+    md = c(
+      "highlight==\n"
+    ), flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>highlight==</p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 16 (L181-188) - Paragraph boundary stops resolution", {
+  expect_identical_html(
+    md = c(
+      "This ==has a", "",
+      "new paragraph==."
+    ), flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>This ==has a</p>",
+      "<p>new paragraph==.</p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 17 (L197-201) - Suppression inside code", {
+  expect_identical_html(
+    md = c(
+      "`==code==`\n"
+    ), flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><code>==code==</code></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 18 (L207-214) - Suppression inside code", {
+  expect_identical_html(
+    md = c(
+      "```", "==code==", "```"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code>==code==",
+      "</code></pre>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 19 (L223-227) - Interaction with other extensions", {
+  expect_identical_html(
+    md = c(
+      "||==highlighted spoiler==||\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler><mark>highlighted spoiler</mark></x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 20 (L233-237) - Interaction with other extensions", {
+  expect_identical_html(
+    md = c(
+      "~~==highlighted deletion==~~\n"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><del><mark>highlighted deletion</mark></del></p>"
+    )
+  )
+})
+
+test_that("spec-highlight - Ex 21 (L243-256) - Interaction with other extensions", {
+  expect_identical_html(
+    md = c(
+      "| Feature | Status |",
+      "| --- | --- |",
+      "| Highlight | ==done== |"
+    ),
+    flags = c(
+      "MD_FLAG_HIGHLIGHT",
+      "MD_FLAG_TABLES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<table>",
+      "<thead>",
+      "<tr><th>Feature</th><th>Status</th></tr>",
+      "</thead>", "<tbody>",
+      "<tr><td>Highlight</td><td><mark>done</mark></td></tr>",
+      "</tbody>", "</table>"
+    )
+  )
+})
+
+# spec-insert -------------------------------
+
+test_that("spec-insert - Ex 1 (L12-16) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "++Hello, world!++\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><ins>Hello, world!</ins></p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 2 (L22-26) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "++first++ and ++second++\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><ins>first</ins> and <ins>second</ins></p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 3 (L32-36) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "colo++u++r\n"
+    ), flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>colo<ins>u</ins>r</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 4 (L45-48) - Opt-in behavior / Flag required", {
+  expect_identical_html(
+    md = c(
+      "++insert++\n"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>++insert++</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 5 (L57-61) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "++very *important* text++\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><ins>very <em>important</em> text</ins></p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 6 (L67-71) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "++**bold** and _italic_++\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><ins><strong>bold</strong> and <em>italic</em></ins></p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 7 (L77-81) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "++inserted `code`++\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><ins>inserted <code>code</code></ins></p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 8 (L87-91) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "++inserted [link](http://example.com)++\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><ins>inserted <a href=\"http://example.com\">link</a></ins></p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 9 (L97-101) - Nested inline spans", {
+  expect_identical_html(
+    md = c(
+      "[inserted ++text++](http://example.com)\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"http://example.com\">inserted <ins>text</ins></a></p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 10 (L111-115) - Whitespace rules", {
+  expect_identical_html(
+    md = c(
+      "++ insert++\n"
+    ), flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>++ insert++</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 11 (L122-126) - Whitespace rules", {
+  expect_identical_html(
+    md = c(
+      "++insert ++\n"
+    ), flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>++insert ++</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 12 (L135-139) - Delimiter length", {
+  expect_identical_html(
+    md = c(
+      "+insert+\n"
+    ), flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>+insert+</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 13 (L145-149) - Delimiter length", {
+  expect_identical_html(
+    md = c(
+      "+++insert+++\n"
+    ), flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>+++insert+++</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 14 (L158-162) - Unmatched delimiters", {
+  expect_identical_html(
+    md = c(
+      "++insert\n"
+    ), flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>++insert</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 15 (L168-172) - Unmatched delimiters", {
+  expect_identical_html(
+    md = c(
+      "insert++\n"
+    ), flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>insert++</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 16 (L179-183) - Unmatched delimiters", {
+  expect_identical_html(
+    md = c(
+      "This ++text+++ is curious.\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>This ++text+++ is curious.</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 17 (L192-199) - Paragraph boundary stops resolution", {
+  expect_identical_html(
+    md = c(
+      "This ++has a", "",
+      "new paragraph++."
+    ), flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>This ++has a</p>",
+      "<p>new paragraph++.</p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 18 (L208-212) - Suppression inside code", {
+  expect_identical_html(
+    md = c(
+      "`++code++`\n"
+    ), flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><code>++code++</code></p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 19 (L218-225) - Suppression inside code", {
+  expect_identical_html(
+    md = c(
+      "```", "++code++", "```"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code>++code++",
+      "</code></pre>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 20 (L234-247) - Interaction with other extensions", {
+  expect_identical_html(
+    md = c(
+      "| Feature | Status |",
+      "| --- | --- |",
+      "| Insert | ++done++ |"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_FLAG_TABLES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<table>",
+      "<thead>",
+      "<tr><th>Feature</th><th>Status</th></tr>",
+      "</thead>", "<tbody>",
+      "<tr><td>Insert</td><td><ins>done</ins></td></tr>",
+      "</tbody>", "</table>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 21 (L255-259) - Spoilers (requires `MD_FLAG_SPOILERS`)", {
+  expect_identical_html(
+    md = c(
+      "||++inserted spoiler++||\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler><ins>inserted spoiler</ins></x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-insert - Ex 22 (L265-269) - Spoilers (requires `MD_FLAG_SPOILERS`)", {
+  expect_identical_html(
+    md = c(
+      "++||inserted spoiler||++\n"
+    ),
+    flags = c(
+      "MD_FLAG_INSERT",
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><ins><x-spoiler>inserted spoiler</x-spoiler></ins></p>"
     )
   )
 })
@@ -1317,8 +3033,7 @@ test_that("spec-latex-math - Ex 1 (L11-15) - LaTeX Math", {
     ),
     flags = c(
       "MD_FLAG_LATEXMATHSPANS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_LATEXMATHSPANS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-equation>a+b=c</x-equation> Hello, world!</p>"
@@ -1333,8 +3048,7 @@ test_that("spec-latex-math - Ex 2 (L21-25) - LaTeX Math", {
     ),
     flags = c(
       "MD_FLAG_LATEXMATHSPANS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_LATEXMATHSPANS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>$$foo <x-equation>bar</x-equation> baz$$</p>"
@@ -1348,8 +3062,7 @@ test_that("spec-latex-math - Ex 3 (L31-35) - LaTeX Math", {
       "x$a+b=c$\n"
     ), flags = c(
       "MD_FLAG_LATEXMATHSPANS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_LATEXMATHSPANS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>x$a+b=c$</p>"
@@ -1363,8 +3076,7 @@ test_that("spec-latex-math - Ex 4 (L41-45) - LaTeX Math", {
       "$a+b=c$x\n"
     ), flags = c(
       "MD_FLAG_LATEXMATHSPANS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_LATEXMATHSPANS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>$a+b=c$x</p>"
@@ -1379,8 +3091,7 @@ test_that("spec-latex-math - Ex 5 (L51-55) - LaTeX Math", {
     ),
     flags = c(
       "MD_FLAG_LATEXMATHSPANS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_LATEXMATHSPANS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>This is a display equation: <x-equation type=\"display\">\\int_a^b x dx</x-equation>.</p>"
@@ -1395,8 +3106,7 @@ test_that("spec-latex-math - Ex 6 (L61-68) - LaTeX Math", {
       "f(x) dx", "$$"
     ), flags = c(
       "MD_FLAG_LATEXMATHSPANS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_LATEXMATHSPANS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-equation type=\"display\"> \\int_a^b f(x) dx </x-equation></p>"
@@ -1413,12 +3123,7 @@ test_that("spec-permissive-autolinks - Ex 1 (L8-12) - Permissive Autolinks", {
       "<https://example.com>"
     ),
     flags = c(
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><a href=\"mailto:john.doe@example.com\">mailto:john.doe@example.com</a>",
@@ -1437,12 +3142,7 @@ test_that("spec-permissive-autolinks - Ex 2 (L22-32) - Permissive Autolinks", {
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
       "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><a href=\"mailto:john.doe@example.com\">john.doe@example.com</a>",
@@ -1462,12 +3162,7 @@ test_that("spec-permissive-autolinks - Ex 3 (L47-57) - Permissive Autolinks", {
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
       "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>:john.doe@example.com",
@@ -1487,12 +3182,7 @@ test_that("spec-permissive-autolinks - Ex 4 (L64-74) - Permissive Autolinks", {
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
       "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>[<a href=\"mailto:john.doe@example.com\">john.doe@example.com</a>",
@@ -1512,12 +3202,7 @@ test_that("spec-permissive-autolinks - Ex 5 (L80-90) - Permissive Autolinks", {
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
       "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><a href=\"mailto:john.doe@example.com\">john.doe@example.com</a>]",
@@ -1534,12 +3219,7 @@ test_that("spec-permissive-autolinks - Ex 6 (L98-102) - Permissive Autolinks", {
     ),
     flags = c(
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>Have you ever visited <a href=\"http://zombo.com\">http://zombo.com</a>?</p>"
@@ -1554,12 +3234,7 @@ test_that("spec-permissive-autolinks - Ex 7 (L109-113) - Permissive Autolinks", 
     ),
     flags = c(
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>You may contact me at <strong><a href=\"mailto:john.doe@example.com\">john.doe@example.com</a></strong>.</p>"
@@ -1575,12 +3250,7 @@ test_that("spec-permissive-autolinks - Ex 8 (L120-127) - Permissive Autolinks", 
     ),
     flags = c(
       "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>*john.doe@example.com</p>",
@@ -1599,12 +3269,7 @@ test_that("spec-permissive-autolinks - Ex 9 (L140-151) - Permissive URL Autolink
     ),
     flags = c(
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><a href=\"https://example.com\">https://example.com</a>",
@@ -1622,12 +3287,7 @@ test_that("spec-permissive-autolinks - Ex 10 (L166-170) - Permissive URL Autolin
     ),
     flags = c(
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><a href=\"https://example.com/images/branding/logo_272x92.png\">https://example.com/images/branding/logo_272x92.png</a></p>"
@@ -1642,12 +3302,7 @@ test_that("spec-permissive-autolinks - Ex 11 (L179-183) - Permissive URL Autolin
     ),
     flags = c(
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><a href=\"https://www.google.com/search?q=md4c+markdown\">https://www.google.com/search?q=md4c+markdown</a></p>"
@@ -1662,12 +3317,7 @@ test_that("spec-permissive-autolinks - Ex 12 (L189-193) - Permissive URL Autolin
     ),
     flags = c(
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><a href=\"https://example.com#fragment\">https://example.com#fragment</a></p>"
@@ -1685,12 +3335,7 @@ test_that("spec-permissive-autolinks - Ex 13 (L199-209) - Permissive URL Autolin
     ),
     flags = c(
       "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><a href=\"http://commonmark.org\">http://commonmark.org</a></p>",
@@ -1707,15 +3352,796 @@ test_that("spec-permissive-autolinks - Ex 14 (L220-224) - Permissive WWW Autolin
     ),
     flags = c(
       "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS",
-      "MD_FLAG_PERMISSIVEURLAUTOLINKS",
-      "MD_FLAG_PERMISSIVEWWWAUTOLINKS",
-      "MD_FLAG_PERMISSIVEEMAILAUTOLINKS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><a href=\"http://www.google.com/search?q=Markdown\">www.google.com/search?q=Markdown</a></p>"
+    )
+  )
+})
+
+# spec-preserve-blank-lines -------------------------------
+
+test_that("spec-preserve-blank-lines - Ex 1 (L23-34) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "Paragraph one.", "", "",
+      "", "Paragraph two."
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>Paragraph one.</p>",
+      "<br>", "<br>",
+      "<p>Paragraph two.</p>"
+    )
+  )
+})
+
+test_that("spec-preserve-blank-lines - Ex 2 (L43-50) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "foo", "", "bar"
+    ), flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>foo</p>",
+      "<p>bar</p>"
+    )
+  )
+})
+
+test_that("spec-preserve-blank-lines - Ex 3 (L56-63) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "", "", "foo"
+    ), flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<br>",
+      "<p>foo</p>"
+    )
+  )
+})
+
+test_that("spec-preserve-blank-lines - Ex 4 (L69-76) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "foo", "", "", ""
+    ), flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>foo</p>",
+      "<br>"
+    )
+  )
+})
+
+test_that("spec-preserve-blank-lines - Ex 5 (L82-93) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "foo", "", "", "> quote"
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>foo</p>",
+      "<br>", "<blockquote>",
+      "<p>quote</p>",
+      "</blockquote>"
+    )
+  )
+})
+
+test_that("spec-preserve-blank-lines - Ex 6 (L99-110) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "> foo", ">", ">", "> bar"
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<blockquote>",
+      "<p>foo</p>", "<br>",
+      "<p>bar</p>",
+      "</blockquote>"
+    )
+  )
+})
+
+test_that("spec-preserve-blank-lines - Ex 7 (L118-130) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "> foo", ">", ">", "",
+      "bar"
+    ), flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<blockquote>",
+      "<p>foo</p>", "<br>",
+      "</blockquote>",
+      "<p>bar</p>"
+    )
+  )
+})
+
+test_that("spec-preserve-blank-lines - Ex 8 (L136-149) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "> foo", "", "", "> bar"
+    ),
+    flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<blockquote>",
+      "<p>foo</p>",
+      "</blockquote>", "<br>",
+      "<blockquote>",
+      "<p>bar</p>",
+      "</blockquote>"
+    )
+  )
+})
+
+test_that("spec-preserve-blank-lines - Ex 9 (L156-171) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "```", "foo", "", "", "",
+      "bar", "```"
+    ), flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code>foo",
+      "", "", "", "bar",
+      "</code></pre>"
+    )
+  )
+})
+
+test_that("spec-preserve-blank-lines - Ex 10 (L177-188) - Preserve blank lines", {
+  expect_identical_html(
+    md = c(
+      "    foo", "", "",
+      "    bar"
+    ), flags = c(
+      "MD_FLAG_PRESERVEBLANKLINES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code>foo",
+      "", "", "bar",
+      "</code></pre>"
+    )
+  )
+})
+
+# spec-spoilers -------------------------------
+
+test_that("spec-spoilers - Ex 1 (L17-21) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "||Hello, world!||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler>Hello, world!</x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 2 (L27-31) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "This is normal text with ||hidden content|| revealed here.\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>This is normal text with <x-spoiler>hidden content</x-spoiler> revealed here.</p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 3 (L37-41) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "||first|| and ||second||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler>first</x-spoiler> and <x-spoiler>second</x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 4 (L47-51) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "||entire paragraph is a spoiler||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler>entire paragraph is a spoiler</x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 5 (L60-63) - Flag required", {
+  expect_identical_html(
+    md = c(
+      "||hidden||\n"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>||hidden||</p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 6 (L72-76) - Nested inline spans inside a spoiler", {
+  expect_identical_html(
+    md = c(
+      "||nested *emphasis*||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler>nested <em>emphasis</em></x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 7 (L82-86) - Nested inline spans inside a spoiler", {
+  expect_identical_html(
+    md = c(
+      "||**bold** and _italic_ together||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler><strong>bold</strong> and <em>italic</em> together</x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 8 (L92-96) - Nested inline spans inside a spoiler", {
+  expect_identical_html(
+    md = c(
+      "||spoiler with `code`||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler>spoiler with <code>code</code></x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 9 (L102-106) - Nested inline spans inside a spoiler", {
+  expect_identical_html(
+    md = c(
+      "||spoiler with [a link](http://example.com)||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler>spoiler with <a href=\"http://example.com\">a link</a></x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 10 (L112-116) - Nested inline spans inside a spoiler", {
+  expect_identical_html(
+    md = c(
+      "||~~strikethrough inside spoiler~~||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler><del>strikethrough inside spoiler</del></x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 11 (L122-126) - Nested inline spans inside a spoiler", {
+  expect_identical_html(
+    md = c(
+      "~~del with ||spoiler|| inside~~\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><del>del with <x-spoiler>spoiler</x-spoiler> inside</del></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 12 (L135-139) - Suppression inside code spans and code blocks", {
+  expect_identical_html(
+    md = c(
+      "`code with ||pipes||`\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><code>code with ||pipes||</code></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 13 (L145-152) - Suppression inside code spans and code blocks", {
+  expect_identical_html(
+    md = c(
+      "```", "||not a spoiler||",
+      "```"
+    ), flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code>||not a spoiler||",
+      "</code></pre>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 14 (L158-163) - Suppression inside code spans and code blocks", {
+  expect_identical_html(
+    md = c(
+      "    ||not a spoiler||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<pre><code>||not a spoiler||",
+      "</code></pre>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 15 (L172-176) - Unmatched delimiters", {
+  expect_identical_html(
+    md = c(
+      "||unclosed spoiler\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>||unclosed spoiler</p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 16 (L182-186) - Unmatched delimiters", {
+  expect_identical_html(
+    md = c(
+      "unclosed spoiler||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>unclosed spoiler||</p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 17 (L196-200) - Backslash escaping", {
+  expect_identical_html(
+    md = c(
+      "\\||not a spoiler||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>||not a spoiler||</p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 18 (L209-216) - Paragraph boundary", {
+  expect_identical_html(
+    md = c(
+      "||starts here", "",
+      "ends here||"
+    ), flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>||starts here</p>",
+      "<p>ends here||</p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 19 (L225-231) - Soft line break inside a spoiler", {
+  expect_identical_html(
+    md = c(
+      "||multi", "line spoiler||"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler>multi",
+      "line spoiler</x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 20 (L240-244) - Empty spoiler", {
+  expect_identical_html(
+    md = c(
+      "||||\n"
+    ), flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>||||</p>")
+  )
+})
+
+test_that("spec-spoilers - Ex 21 (L250-254) - Empty spoiler", {
+  expect_identical_html(
+    md = c(
+      "||\\|||\n"
+    ), flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler>|</x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 22 (L263-267) - ATX headings", {
+  expect_identical_html(
+    md = c(
+      "# ||heading spoiler||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<h1><x-spoiler>heading spoiler</x-spoiler></h1>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 23 (L271-275) - ATX headings", {
+  expect_identical_html(
+    md = c(
+      "## ||level two||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<h2><x-spoiler>level two</x-spoiler></h2>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 24 (L281-287) - Block quotes", {
+  expect_identical_html(
+    md = c(
+      "> ||hidden in a quote||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<blockquote>",
+      "<p><x-spoiler>hidden in a quote</x-spoiler></p>",
+      "</blockquote>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 25 (L293-301) - Block quotes", {
+  expect_identical_html(
+    md = c(
+      "> > ||nested quote spoiler||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<blockquote>",
+      "<blockquote>",
+      "<p><x-spoiler>nested quote spoiler</x-spoiler></p>",
+      "</blockquote>",
+      "</blockquote>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 26 (L307-315) - Unordered lists", {
+  expect_identical_html(
+    md = c(
+      "- ||list item spoiler||",
+      "- normal item"
+    ), flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<ul>",
+      "<li><x-spoiler>list item spoiler</x-spoiler></li>",
+      "<li>normal item</li>",
+      "</ul>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 27 (L321-329) - Ordered lists", {
+  expect_identical_html(
+    md = c(
+      "1. ||first item||",
+      "2. normal item"
+    ), flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<ol>",
+      "<li><x-spoiler>first item</x-spoiler></li>",
+      "<li>normal item</li>",
+      "</ol>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 28 (L335-343) - Task lists (requires `MD_FLAG_TASKLISTS`)", {
+  expect_identical_html(
+    md = c(
+      "- [ ] ||task item spoiler||",
+      "- [x] done"
+    ), flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_FLAG_TASKLISTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<ul>",
+      "<li class=\"task-list-item\"><input type=\"checkbox\" class=\"task-list-item-checkbox\" disabled><x-spoiler>task item spoiler</x-spoiler></li>",
+      "<li class=\"task-list-item\"><input type=\"checkbox\" class=\"task-list-item-checkbox\" disabled checked>done</li>",
+      "</ul>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 29 (L361-380) - Tables (requires `MD_FLAG_TABLES`)", {
+  expect_identical_html(
+    md = c(
+      "| A | B |", "|---|---|",
+      "| ||spoiler|| | baz |"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_FLAG_TABLES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<table>",
+      "<thead>", "<tr>",
+      "<th>A</th>", "<th>B</th>",
+      "</tr>", "</thead>",
+      "<tbody>", "<tr>",
+      "<td><x-spoiler>spoiler</x-spoiler></td>",
+      "<td>baz</td>", "</tr>",
+      "</tbody>", "</table>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 30 (L387-412) - Tables (requires `MD_FLAG_TABLES`)", {
+  expect_identical_html(
+    md = c(
+      "| A | B | C | D | E |",
+      "|---|---|---|---|---|",
+      "| a     ||c||     e |"
+    ),
+    flags = c(
+      "MD_FLAG_TABLES",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<table>",
+      "<thead>", "<tr>",
+      "<th>A</th>", "<th>B</th>",
+      "<th>C</th>", "<th>D</th>",
+      "<th>E</th>", "</tr>",
+      "</thead>", "<tbody>",
+      "<tr>", "<td>a</td>",
+      "<td></td>", "<td>c</td>",
+      "<td></td>", "<td>e</td>",
+      "</tr>", "</tbody>",
+      "</table>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 31 (L422-426) - Wiki-links (requires `MD_FLAG_WIKILINKS`)", {
+  expect_identical_html(
+    md = c(
+      "[[target|display with ||spoiler||]]\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_FLAG_WIKILINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-wikilink data-target=\"target\">display with <x-spoiler>spoiler</x-spoiler></x-wikilink></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 32 (L433-437) - Wiki-links (requires `MD_FLAG_WIKILINKS`)", {
+  expect_identical_html(
+    md = c(
+      "[[a||b|label with ||spoiler||]]\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_FLAG_WIKILINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-wikilink data-target=\"a||b\">label with <x-spoiler>spoiler</x-spoiler></x-wikilink></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 33 (L445-449) - Wiki-links (requires `MD_FLAG_WIKILINKS`)", {
+  expect_identical_html(
+    md = c(
+      "[[dest|||spoiler||]]\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_FLAG_WIKILINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-wikilink data-target=\"dest|||spoiler||\">dest|||spoiler||</x-wikilink></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 34 (L455-459) - Wiki-links (requires `MD_FLAG_WIKILINKS`)", {
+  expect_identical_html(
+    md = c(
+      "||[link](http://example.com) inside spoiler||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler><a href=\"http://example.com\">link</a> inside spoiler</x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 35 (L463-467) - Wiki-links (requires `MD_FLAG_WIKILINKS`)", {
+  expect_identical_html(
+    md = c(
+      "||![img](http://example.com/img.png) inside spoiler||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler><img src=\"http://example.com/img.png\" alt=\"img\"> inside spoiler</x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 36 (L471-475) - Wiki-links (requires `MD_FLAG_WIKILINKS`)", {
+  expect_identical_html(
+    md = c(
+      "||*em* inside spoiler||\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler><em>em</em> inside spoiler</x-spoiler></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 37 (L481-485) - Wiki-links (requires `MD_FLAG_WIKILINKS`)", {
+  expect_identical_html(
+    md = c(
+      "[[foo|bar]]\n"
+    ), flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_FLAG_WIKILINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-wikilink data-target=\"foo\">bar</x-wikilink></p>"
+    )
+  )
+})
+
+test_that("spec-spoilers - Ex 38 (L491-495) - Wiki-links (requires `MD_FLAG_WIKILINKS`)", {
+  expect_identical_html(
+    md = c(
+      "[[foo|bar|baz]]\n"
+    ),
+    flags = c(
+      "MD_FLAG_SPOILERS",
+      "MD_FLAG_WIKILINKS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-wikilink data-target=\"foo\">bar|baz</x-wikilink></p>"
     )
   )
 })
@@ -1729,8 +4155,7 @@ test_that("spec-strikethrough - Ex 1 (L10-14) - Strike-Through", {
     ),
     flags = c(
       "MD_FLAG_STRIKETHROUGH",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_STRIKETHROUGH"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><del>Hi</del> Hello, world!</p>"
@@ -1745,8 +4170,7 @@ test_that("spec-strikethrough - Ex 2 (L21-25) - Strike-Through", {
     ),
     flags = c(
       "MD_FLAG_STRIKETHROUGH",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_STRIKETHROUGH"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>This ~text~~ is curious.</p>"
@@ -1760,8 +4184,7 @@ test_that("spec-strikethrough - Ex 3 (L31-35) - Strike-Through", {
       "foo ~~~bar~~~\n"
     ), flags = c(
       "MD_FLAG_STRIKETHROUGH",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_STRIKETHROUGH"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>foo ~~~bar~~~</p>"
@@ -1775,8 +4198,7 @@ test_that("spec-strikethrough - Ex 4 (L43-47) - Strike-Through", {
       "~foo ~bar\n"
     ), flags = c(
       "MD_FLAG_STRIKETHROUGH",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_STRIKETHROUGH"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>~foo ~bar</p>"
@@ -1791,12 +4213,389 @@ test_that("spec-strikethrough - Ex 5 (L55-62) - Strike-Through", {
       "new paragraph~~."
     ), flags = c(
       "MD_FLAG_STRIKETHROUGH",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_STRIKETHROUGH"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>This ~~has a</p>",
       "<p>new paragraph~~.</p>"
+    )
+  )
+})
+
+# spec-subscripts -------------------------------
+
+test_that("spec-subscripts - Ex 1 (L12-16) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "H~2~O\n"
+    ), flags = c(
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>H<sub>2</sub>O</p>"
+    )
+  )
+})
+
+test_that("spec-subscripts - Ex 2 (L22-26) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "log~2~x\n"
+    ), flags = c(
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>log<sub>2</sub>x</p>"
+    )
+  )
+})
+
+test_that("spec-subscripts - Ex 3 (L32-36) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "[H~2~O](http://example.com)\n"
+    ),
+    flags = c(
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><a href=\"http://example.com\">H<sub>2</sub>O</a></p>"
+    )
+  )
+})
+
+test_that("spec-subscripts - Ex 4 (L45-49) - Opt-in behavior", {
+  expect_identical_html(
+    md = c(
+      "H~2~O\n"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>H~2~O</p>")
+  )
+})
+
+test_that("spec-subscripts - Ex 5 (L58-62) - Whitespace rules", {
+  expect_identical_html(
+    md = c(
+      "H~ 2~O\n"
+    ), flags = c(
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>H~ 2~O</p>")
+  )
+})
+
+test_that("spec-subscripts - Ex 6 (L68-72) - Whitespace rules", {
+  expect_identical_html(
+    md = c(
+      "H~2 ~O\n"
+    ), flags = c(
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>H~2 ~O</p>")
+  )
+})
+
+test_that("spec-subscripts - Ex 7 (L78-82) - Whitespace rules", {
+  expect_identical_html(
+    md = c(
+      "~2~\n"
+    ), flags = c(
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><sub>2</sub></p>"
+    )
+  )
+})
+
+test_that("spec-subscripts - Ex 8 (L91-95) - Code spans suppress markers", {
+  expect_identical_html(
+    md = c(
+      "`H~2~O`\n"
+    ), flags = c(
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><code>H~2~O</code></p>"
+    )
+  )
+})
+
+test_that("spec-subscripts - Ex 9 (L105-109) - Double tilde is not subscript", {
+  expect_identical_html(
+    md = c(
+      "~~old~~\n"
+    ), flags = c(
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>~~old~~</p>")
+  )
+})
+
+test_that("spec-subscripts - Ex 10 (L119-123) - Interaction with `MD_FLAG_STRIKETHROUGH`", {
+  expect_identical_html(
+    md = c(
+      "~text~\n"
+    ), flags = c(
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><del>text</del></p>"
+    )
+  )
+})
+
+test_that("spec-subscripts - Ex 11 (L130-134) - Interaction with `MD_FLAG_STRIKETHROUGH`", {
+  expect_identical_html(
+    md = c(
+      "~~text~~\n"
+    ), flags = c(
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><del>text</del></p>"
+    )
+  )
+})
+
+test_that("spec-subscripts - Ex 12 (L141-145) - Interaction with `MD_FLAG_STRIKETHROUGH`", {
+  expect_identical_html(
+    md = c(
+      "H~2~O and ~~old~~\n"
+    ),
+    flags = c(
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_FLAG_STRIKETHROUGH",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>H<sub>2</sub>O and <del>old</del></p>"
+    )
+  )
+})
+
+# spec-superscripts -------------------------------
+
+test_that("spec-superscripts - Ex 1 (L12-16) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "x^2^\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>x<sup>2</sup></p>"
+    )
+  )
+})
+
+test_that("spec-superscripts - Ex 2 (L22-26) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "foo^bar^\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>foo<sup>bar</sup></p>"
+    )
+  )
+})
+
+test_that("spec-superscripts - Ex 3 (L32-36) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "_x^2^_\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><em>x<sup>2</sup></em></p>"
+    )
+  )
+})
+
+test_that("spec-superscripts - Ex 4 (L42-46) - Basic recognition", {
+  expect_identical_html(
+    md = c(
+      "**x^2^**\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><strong>x<sup>2</sup></strong></p>"
+    )
+  )
+})
+
+test_that("spec-superscripts - Ex 5 (L55-59) - Opt-in behavior", {
+  expect_identical_html(
+    md = c(
+      "x^2^\n"
+    ), flags = c(
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>x^2^</p>")
+  )
+})
+
+test_that("spec-superscripts - Ex 6 (L68-72) - Whitespace rules", {
+  expect_identical_html(
+    md = c(
+      "x^ 2^\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>x^ 2^</p>")
+  )
+})
+
+test_that("spec-superscripts - Ex 7 (L78-82) - Whitespace rules", {
+  expect_identical_html(
+    md = c(
+      "x^2 ^\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>x^2 ^</p>")
+  )
+})
+
+test_that("spec-superscripts - Ex 8 (L91-95) - Longer caret runs are literal", {
+  expect_identical_html(
+    md = c(
+      "x^^y^^\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>x^^y^^</p>")
+  )
+})
+
+test_that("spec-superscripts - Ex 9 (L104-111) - Paragraph boundary stops resolution", {
+  expect_identical_html(
+    md = c(
+      "x^", "", "2^"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>x^</p>",
+      "<p>2^</p>"
+    )
+  )
+})
+
+test_that("spec-superscripts - Ex 10 (L120-124) - Code spans suppress markers", {
+  expect_identical_html(
+    md = c(
+      "`x^2^`\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><code>x^2^</code></p>"
+    )
+  )
+})
+
+test_that("spec-superscripts - Ex 11 (L132-136) - Code spans suppress markers", {
+  expect_identical_html(
+    md = c(
+      "^2^\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><sup>2</sup></p>"
+    )
+  )
+})
+
+test_that("spec-superscripts - Ex 12 (L143-147) - Code spans suppress markers", {
+  expect_identical_html(
+    md = c(
+      "^ x\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>^ x</p>")
+  )
+})
+
+test_that("spec-superscripts - Ex 13 (L156-160) - Unmatched delimiters are literal", {
+  expect_identical_html(
+    md = c(
+      "x^2\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>x^2</p>")
+  )
+})
+
+test_that("spec-superscripts - Ex 14 (L166-170) - Unmatched delimiters are literal", {
+  expect_identical_html(
+    md = c(
+      "x2^\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c("<p>x2^</p>")
+  )
+})
+
+test_that("spec-superscripts - Ex 15 (L181-185) - Subscripts (requires `MD_FLAG_SUBSCRIPTS`)", {
+  expect_identical_html(
+    md = c(
+      "x^a~b~^\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_FLAG_SUBSCRIPTS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p>x<sup>a<sub>b</sub></sup></p>"
+    )
+  )
+})
+
+test_that("spec-superscripts - Ex 16 (L193-197) - Spoilers (requires `MD_FLAG_SPOILERS`)", {
+  expect_identical_html(
+    md = c(
+      "||x^2^||\n"
+    ), flags = c(
+      "MD_FLAG_SUPERSCRIPTS",
+      "MD_FLAG_SPOILERS",
+      "MD_DIALECT_COMMONMARK"
+    ),
+    expected = c(
+      "<p><x-spoiler>x<sup>2</sup></x-spoiler></p>"
     )
   )
 })
@@ -1814,8 +4613,7 @@ test_that("spec-tables - Ex 1 (L11-28) - Tables", {
     ),
     flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -1841,8 +4639,7 @@ test_that("spec-tables - Ex 2 (L34-51) - Tables", {
     ),
     flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -1868,8 +4665,7 @@ test_that("spec-tables - Ex 3 (L55-72) - Tables", {
     ),
     flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -1894,8 +4690,7 @@ test_that("spec-tables - Ex 4 (L76-93) - Tables", {
       "quux     | quuz"
     ), flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -1918,8 +4713,7 @@ test_that("spec-tables - Ex 5 (L101-112) - Tables", {
     ),
     flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<h2>Column 1</h2>",
@@ -1937,8 +4731,7 @@ test_that("spec-tables - Ex 6 (L119-136) - Tables", {
     ),
     flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -1964,8 +4757,7 @@ test_that("spec-tables - Ex 7 (L142-154) - Tables", {
       "| quux     | quuz"
     ),
     flags = c(
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>Lorem ipsum dolor sit amet.",
@@ -1990,8 +4782,7 @@ test_that("spec-tables - Ex 8 (L160-179) - Tables", {
     ),
     flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -2016,8 +4807,7 @@ test_that("spec-tables - Ex 9 (L187-200) - Tables", {
     ),
     flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -2040,8 +4830,7 @@ test_that("spec-tables - Ex 10 (L206-223) - Tables", {
       "quux     | quuz"
     ), flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -2067,8 +4856,7 @@ test_that("spec-tables - Ex 11 (L230-249) - Tables", {
       "", "[qux]: /url"
     ), flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -2093,8 +4881,7 @@ test_that("spec-tables - Ex 12 (L256-273) - Tables", {
       "quux     | quuz"
     ), flags = c(
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -2118,8 +4905,7 @@ test_that("spec-tasklists - Ex 1 (L10-20) - Tasklists", {
       " * [ ] baz"
     ), flags = c(
       "MD_FLAG_TASKLISTS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TASKLISTS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<ul>",
@@ -2139,8 +4925,7 @@ test_that("spec-tasklists - Ex 2 (L26-36) - Tasklists", {
       " 3. [ ] baz"
     ), flags = c(
       "MD_FLAG_TASKLISTS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TASKLISTS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<ol>",
@@ -2163,8 +4948,7 @@ test_that("spec-tasklists - Ex 3 (L42-66) - Tasklists", {
       "   * [ ] quuz"
     ), flags = c(
       "MD_FLAG_TASKLISTS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TASKLISTS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<ul>",
@@ -2195,8 +4979,7 @@ test_that("spec-tasklists - Ex 4 (L72-96) - Tasklists", {
       "    * [ ] quuz"
     ), flags = c(
       "MD_FLAG_TASKLISTS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TASKLISTS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<ol>",
@@ -2226,8 +5009,7 @@ test_that("spec-tasklists - Ex 5 (L102-126) - Tasklists", {
     ),
     flags = c(
       "MD_FLAG_TASKLISTS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_TASKLISTS"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<ul>",
@@ -2253,8 +5035,7 @@ test_that("spec-underline - Ex 1 (L9-13) - Underline", {
       "_foo_\n"
     ), flags = c(
       "MD_FLAG_UNDERLINE",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_UNDERLINE"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><u>foo</u></p>"
@@ -2268,8 +5049,7 @@ test_that("spec-underline - Ex 2 (L20-24) - Underline", {
       "___foo___\n"
     ), flags = c(
       "MD_FLAG_UNDERLINE",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_UNDERLINE"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><u><u><u>foo</u></u></u></p>"
@@ -2283,8 +5063,7 @@ test_that("spec-underline - Ex 3 (L30-34) - Underline", {
       "foo_bar_baz\n"
     ), flags = c(
       "MD_FLAG_UNDERLINE",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_UNDERLINE"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>foo_bar_baz</p>"
@@ -2298,8 +5077,7 @@ test_that("spec-underline - Ex 4 (L42-46) - Underline", {
       "_foo _bar\n"
     ), flags = c(
       "MD_FLAG_UNDERLINE",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_UNDERLINE"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>_foo _bar</p>"
@@ -2315,9 +5093,7 @@ test_that("spec-wiki-links - Ex 1 (L10-14) - Wiki Links", {
       "[[foo]]\n"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo\">foo</x-wikilink></p>"
@@ -2331,9 +5107,7 @@ test_that("spec-wiki-links - Ex 2 (L21-25) - Wiki Links", {
       "[[foo|bar]]\n"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo\">bar</x-wikilink></p>"
@@ -2347,9 +5121,7 @@ test_that("spec-wiki-links - Ex 3 (L31-35) - Wiki Links", {
       "[[]]\n"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c("<p>[[]]</p>")
   )
@@ -2361,9 +5133,7 @@ test_that("spec-wiki-links - Ex 4 (L39-43) - Wiki Links", {
       "[[|foo]]\n"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>[[|foo]]</p>"
@@ -2377,9 +5147,7 @@ test_that("spec-wiki-links - Ex 5 (L50-56) - Wiki Links", {
       "[[foo", "bar]]"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>[[foo",
@@ -2395,9 +5163,7 @@ test_that("spec-wiki-links - Ex 6 (L60-66) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>[[foo",
@@ -2412,9 +5178,7 @@ test_that("spec-wiki-links - Ex 7 (L73-77) - Wiki Links", {
       "[[*foo*]]\n"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"*foo*\">*foo*</x-wikilink></p>"
@@ -2429,9 +5193,7 @@ test_that("spec-wiki-links - Ex 8 (L81-85) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo\"><img src=\"bar.jpg\" alt=\"bar\"></x-wikilink></p>"
@@ -2446,9 +5208,7 @@ test_that("spec-wiki-links - Ex 9 (L92-96) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo\">bar|baz</x-wikilink></p>"
@@ -2463,9 +5223,7 @@ test_that("spec-wiki-links - Ex 10 (L102-106) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo|bar\">baz</x-wikilink></p>"
@@ -2479,9 +5237,7 @@ test_that("spec-wiki-links - Ex 11 (L112-116) - Wiki Links", {
       "[[foo|*bar*]]\n"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo\"><em>bar</em></x-wikilink></p>"
@@ -2495,9 +5251,7 @@ test_that("spec-wiki-links - Ex 12 (L123-127) - Wiki Links", {
       "[[foo|]]\n"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo\">foo</x-wikilink></p>"
@@ -2512,9 +5266,7 @@ test_that("spec-wiki-links - Ex 13 (L133-141) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo\">foo",
@@ -2531,9 +5283,7 @@ test_that("spec-wiki-links - Ex 14 (L147-151) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo\">foo</x-wikilink>(foo.jpg)</p>"
@@ -2548,9 +5298,7 @@ test_that("spec-wiki-links - Ex 15 (L155-161) - Wiki Links", {
       "[[foo]]"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"foo\">foo</x-wikilink></p>"
@@ -2568,9 +5316,7 @@ test_that("spec-wiki-links - Ex 16 (L167-186) - Wiki Links", {
     flags = c(
       "MD_FLAG_WIKILINKS",
       "MD_FLAG_TABLES",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<table>",
@@ -2592,9 +5338,7 @@ test_that("spec-wiki-links - Ex 17 (L192-196) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><img src=\"foo.jpg\" alt=\"[foo]\"></p>"
@@ -2609,9 +5353,7 @@ test_that("spec-wiki-links - Ex 18 (L203-209) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>[<a href=\"/url\">foo</a></p>"
@@ -2626,9 +5368,7 @@ test_that("spec-wiki-links - Ex 19 (L216-222) - Wiki Links", {
       "[foo]: /url"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>[<a href=\"/url\">foo</a>]</p>"
@@ -2642,9 +5382,7 @@ test_that("spec-wiki-links - Ex 20 (L228-232) - Wiki Links", {
       "[[foo[[bar]]]]\n"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>[[foo<x-wikilink data-target=\"bar\">bar</x-wikilink>]]</p>"
@@ -2660,9 +5398,7 @@ test_that("spec-wiki-links - Ex 21 (L238-244) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p>[[12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901]]",
@@ -2679,9 +5415,7 @@ test_that("spec-wiki-links - Ex 22 (L250-256) - Wiki Links", {
     ),
     flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<p><x-wikilink data-target=\"1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890\">1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890</x-wikilink>",
@@ -2700,9 +5434,7 @@ test_that("spec-wiki-links - Ex 23 (L263-277) - Wiki Links", {
       "> 123456789]]"
     ), flags = c(
       "MD_FLAG_WIKILINKS",
-      "MD_DIALECT_COMMONMARK",
-      "MD_FLAG_WIKILINKS",
-      "MD_FLAG_TABLES"
+      "MD_DIALECT_COMMONMARK"
     ),
     expected = c(
       "<blockquote>",
@@ -4365,7 +7097,7 @@ test_that("spec - Ex 112 (L1837-1844) - Indented code blocks", {
 test_that("spec - Ex 113 (L1852-1857) - Indented code blocks", {
   expect_identical_html(
     md = c(
-      "Foo", "    bar", ""
+      "Foo", "    bar", "", ""
     ),
     flags = c(
       "MD_DIALECT_COMMONMARK"
@@ -4431,7 +7163,7 @@ test_that("spec - Ex 117 (L1912-1919) - Indented code blocks", {
   expect_identical_html(
     md = c(
       "", "    ", "    foo",
-      "    ", ""
+      "    ", "", ""
     ), flags = c(
       "MD_DIALECT_COMMONMARK"
     ),

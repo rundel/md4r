@@ -12,6 +12,10 @@
 #' @param href Used by `md_span_a` nodes to provide the `href` attribute.
 #' @param src Used by `md_span_img` nodes to provide the `src` attribute.
 #' @param target Used by `md_span_wikilink` nodes to provide the `target` attribute.
+#' @param label Used by `md_span_footnote_ref` nodes to provide the footnote label (e.g. `"1"` for `[^1]`).
+#' @param id Used by `md_span_footnote_ref` nodes to provide the 1-based number of the referenced footnote.
+#' @param ref_id Used by `md_span_footnote_ref` nodes to provide the 1-based index of this reference
+#' among all references to the same footnote.
 #'
 #' @returns Returns a list with a class of specified type along with `md_span` and `md_node`.
 #'
@@ -119,4 +123,60 @@ md_span_u = function(...) {
   nodes = list(...)
   checkmate::assert_list(nodes, types = "md_node", .var.name = "...")
   structure(nodes, class = c("md_span_u", "md_span", "md_node"))
+}
+
+#' @rdname md_span
+#' @export
+md_span_ins = function(...) {
+  nodes = list(...)
+  checkmate::assert_list(nodes, types = "md_node", .var.name = "...")
+  structure(nodes, class = c("md_span_ins", "md_span", "md_node"))
+}
+
+#' @rdname md_span
+#' @export
+md_span_spoiler = function(...) {
+  nodes = list(...)
+  checkmate::assert_list(nodes, types = "md_node", .var.name = "...")
+  structure(nodes, class = c("md_span_spoiler", "md_span", "md_node"))
+}
+
+#' @rdname md_span
+#' @export
+md_span_sup = function(...) {
+  nodes = list(...)
+  checkmate::assert_list(nodes, types = "md_node", .var.name = "...")
+  structure(nodes, class = c("md_span_sup", "md_span", "md_node"))
+}
+
+#' @rdname md_span
+#' @export
+md_span_sub = function(...) {
+  nodes = list(...)
+  checkmate::assert_list(nodes, types = "md_node", .var.name = "...")
+  structure(nodes, class = c("md_span_sub", "md_span", "md_node"))
+}
+
+#' @rdname md_span
+#' @export
+md_span_mark = function(...) {
+  nodes = list(...)
+  checkmate::assert_list(nodes, types = "md_node", .var.name = "...")
+  structure(nodes, class = c("md_span_mark", "md_span", "md_node"))
+}
+
+#' @rdname md_span
+#' @export
+md_span_footnote_ref = function(label, id = 1, ref_id = 1) {
+  checkmate::assert_character(label, len = 1, any.missing = FALSE)
+  checkmate::assert_integerish(id, len = 1, lower = 1, any.missing = FALSE)
+  checkmate::assert_integerish(ref_id, len = 1, lower = 1, any.missing = FALSE)
+
+  structure(
+    list(),
+    id = id,
+    ref_id = ref_id,
+    label = label,
+    class = c("md_span_footnote_ref", "md_span", "md_node")
+  )
 }

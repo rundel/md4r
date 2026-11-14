@@ -18,6 +18,10 @@
 \alias{md_block_tr}
 \alias{md_block_th}
 \alias{md_block_td}
+\alias{md_block_admonition}
+\alias{md_block_blank}
+\alias{md_block_footnote_def_section}
+\alias{md_block_footnote_def}
 \title{Tools for creating block nodes}
 \usage{
 md_block_doc(..., flags = "MD_DIALECT_COMMONMARK")
@@ -51,6 +55,17 @@ md_block_tr(...)
 md_block_th(..., align = c("default", "left", "center", "right"))
 
 md_block_td(..., align = c("default", "left", "center", "right"))
+
+md_block_admonition(
+  ...,
+  type = c("note", "tip", "important", "warning", "caution")
+)
+
+md_block_blank(line_count = 1)
+
+md_block_footnote_def_section(...)
+
+md_block_footnote_def(..., label, id = 1, ref_count = 1)
 }
 \arguments{
 \item{...}{Child nodes that will be contained within the block - all must inherit from \code{md_node}.}
@@ -86,6 +101,16 @@ Only \code{" "}, \code{"x"}, and \code{"X"} are allowed.}
 \item{head_row_count}{Used by \code{md_block_table} nodes to specify the number of header rows. Should only be \code{1}.}
 
 \item{align}{Used by \code{md_block_td} or \code{md_block_th} nodes to specify the alignment of the table contents.}
+
+\item{type}{Used by \code{md_block_admonition} nodes to specify the admonition type.}
+
+\item{line_count}{Used by \code{md_block_blank} nodes to specify the number of blank lines.}
+
+\item{label}{Used by \code{md_block_footnote_def} nodes to specify the footnote label.}
+
+\item{id}{Used by \code{md_block_footnote_def} nodes to specify the 1-based footnote number.}
+
+\item{ref_count}{Used by \code{md_block_footnote_def} nodes to specify the number of references to the footnote.}
 }
 \value{
 Returns a list with a class of specified type along with \code{md_span} and \code{md_node}.

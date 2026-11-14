@@ -193,6 +193,28 @@ int MarkdownParser::onEnterBlock(MD_BLOCKTYPE type, void* detail, void* userdata
     else if (d->align == MD_ALIGN_CENTER)  node.l.attr("align") = "center";
     else if (d->align == MD_ALIGN_RIGHT)   node.l.attr("align") = "right";
 
+  } else if (type == MD_BLOCK_FOOTNOTE_DEF_SECTION) {
+    block_class.push_back("md_block_footnote_def_section");
+  } else if (type == MD_BLOCK_FOOTNOTE_DEF) {
+    block_class.push_back("md_block_footnote_def");
+
+    MD_BLOCK_FOOTNOTE_DEF_DETAIL* d = static_cast<MD_BLOCK_FOOTNOTE_DEF_DETAIL *>(detail);
+    node.l.attr("id") = d->id;
+    node.l.attr("ref_count") = d->ref_count;
+    node.l.attr("label") = md_attr_str(d->label);
+
+  } else if (type == MD_BLOCK_ADMONITION) {
+    block_class.push_back("md_block_admonition");
+
+    MD_BLOCK_ADMONITION_DETAIL* d = static_cast<MD_BLOCK_ADMONITION_DETAIL *>(detail);
+    node.l.attr("type") = md_attr_str(d->type);
+
+  } else if (type == MD_BLOCK_BLANK) {
+    block_class.push_back("md_block_blank");
+
+    MD_BLOCK_BLANK_DETAIL* d = static_cast<MD_BLOCK_BLANK_DETAIL *>(detail);
+    node.l.attr("line_count") = d->line_count;
+
   } else {
     block_class.push_back("md_block_other");
   }
@@ -252,6 +274,24 @@ int MarkdownParser::onEnterSpan(MD_SPANTYPE type, void* detail, void* userdata) 
 
   } else if (type == MD_SPAN_U) {
     span_class.push_back("md_span_u");
+  } else if (type == MD_SPAN_INS) {
+    span_class.push_back("md_span_ins");
+  } else if (type == MD_SPAN_SPOILER) {
+    span_class.push_back("md_span_spoiler");
+  } else if (type == MD_SPAN_SUPERSCRIPT) {
+    span_class.push_back("md_span_sup");
+  } else if (type == MD_SPAN_SUBSCRIPT) {
+    span_class.push_back("md_span_sub");
+  } else if (type == MD_SPAN_MARK) {
+    span_class.push_back("md_span_mark");
+  } else if (type == MD_SPAN_FOOTNOTE_REF) {
+    span_class.push_back("md_span_footnote_ref");
+
+    MD_SPAN_FOOTNOTE_REF_DETAIL* d = static_cast<MD_SPAN_FOOTNOTE_REF_DETAIL *>(detail);
+    node.l.attr("id") = d->id;
+    node.l.attr("ref_id") = d->ref_id;
+    node.l.attr("label") = md_attr_str(d->label);
+
   } else {
     span_class.push_back("md_span_other");
   }
@@ -336,6 +376,14 @@ int flag_mask(std::vector<std::string> const& flags) {
     else if (flag == "MD_FLAG_WIKILINKS")                flag_val |= MD_FLAG_WIKILINKS;
     else if (flag == "MD_FLAG_UNDERLINE")                flag_val |= MD_FLAG_UNDERLINE;
     else if (flag == "MD_FLAG_HARD_SOFT_BREAKS")         flag_val |= MD_FLAG_HARD_SOFT_BREAKS;
+    else if (flag == "MD_FLAG_SPOILERS")                 flag_val |= MD_FLAG_SPOILERS;
+    else if (flag == "MD_FLAG_SUPERSCRIPTS")             flag_val |= MD_FLAG_SUPERSCRIPTS;
+    else if (flag == "MD_FLAG_SUBSCRIPTS")               flag_val |= MD_FLAG_SUBSCRIPTS;
+    else if (flag == "MD_FLAG_ADMONITIONS")              flag_val |= MD_FLAG_ADMONITIONS;
+    else if (flag == "MD_FLAG_FOOTNOTES")                flag_val |= MD_FLAG_FOOTNOTES;
+    else if (flag == "MD_FLAG_HIGHLIGHT")                flag_val |= MD_FLAG_HIGHLIGHT;
+    else if (flag == "MD_FLAG_PRESERVEBLANKLINES")       flag_val |= MD_FLAG_PRESERVEBLANKLINES;
+    else if (flag == "MD_FLAG_INSERT")                   flag_val |= MD_FLAG_INSERT;
     else if (flag == "MD_FLAG_PERMISSIVEAUTOLINKS")      flag_val |= MD_FLAG_PERMISSIVEAUTOLINKS;
     else if (flag == "MD_FLAG_NOHTML")                   flag_val |= MD_FLAG_NOHTML;
     else if (flag == "MD_DIALECT_COMMONMARK")            flag_val |= MD_DIALECT_COMMONMARK;

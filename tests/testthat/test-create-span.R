@@ -41,3 +41,36 @@ test_that("md_span_wikilink stores target", {
   expect_identical(attr(n, "target"), "Some Page")
   expect_error(md_span_wikilink(md_text_normal("x"), target = NA))
 })
+
+test_that("md4c 0.6.0 span constructors build correct classes and markdown", {
+  spans = list(
+    md_span_ins     = "++x++",
+    md_span_spoiler = "||x||",
+    md_span_sup     = "^x^",
+    md_span_sub     = "~x~",
+    md_span_mark    = "==x=="
+  )
+
+  for (fn_name in names(spans)) {
+    n = get(fn_name)(md_text_normal("x"))
+    expect_s3_class(n, c(fn_name, "md_span", "md_node"))
+    expect_identical(as.character(to_md(n)), spans[[fn_name]])
+  }
+
+  expect_identical(to_html(md_span_mark(md_text_normal("x"))), "<mark>x</mark>")
+})
+
+test_that("md_span_footnote_ref stores and validates attributes", {
+  n = md_span_footnote_ref(label = "note", id = 2, ref_id = 3)
+  expect_s3_class(n, c("md_span_footnote_ref", "md_span", "md_node"))
+  expect_length(n, 0)
+  expect_identical(as.character(to_md(n)), "[^note]")
+  expect_identical(
+    as.character(to_html(n)),
+    "<sup><a href=\"#fn-2\" id=\"fnref-2-3\">2</a></sup>"
+  )
+
+  expect_error(md_span_footnote_ref())
+  expect_error(md_span_footnote_ref(label = NA))
+  expect_error(md_span_footnote_ref(label = "a", id = 0))
+})

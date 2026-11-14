@@ -7,15 +7,17 @@ Sync the vendored md4c sources to the latest upstream release at https://github.
 
 ## Step 1: Detect currently vendored version
 
-Read the most recent "Based on md4c version X.Y.Z" line from `NEWS.md`. That is the authoritative record. Note the version as `CURRENT`.
+Read the most recent "Updated md4c to version X.Y.Z" (older entries: "Based on md4c version X.Y.Z") line from `NEWS.md`, i.e. the first match from the top. That is the authoritative record. Note the version as `CURRENT`.
 
 ## Step 2: Find the latest upstream release tag
 
-md4c does not publish GitHub Releases — it uses tags of the form `release-X.Y.Z`. Query:
+md4c does not publish GitHub Releases, it only uses tags. Tags were `release-X.Y.Z` up to 0.5.3 and `vX.Y.Z` from 0.6.0 on. Query:
 
 ```sh
-gh api repos/mity/md4c/tags --jq '.[].name' | grep '^release-' | sed 's/^release-//' | sort -V | tail -5
+gh api 'repos/mity/md4c/tags?per_page=100' --jq '.[].name' | grep -E '^(release-|v)[0-9]' | sed -E 's/^(release-|v)//' | sort -V | tail -5
 ```
+
+Note the exact tag name (`<TAG>` below, e.g. `v0.6.0`) for the chosen version.
 
 Pick the highest version as `LATEST`. If `LATEST <= CURRENT`, report that the package is up to date and stop.
 
@@ -29,7 +31,7 @@ If the user wants to pin to a specific tag (not necessarily the highest), let th
 
 ## Step 4: Fetch files from the chosen tag
 
-Use `curl` against `https://raw.githubusercontent.com/mity/md4c/release-<TAG>/<PATH>`. Fetch to a scratch directory first, then move into place after Step 5's review. The mapping from upstream paths to package paths is:
+Use `curl` against `https://raw.githubusercontent.com/mity/md4c/<TAG>/<PATH>`. Fetch to a scratch directory first, then move into place after Step 5's review. The mapping from upstream paths to package paths is:
 
 | Upstream | Package |
 |---|---|
@@ -43,7 +45,7 @@ Use `curl` against `https://raw.githubusercontent.com/mity/md4c/release-<TAG>/<P
 
 Only overwrite spec files that already exist in `inst/specs/md4c/`. If upstream introduces new `spec-*.txt` files (e.g. `spec-spoilers.txt`, `spec-subscripts.txt`, `spec-superscripts.txt`), list them but do NOT add them automatically — they correspond to flags the R wrapper does not yet support, which needs separate wiring. Surface these as a follow-up item for the user.
 
-Use `gh api repos/mity/md4c/contents/test?ref=release-<TAG> --jq '.[].name'` to enumerate upstream `test/` so you can compare against the local set.
+Use `gh api repos/mity/md4c/contents/test?ref=<TAG> --jq '.[].name'` to enumerate upstream `test/` so you can compare against the local set.
 
 ## Step 5: Review what changed
 
@@ -75,7 +77,7 @@ Report pass/fail counts. If tests fail, do NOT proceed to Step 7 — report the 
 
 After tests pass:
 
-1. **NEWS.md**: add a bullet to the development version entry: `* Updated vendored md4c to version X.Y.Z.` (or create a new entry if the user wants to bump the package version too).
+1. **NEWS.md**: add a bullet to the development version entry: `* Updated md4c to version X.Y.Z.` (or create a new entry if the user wants to bump the package version too).
 2. **DESCRIPTION**: if upstream copyright year changed, update the copyright headers/comments. Do NOT modify the package `Version` field unless the user explicitly asks (they track md4c versions intentionally, with an extra component for in-version package iterations — confirm the version policy with them before changing).
 3. **Spec files note**: if Step 4 surfaced new upstream spec files that were not synced, leave a TODO bullet in NEWS or report it separately so the user can decide whether to wire up the corresponding flag(s) in `R/flags.R` and the `inst/specs/md4c/` directory.
 
