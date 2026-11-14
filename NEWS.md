@@ -19,6 +19,14 @@
 
 * `to_md()` no longer adds a spurious space when a code span starts with a line ending.
 
+* `to_md()` now keeps an indented code block that follows a list separate from the list, by padding or indenting the list markers as needed.
+
+* `to_md()` now escapes `[` and `]` in wiki link targets.
+
+* `to_md()` now uses `_` for emphasis whose content starts with a `*`.
+
+* `to_md()` now round trips whitespace runs that were collapsed by `MD_FLAG_COLLAPSEWHITESPACE`.
+
 # Changes in md4r 0.5.3.0
 
 * Updated md4c to version 0.5.3.
